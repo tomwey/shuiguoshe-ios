@@ -17,6 +17,12 @@
 
 #import "AFNetworking.h"
 
+#import "DataService.h"
+
+#import "Banner.h"
+#import "Sale.h"
+#import "Item.h"
+
 #import "BannerView.h"
 
 #import "BaseViewController.h"

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		99A7BD7B1A519D840092EA89 /* SaleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7BD7A1A519D840092EA89 /* SaleView.m */; };
+		99A7BD7F1A519DD10092EA89 /* Sale.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7BD7E1A519DD10092EA89 /* Sale.m */; };
+		99A7BD821A519DDB0092EA89 /* Banner.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7BD811A519DDB0092EA89 /* Banner.m */; };
+		99A7BD851A519DEB0092EA89 /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7BD841A519DEB0092EA89 /* Item.m */; };
+		99A7BD891A519E370092EA89 /* DataService.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7BD881A519E370092EA89 /* DataService.m */; };
 		99C2744B1A4EDF3300898741 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C2744A1A4EDF3300898741 /* main.m */; };
 		99C2744E1A4EDF3300898741 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C2744D1A4EDF3300898741 /* AppDelegate.m */; };
 		99C274651A4EDF3300898741 /* shuiguosheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C274641A4EDF3300898741 /* shuiguosheTests.m */; };
@@ -49,6 +54,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		99A7BD791A519D840092EA89 /* SaleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaleView.h; sourceTree = "<group>"; };
+		99A7BD7A1A519D840092EA89 /* SaleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaleView.m; sourceTree = "<group>"; };
+		99A7BD7D1A519DD10092EA89 /* Sale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sale.h; sourceTree = "<group>"; };
+		99A7BD7E1A519DD10092EA89 /* Sale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sale.m; sourceTree = "<group>"; };
+		99A7BD801A519DDB0092EA89 /* Banner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Banner.h; sourceTree = "<group>"; };
+		99A7BD811A519DDB0092EA89 /* Banner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Banner.m; sourceTree = "<group>"; };
+		99A7BD831A519DEB0092EA89 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		99A7BD841A519DEB0092EA89 /* Item.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Item.m; sourceTree = "<group>"; };
+		99A7BD871A519E370092EA89 /* DataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataService.h; sourceTree = "<group>"; };
+		99A7BD881A519E370092EA89 /* DataService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataService.m; sourceTree = "<group>"; };
 		99C274451A4EDF3300898741 /* shuiguoshe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shuiguoshe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99C274491A4EDF3300898741 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		99C2744A1A4EDF3300898741 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -131,6 +146,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		99A7BD7C1A519DBD0092EA89 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				99A7BD7D1A519DD10092EA89 /* Sale.h */,
+				99A7BD7E1A519DD10092EA89 /* Sale.m */,
+				99A7BD801A519DDB0092EA89 /* Banner.h */,
+				99A7BD811A519DDB0092EA89 /* Banner.m */,
+				99A7BD831A519DEB0092EA89 /* Item.h */,
+				99A7BD841A519DEB0092EA89 /* Item.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		99A7BD861A519E290092EA89 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				99A7BD871A519E370092EA89 /* DataService.h */,
+				99A7BD881A519E370092EA89 /* DataService.m */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		99C2743C1A4EDF3300898741 = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +190,8 @@
 		99C274471A4EDF3300898741 /* shuiguoshe */ = {
 			isa = PBXGroup;
 			children = (
+				99A7BD861A519E290092EA89 /* Services */,
+				99A7BD7C1A519DBD0092EA89 /* Models */,
 				99C274DD1A4EF00D00898741 /* UIKit+AFNetworking */,
 				99C274C01A4EEE1900898741 /* AFNetworking */,
 				99C274BC1A4EECB500898741 /* Views */,
@@ -217,6 +256,8 @@
 				99C274F81A4F0A6D00898741 /* InfinitePagingView.m */,
 				99C274BD1A4EECD000898741 /* BannerView.h */,
 				99C274BE1A4EECD000898741 /* BannerView.m */,
+				99A7BD791A519D840092EA89 /* SaleView.h */,
+				99A7BD7A1A519D840092EA89 /* SaleView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -370,6 +411,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				99C274D81A4EEE1900898741 /* AFSecurityPolicy.m in Sources */,
+				99A7BD7B1A519D840092EA89 /* SaleView.m in Sources */,
+				99A7BD851A519DEB0092EA89 /* Item.m in Sources */,
 				99C2747E1A4EE15300898741 /* CartViewController.m in Sources */,
 				99C274D71A4EEE1900898741 /* AFNetworkReachabilityManager.m in Sources */,
 				99C274881A4EE2CF00898741 /* BaseViewController.m in Sources */,
@@ -384,8 +427,11 @@
 				99C274DA1A4EEE1900898741 /* AFURLRequestSerialization.m in Sources */,
 				99C274BF1A4EECD000898741 /* BannerView.m in Sources */,
 				99C274DC1A4EEE1900898741 /* AFURLSessionManager.m in Sources */,
+				99A7BD7F1A519DD10092EA89 /* Sale.m in Sources */,
 				99C2744E1A4EDF3300898741 /* AppDelegate.m in Sources */,
+				99A7BD891A519E370092EA89 /* DataService.m in Sources */,
 				99C274D51A4EEE1900898741 /* AFHTTPRequestOperationManager.m in Sources */,
+				99A7BD821A519DDB0092EA89 /* Banner.m in Sources */,
 				99C274F41A4EF00D00898741 /* UIProgressView+AFNetworking.m in Sources */,
 				99C274851A4EE1F200898741 /* ItemsViewController.m in Sources */,
 				99C274F21A4EF00D00898741 /* UIButton+AFNetworking.m in Sources */,
@@ -575,6 +621,7 @@
 				99C2746A1A4EDF3300898741 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		99C2746B1A4EDF3300898741 /* Build configuration list for PBXNativeTarget "shuiguosheTests" */ = {
 			isa = XCConfigurationList;
@@ -583,6 +630,7 @@
 				99C2746D1A4EDF3300898741 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

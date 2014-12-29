@@ -27,7 +27,7 @@
 {
     if (self = [super initWithFrame:frame]) {
         self.bounds = CGRectMake(0, 0, mainScreenBounds.size.width,
-                                 mainScreenBounds.size.width/213 * 40);
+                                 mainScreenBounds.size.width * 360 / 994);
         pagingView = [[InfinitePagingView alloc] initWithFrame:
                                     self.bounds];
         [self addSubview:pagingView];
@@ -36,11 +36,12 @@
         pagingView.delegate = self;
         
         pager = [[[UIPageControl alloc] init] autorelease];
-        pager.bounds = CGRectMake(0, 0, 300, 20);
+//        pager.bounds = CGRectMake(0, 0, 300, 20);
         pager.center = CGPointMake(CGRectGetWidth(self.bounds) * 0.5, 30);
         [self addSubview:pager];
         pager.currentPage = 1;
-        pager.currentPageIndicatorTintColor = RGB(99, 185, 76);
+        [self bringSubviewToFront:pager];
+        pager.currentPageIndicatorTintColor = [UIColor redColor];//RGB(99, 185, 76);
         
         timer = [NSTimer scheduledTimerWithTimeInterval:2.0
                                                  target:self
