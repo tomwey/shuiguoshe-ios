@@ -68,7 +68,7 @@
 
 - (void)onTimer:(id)sender
 {
-//    [pagingView scrollToNextPage];
+//    [_pagingView scrollToNextPage];
 }
 
 - (void)addImageViewAtPosition:(int)index forURL:(NSString *)url
@@ -80,8 +80,6 @@
     
     [_pagingView addPageView:imageView];
     [imageView release];
-    
-
     
     [imageView setImageWithURL:[NSURL URLWithString:url]];
 }

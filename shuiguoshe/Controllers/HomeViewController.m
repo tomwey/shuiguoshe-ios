@@ -31,70 +31,50 @@
     
     _currentHeight = CGRectGetMaxY(banner.frame) + 10;
     
-    // 今日特卖区
-    UILabel* discountLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, _currentHeight, 200, 40)];
-    [scrollView addSubview:discountLabel];
-    [discountLabel release];
-    discountLabel.text = @"今日特卖区";
+    // 分类
+    [[DataService sharedService] loadEntityForClass:@"Catalog" URI:@"/catalogs" completion:^(id result, BOOL succeed) {
+        int numberOfCol = 2;
+        CGFloat padding = 20;
+        CGFloat width = ( CGRectGetWidth(mainScreenBounds) - ( numberOfCol + 1 ) * padding ) / numberOfCol;
+        CGFloat height = 0.318 * width;
+        for (int i=0; i<[result count]; i++) {
+            
+            UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [scrollView addSubview:btn];
+            
+            Catalog* cata = [result objectAtIndex:i];
+            [btn setTitle:cata.name forState:UIControlStateNormal];
+            btn.backgroundColor = RGB(7,156,22);
+            
+            int m = i % numberOfCol;
+            int n = i / numberOfCol;
+            btn.frame = CGRectMake(padding + ( padding + width ) * m, _currentHeight + ( padding + height ) * n, width, height);
+            
+            if ( i == [result count] - 1 ) {
+                _currentHeight = CGRectGetMaxY(btn.frame) + 10;
+            }
+            
+            [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        }
+    }];
     
-    discountLabel.textColor = RGB(83, 83, 83);
-    discountLabel.font = [UIFont boldSystemFontOfSize:18];
+    // 限时抢购
+    [[DataService sharedService] loadEntityForClass:@"Item" URI:@"items/discounted" completion:^(id result, BOOL succeed) {
+        if ( succeed ) {
+            for (int i=0; i<[result count]; i++) {
+                
+            }
+        } else {
+            
+        }
+    }];
     
-    _currentHeight = CGRectGetMaxY(discountLabel.frame) + 5;
+    scrollView.contentSize = CGSizeMake(CGRectGetWidth(scrollView.bounds), _currentHeight);
+}
+
+- (void)btnClicked:(UIButton *)sender
+{
     
-    [[DataService sharedService] loadEntityForClass:@"Item"
-                                                URI:@"/items/discounted"
-                                         completion:^(id result, BOOL succeed) {
-                                             if ( !succeed ) {
-                                                 NSLog(@"Load Item Error");
-                                             } else {
-                                                 CGFloat dt = 0;
-                                                 for (int i=0; i<[result count]; i++) {
-                                                     UIImageView* imageView = [[UIImageView alloc] init];
-                                                     [scrollView addSubview:imageView];
-                                                     [imageView release];
-                                                     
-                                                     imageView.frame = CGRectMake((100+10) * i, CGRectGetMaxY(discountLabel.frame) + 5, 100, 83);
-                                                     
-                                                     Item* item = [result objectAtIndex:i];
-                                                     [imageView setImageWithURL:[NSURL URLWithString:item.thumbImageUrl]];
-                                                     
-                                                     CGRect frame = imageView.frame;
-                                                     frame.size.height = 40;
-                                                     frame.origin.y = CGRectGetMaxY(imageView.frame) + 5;
-                                                     UILabel* label = [[UILabel alloc] initWithFrame:frame];
-                                                     [scrollView addSubview:label];
-                                                     [label release];
-                                                     
-                                                     label.textColor = [UIColor blackColor];
-                                                     label.textAlignment = NSTextAlignmentCenter;
-                                                     label.text = item.title;
-                                                     
-                                                     dt = CGRectGetMaxY(label.frame);
-                                                 }
-                                             }
-                                         }];
-    
-    // 鲜果专卖区
-    UILabel* saleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, _currentHeight + 120, 200, 40)];
-    [scrollView addSubview:saleLabel];
-    [saleLabel release];
-    saleLabel.text = @"鲜果专卖区";
-    
-    saleLabel.textColor = RGB(83, 83, 83);
-    saleLabel.font = [UIFont boldSystemFontOfSize:18];
-    
-    _currentHeight = CGRectGetMaxY(saleLabel.frame) + 10;
-    
-    [[DataService sharedService] loadEntityForClass:@"Sale"
-                                                URI:@"/sales"
-                                         completion:^(id result, BOOL succeed) {
-                                             if ( succeed ) {
-//                                                 UILabel* titleLabel = [[UILabel alloc] initW
-                                             } else {
-                                                 
-                                             }
-                                         }];
 }
 
 - (void)didReceiveMemoryWarning {

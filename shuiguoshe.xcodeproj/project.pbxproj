@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		973820FC1A884F2500B54EEC /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 973820FB1A884F2500B54EEC /* placeholder.png */; };
+		973820FF1A8890A600B54EEC /* Catalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 973820FE1A8890A600B54EEC /* Catalog.m */; };
+		973821021A88971700B54EEC /* ItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 973821011A88971700B54EEC /* ItemView.m */; };
 		99A7BD7B1A519D840092EA89 /* SaleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7BD7A1A519D840092EA89 /* SaleView.m */; };
 		99A7BD7F1A519DD10092EA89 /* Sale.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7BD7E1A519DD10092EA89 /* Sale.m */; };
 		99A7BD821A519DDB0092EA89 /* Banner.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7BD811A519DDB0092EA89 /* Banner.m */; };
@@ -54,6 +57,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		973820FB1A884F2500B54EEC /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
+		973820FD1A8890A600B54EEC /* Catalog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Catalog.h; sourceTree = "<group>"; };
+		973820FE1A8890A600B54EEC /* Catalog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Catalog.m; sourceTree = "<group>"; };
+		973821001A88971700B54EEC /* ItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemView.h; sourceTree = "<group>"; };
+		973821011A88971700B54EEC /* ItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemView.m; sourceTree = "<group>"; };
 		99A7BD791A519D840092EA89 /* SaleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaleView.h; sourceTree = "<group>"; };
 		99A7BD7A1A519D840092EA89 /* SaleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaleView.m; sourceTree = "<group>"; };
 		99A7BD7D1A519DD10092EA89 /* Sale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sale.h; sourceTree = "<group>"; };
@@ -146,6 +154,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		973820F91A884E6F00B54EEC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				973820FA1A884E7D00B54EEC /* Images */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		973820FA1A884E7D00B54EEC /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				973820FB1A884F2500B54EEC /* placeholder.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		99A7BD7C1A519DBD0092EA89 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +179,8 @@
 				99A7BD811A519DDB0092EA89 /* Banner.m */,
 				99A7BD831A519DEB0092EA89 /* Item.h */,
 				99A7BD841A519DEB0092EA89 /* Item.m */,
+				973820FD1A8890A600B54EEC /* Catalog.h */,
+				973820FE1A8890A600B54EEC /* Catalog.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -190,6 +216,7 @@
 		99C274471A4EDF3300898741 /* shuiguoshe */ = {
 			isa = PBXGroup;
 			children = (
+				973820F91A884E6F00B54EEC /* Resources */,
 				99A7BD861A519E290092EA89 /* Services */,
 				99A7BD7C1A519DBD0092EA89 /* Models */,
 				99C274DD1A4EF00D00898741 /* UIKit+AFNetworking */,
@@ -258,6 +285,8 @@
 				99C274BE1A4EECD000898741 /* BannerView.m */,
 				99A7BD791A519D840092EA89 /* SaleView.h */,
 				99A7BD7A1A519D840092EA89 /* SaleView.m */,
+				973821001A88971700B54EEC /* ItemView.h */,
+				973821011A88971700B54EEC /* ItemView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -393,6 +422,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				99C2746F1A4EDF7900898741 /* Default-568h@2x.png in Resources */,
+				973820FC1A884F2500B54EEC /* placeholder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +451,7 @@
 				99C274D91A4EEE1900898741 /* AFURLConnectionOperation.m in Sources */,
 				99C274F01A4EF00D00898741 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				99C274F61A4EF00D00898741 /* UIWebView+AFNetworking.m in Sources */,
+				973821021A88971700B54EEC /* ItemView.m in Sources */,
 				99C274D41A4EEE1900898741 /* AFHTTPRequestOperation.m in Sources */,
 				99C274D61A4EEE1900898741 /* AFHTTPSessionManager.m in Sources */,
 				99C274F11A4EF00D00898741 /* UIAlertView+AFNetworking.m in Sources */,
@@ -442,6 +473,7 @@
 				99C2747F1A4EE15300898741 /* HomeViewController.m in Sources */,
 				99C2744B1A4EDF3300898741 /* main.m in Sources */,
 				99C274F91A4F0A6D00898741 /* InfinitePagingView.m in Sources */,
+				973820FF1A8890A600B54EEC /* Catalog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

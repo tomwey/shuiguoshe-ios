@@ -22,6 +22,7 @@
 #import "Banner.h"
 #import "Sale.h"
 #import "Item.h"
+#import "Catalog.h"
 
 #import "UIImageView+AFNetworking.h"
 #import "InfinitePagingView.h"

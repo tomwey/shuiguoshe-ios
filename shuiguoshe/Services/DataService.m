@@ -53,7 +53,13 @@ static NSString * const kAPIHost = @"http://shuiguoshe.com/api/v1";
         uri = [uri substringFromIndex:1];
     }
     
-    NSString* url = [NSString stringWithFormat:@"%@/%@", kAPIHost, uri];
+#if DEBUG
+    NSString* apiHost = @"http://10.0.16.11:3000/api/v1";
+#else
+    NSString* apiHost = kAPIHost;
+#endif
+    
+    NSString* url = [NSString stringWithFormat:@"%@/%@", apiHost, uri];
 #if DEBUG
     NSLog(@"url: %@", url);
 #endif

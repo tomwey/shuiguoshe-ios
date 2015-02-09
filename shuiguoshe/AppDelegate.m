@@ -25,7 +25,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    [[UINavigationBar appearance] setBarTintColor:RGB(99, 185, 76)];
+    [[UINavigationBar appearance] setBarTintColor:RGB(7,156,22)];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
     UITabBarController* tabBar = [[[UITabBarController alloc] init] autorelease];
@@ -36,19 +36,8 @@
                                                      image:nil
                                              selectedImage:nil] autorelease];
     
-    UIViewController* items = [BaseViewController viewControllerWithClassName:@"ItemsViewController"];
-    items.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"全部"
-                                                     image:nil
-                                             selectedImage:nil] autorelease];
-    
     UIViewController* cart = [BaseViewController viewControllerWithClassName:@"CartViewController"];
-    cart.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"我的购物车"
-                                                      image:nil
-                                              selectedImage:nil] autorelease];
-    
-    UIViewController* apartments = [BaseViewController viewControllerWithClassName:@"ApartmentsViewController"];
-    
-    apartments.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"服务小区"
+    cart.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"购物车"
                                                       image:nil
                                               selectedImage:nil] autorelease];
     
@@ -58,7 +47,7 @@
                                                      image:nil
                                              selectedImage:nil] autorelease];
     
-    NSArray* controllers = @[home, items, cart, apartments, user];
+    NSArray* controllers = @[home, cart, user];
     tabBar.viewControllers = controllers;
     
     return YES;
