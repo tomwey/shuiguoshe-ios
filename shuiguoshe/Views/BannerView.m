@@ -8,15 +8,13 @@
 
 #import "BannerView.h"
 #import "Defines.h"
-#import "UIImageView+AFNetworking.h"
-#import "InfinitePagingView.h"
 
 @interface BannerView () <InfinitePagingViewDelegate>
 {
-    UIPageControl* pager;
-    InfinitePagingView* pagingView;
-    int total;
-    NSTimer* timer;
+    UIPageControl*      _pager;
+    InfinitePagingView* _pagingView;
+    int                 _total;
+    NSTimer*            _timer;
 }
 
 @end
@@ -28,51 +26,41 @@
     if (self = [super initWithFrame:frame]) {
         self.bounds = CGRectMake(0, 0, mainScreenBounds.size.width,
                                  mainScreenBounds.size.width * 360 / 994);
-        pagingView = [[InfinitePagingView alloc] initWithFrame:
+        _pagingView = [[InfinitePagingView alloc] initWithFrame:
                                     self.bounds];
-        [self addSubview:pagingView];
-        [pagingView release];
+        [self addSubview:_pagingView];
+        [_pagingView release];
         
-        pagingView.delegate = self;
+        _pagingView.delegate = self;
         
-        pager = [[[UIPageControl alloc] init] autorelease];
-//        pager.bounds = CGRectMake(0, 0, 300, 20);
-        pager.center = CGPointMake(CGRectGetWidth(self.bounds) * 0.5, 30);
-        [self addSubview:pager];
-        pager.currentPage = 1;
-        [self bringSubviewToFront:pager];
-        pager.currentPageIndicatorTintColor = [UIColor redColor];//RGB(99, 185, 76);
+        _pager = [[[UIPageControl alloc] init] autorelease];
+        _pager.center = CGPointMake(CGRectGetWidth(self.bounds) * 0.5, 30);
+        [self addSubview:_pager];
+        _pager.currentPage = 1;
+        [self bringSubviewToFront:_pager];
+        _pager.currentPageIndicatorTintColor = [UIColor redColor];//RGB(99, 185, 76);
         
-        timer = [NSTimer scheduledTimerWithTimeInterval:2.0
+        _timer = [NSTimer scheduledTimerWithTimeInterval:2.0
                                                  target:self
                                                selector:@selector(onTimer:)
                                                userInfo:nil
                                                 repeats:YES];
-        [timer setFireDate:[NSDate distantFuture]];
+        [_timer setFireDate:[NSDate distantFuture]];
         
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager GET:@"http://shuiguoshe.com/api/v1/banners.json"
-          parameters:nil
-             success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//            NSLog(@"JSON: %@", responseObject);
-                 if ( [[responseObject objectForKey:@"code"] intValue] == 0 ) {
-                     NSArray* banners = [responseObject objectForKey:@"data"];
-                     dispatch_async(dispatch_get_main_queue(), ^{
-                         
-                         for ( int i=0; i<[banners count]; i++) {
-                             [self addImageViewAtPosition:i forURL:[[banners objectAtIndex:i] objectForKey:@"image"]];
-                         }
-                         
-                         [pagingView layoutPages];
-                         
-                         [timer setFireDate:[NSDate dateWithTimeIntervalSinceNow:2]];
-                     });
-                 } else {
-                     NSLog(@"加载失败");
-                 }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
-        }];
+        [[DataService sharedService] loadEntityForClass:@"Banner"
+                                                    URI:@"/banners"
+                                             completion:^(id result, BOOL succeed) {
+                                                 if ( !succeed ) {
+                                                     NSLog(@"Load Data Error");
+                                                 } else {
+                                                     for ( int i=0; i<[result count]; i++) {
+                                                         Banner* banner = [result objectAtIndex:i];
+                                                         [self addImageViewAtPosition:i forURL:banner.imageUrl];
+                                                     }
+                                                     
+                                                     [_pagingView layoutPages];
+                                                 }
+                                             }];
     }
     
     return self;
@@ -87,10 +75,10 @@
 {
     UIImageView* imageView = [[UIImageView alloc] init];
     imageView.frame = CGRectMake(0, 0,
-                                 CGRectGetWidth(pagingView.frame),
-                                 CGRectGetHeight(pagingView.frame));
+                                 CGRectGetWidth(_pagingView.frame),
+                                 CGRectGetHeight(_pagingView.frame));
     
-    [pagingView addPageView:imageView];
+    [_pagingView addPageView:imageView];
     [imageView release];
     
 
@@ -100,7 +88,7 @@
 
 - (void)pagingView:(InfinitePagingView *)pagingView didEndDecelerating:(UIScrollView *)scrollView atPageIndex:(NSInteger)pageIndex
 {
-    pager.currentPage = pageIndex;
+    _pager.currentPage = pageIndex;
 }
 
 @end

@@ -23,6 +23,9 @@
 #import "Sale.h"
 #import "Item.h"
 
+#import "UIImageView+AFNetworking.h"
+#import "InfinitePagingView.h"
+
 #import "BannerView.h"
 
 #import "BaseViewController.h"

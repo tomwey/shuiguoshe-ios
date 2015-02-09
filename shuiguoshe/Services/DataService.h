@@ -13,7 +13,7 @@
 + (DataService *)sharedService;
 
 - (void)loadEntityForClass:(NSString *)clz
-                       URL:(NSString *)url
+                       URI:(NSString *)uri
                 completion:( void (^)(id result, BOOL succeed) )completion;
 
 @end

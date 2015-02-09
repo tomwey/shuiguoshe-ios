@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Defines.h"
 
 @interface SaleView : UIView
+
+@property (nonatomic, retain) Sale *sale;
 
 @end

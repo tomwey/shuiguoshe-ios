@@ -10,4 +10,18 @@
 
 @implementation SaleView
 
+- (void)dealloc
+{
+    self.sale = nil;
+    [super dealloc];
+}
+
+- (id)initWithFrame:(CGRect)frame
+{
+    if ( self = [super initWithFrame:frame] ) {
+        
+    }
+    return self;
+}
+
 @end
