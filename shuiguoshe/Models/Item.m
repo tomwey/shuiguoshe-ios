@@ -47,6 +47,7 @@
     
     self.unit          = nil;
     self.discountedAt  = nil;
+    
     [super dealloc];
 }
 

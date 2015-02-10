@@ -8,7 +8,7 @@
 
 #import "HomeViewController.h"
 
-@interface HomeViewController () <UITableViewDataSource>
+@interface HomeViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @end
 
@@ -43,37 +43,84 @@
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     tableView.dataSource = self;
+    tableView.delegate   = self;
     
-    UIScrollView* scrollView = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, mainScreenBounds.size.width, mainScreenBounds.size.height - 0 - 49)] autorelease];
-//    [self.view addSubview:scrollView];
-    BannerView* banner = [[[BannerView alloc] initWithFrame:CGRectMake(0, 0, 320, 120)] autorelease];
-    [scrollView addSubview:banner];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 3;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString* cellId = [NSString stringWithFormat:@"row:%d", indexPath.row];
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if ( !cell ) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId] autorelease];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
     
-    _currentHeight = CGRectGetMaxY(banner.frame) + 10;
+    switch (indexPath.row) {
+        case 0:
+            [self addBanner:cell];
+            break;
+        case 1:
+            [self addCatalog:cell];
+            break;
+        case 2:
+            [self addItems:cell];
+            break;
+            
+        default:
+            break;
+    }
     
+    return cell;
+}
+
+- (void)addBanner:(UITableViewCell *)cell
+{
+    BannerView* banner = (BannerView *)[cell.contentView viewWithTag:1001];
+    if ( !banner ) {
+        banner = [[[BannerView alloc] initWithFrame:CGRectMake(0, 0, 320, 120)] autorelease];
+        [cell.contentView addSubview:banner];
+        banner.tag = 1001;
+    }
     
-    // 分类选购
-    SectionView* sv = [[[SectionView alloc] init] autorelease];
-    [scrollView addSubview:sv];
-    CGRect frame = sv.bounds;
-    frame.origin.y = _currentHeight + 10;
-    frame.origin.x = 20;
-    sv.frame = frame;
-    
-    [sv setSectionName:@"分类选购"];
-    
-    _currentHeight = CGRectGetMaxY(sv.frame) + 10;
+}
+
+- (void)addCatalog:(UITableViewCell *)cell
+{
+    SectionView* sv = (SectionView *)[cell.contentView viewWithTag:1002];
+    if ( !sv ) {
+        sv = [[[SectionView alloc] init] autorelease];
+        [cell.contentView addSubview:sv];
+        sv.tag = 1002;
+        
+        CGRect frame = sv.frame;
+        frame.origin = CGPointMake(20, 20);
+        sv.frame = frame;
+        
+        [sv setSectionName:@"分类选购"];
+    }
     
     // 分类
     [[DataService sharedService] loadEntityForClass:@"Catalog" URI:@"/catalogs" completion:^(id result, BOOL succeed) {
+        
         int numberOfCol = 2;
         CGFloat padding = 20;
         CGFloat width = ( CGRectGetWidth(mainScreenBounds) - ( numberOfCol + 1 ) * padding ) / numberOfCol;
         CGFloat height = 0.318 * width;
+        
         for (int i=0; i<[result count]; i++) {
             
-            UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-            [scrollView addSubview:btn];
+            UIButton* btn = (UIButton *)[cell.contentView viewWithTag:2000 + i];
+            if ( !btn ) {
+                btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                btn.tag = 2000 + i;
+                [cell.contentView addSubview:btn];
+            }
             
             Catalog* cata = [result objectAtIndex:i];
             [btn setTitle:cata.name forState:UIControlStateNormal];
@@ -83,65 +130,64 @@
             
             int m = i % numberOfCol;
             int n = i / numberOfCol;
-            btn.frame = CGRectMake(padding + ( padding + width ) * m, 160 + 10 + ( padding + height ) * n, width, height);
+            btn.frame = CGRectMake(padding + ( padding + width ) * m,
+                                   CGRectGetMaxY(sv.frame) + 20 + ( padding + height ) * n,
+                                   width, height);
             
-            [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            [btn addTarget:self
+                    action:@selector(btnClicked:)
+          forControlEvents:UIControlEventTouchUpInside];
         }
     }];
-    
-    // 限时抢购
-    [[DataService sharedService] loadEntityForClass:@"Item" URI:@"items/discounted" completion:^(id result, BOOL succeed) {
-        if ( succeed ) {
-            SectionView* sv = [[[SectionView alloc] init] autorelease];
-            [scrollView addSubview:sv];
-            CGRect frame = sv.bounds;
-            frame.origin.y = 280 + 10;
-            frame.origin.x = 20;
-            sv.frame = frame;
-            
-            [sv setSectionName:@"限时抢购"];
-            
-            _currentHeight = CGRectGetMaxY(sv.frame) + 10;
-            
-            int numberOfCol = 2;
-            CGFloat padding = 20;
-            CGFloat width = ( CGRectGetWidth(mainScreenBounds) - ( numberOfCol + 1 ) * padding ) / numberOfCol;
-            
-            for (int i=0; i<[result count]; i++) {
-                ItemView* itemView = [[[ItemView alloc] init] autorelease];
-                [scrollView addSubview:itemView];
-                
-                itemView.item = [result objectAtIndex:i];
-                
-                int m = i % numberOfCol;
-                int n = i / numberOfCol;
-                
-                itemView.frame = CGRectMake(padding + ( padding + width ) * m,
-                                            _currentHeight + 10 + (padding + 200) * n,
-                                            width, 200);
-            }
-        } else {
-            
-        }
-    }];
-    
-    scrollView.contentSize = CGSizeMake(CGRectGetWidth(scrollView.bounds), 1000);
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (void)addItems:(UITableViewCell *)cell
 {
-    return 4;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString* cellId = [NSString stringWithFormat:@"row:%d", indexPath.row];
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    if ( !cell ) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId] autorelease];
+    SectionView* sv = (SectionView *)[cell.contentView viewWithTag:1003];
+    if ( !sv ) {
+        sv = [[[SectionView alloc] init] autorelease];
+        [cell.contentView addSubview:sv];
+        sv.tag = 1003;
+        
+        CGRect frame = sv.frame;
+        frame.origin = CGPointMake(20, 20);
+        sv.frame = frame;
+        
+        [sv setSectionName:@"热门订购"];
     }
     
-    return cell;
+    // 分类
+    [[DataService sharedService] loadEntityForClass:@"Item"
+                                                URI:@"/items/hot"
+                                         completion:^(id result, BOOL succeed) {
+        
+        int numberOfCol = 2;
+        CGFloat padding = 20;
+        CGFloat width = ( CGRectGetWidth(mainScreenBounds) - numberOfCol * padding - padding / 2 ) / numberOfCol;
+
+        for (int i=0; i<[result count]; i++) {
+            ItemView* itemView = (ItemView *)[cell.contentView viewWithTag:3000+i];
+            if ( !itemView ) {
+                itemView = [[[ItemView alloc] init] autorelease];
+                itemView.tag = 3000 + i;
+                [cell.contentView addSubview:itemView];
+            }
+            
+            itemView.item = [result objectAtIndex:i];
+            
+            int m = i % numberOfCol;
+            int n = i / numberOfCol;
+            
+            itemView.frame = CGRectMake(padding + (width + padding/2) * m,
+                                        CGRectGetMaxY(sv.frame) + 20 + ( 230 + padding ) * n, width, 230);
+        }
+    }];
+}
+
+static CGFloat heights[] = { 120, 160, 800 };
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return heights[indexPath.row];
 }
 
 - (void)gotoUserProfile

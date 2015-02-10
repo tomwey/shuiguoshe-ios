@@ -16,6 +16,8 @@
     UILabel*     _priceLabel; // 价格
     UILabel*     _saleCountLabel; // 销售记录
     UILabel*     _timeLeftLabel;  // 倒计时
+    
+    LPLabel*     _originPriceLabel; // 市场价
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -23,8 +25,10 @@
     if ( self = [super initWithFrame:frame] ) {
         _discounted = NO;
         
-        self.layer.cornerRadius = 5;
-        self.layer.borderColor = [RGB(213, 213, 213) CGColor];
+        self.layer.cornerRadius = 3;
+        self.layer.borderColor = [RGB(224, 224, 224) CGColor];
+        self.layer.borderWidth = 1;
+        self.clipsToBounds = YES;
         
         self.backgroundColor = [UIColor whiteColor];
         
@@ -45,13 +49,21 @@
         _unitLabel = [[UILabel alloc] init];
         [self addSubview:_unitLabel];
         [_unitLabel release];
-        
-        _unitLabel.textColor = RGB(213, 213, 213);
+        _unitLabel.font = [UIFont systemFontOfSize:14];
+        _unitLabel.textColor = RGB(80,80,80);
         
         // 价格
         _priceLabel = [[UILabel alloc] init];
         [self addSubview:_priceLabel];
         [_priceLabel release];
+        _priceLabel.font = [UIFont systemFontOfSize:14];
+        
+        _originPriceLabel = [[LPLabel alloc] init];
+        [self addSubview:_originPriceLabel];
+        [_originPriceLabel release];
+        _originPriceLabel.font = [UIFont systemFontOfSize:12];
+        _originPriceLabel.textColor = RGB(137, 137, 137);
+        _originPriceLabel.strikeThroughColor = _originPriceLabel.textColor;
         
         // 销售记录
         _saleCountLabel = [[UILabel alloc] init];
@@ -60,7 +72,7 @@
         
         _saleCountLabel.backgroundColor = RGB(7,156,22);
         _saleCountLabel.textColor = [UIColor whiteColor];
-        _saleCountLabel.font = [UIFont systemFontOfSize:10];
+        _saleCountLabel.font = [UIFont systemFontOfSize:12];
         
     }
     return self;
@@ -73,9 +85,25 @@
         _item = [item retain];
         
         [_avatarView setImageWithURL:[NSURL URLWithString:item.thumbImageUrl] placeholderImage:nil];
+        _titleLabel.text = item.title;
         _unitLabel.text = item.unit;
-        _priceLabel.text = item.lowPrice;
-        _saleCountLabel.text = [@(item.ordersCount) description];
+        _priceLabel.text = [NSString stringWithFormat:@"￥%@",item.lowPrice];
+        _originPriceLabel.text = [NSString stringWithFormat:@"￥%@", item.originPrice];
+        
+        CGSize size2 = [_priceLabel.text sizeWithFont:_priceLabel.font
+                                    constrainedToSize:
+                        CGSizeMake(CGRectGetWidth(self.bounds),
+                                   CGRectGetHeight(_priceLabel.bounds))
+                                        lineBreakMode:_priceLabel.lineBreakMode];
+        _priceLabel.bounds = CGRectMake(0, 0, size2.width, size2.height);
+        
+        NSString* str = [NSString stringWithFormat:@" 已售%d件 ", item.ordersCount];
+        CGSize size = [str sizeWithFont:_saleCountLabel.font
+                      constrainedToSize:CGSizeMake(CGRectGetWidth(self.bounds), 20)
+                          lineBreakMode:_saleCountLabel.lineBreakMode];
+        _saleCountLabel.bounds = CGRectMake(0, 0, size.width, 20);
+        
+        _saleCountLabel.text = str;
     }
 }
 
@@ -85,21 +113,32 @@
     
     CGRect bounds = self.bounds;
     
-    CGFloat width = CGRectGetWidth(bounds) - 10;
-    _avatarView.frame = CGRectMake(5, 5, width, width * 5 / 6);
+    CGFloat dt = 6;
+    CGFloat width = CGRectGetWidth(bounds) - dt;
+    _avatarView.frame = CGRectMake(dt/2, dt/2, width, width * 5 / 6);
     
-    _titleLabel.frame = CGRectMake(CGRectGetMinX(_avatarView.frame),
+    _titleLabel.frame = CGRectMake(10,
                                    CGRectGetMaxY(_avatarView.frame),
-                                   width, 50);
-    _unitLabel.frame = CGRectMake(CGRectGetMinX(_avatarView.frame),
-                                  CGRectGetMaxY(_titleLabel.frame),
+                                   CGRectGetWidth(bounds) - 20, 50);
+    
+    _unitLabel.frame = CGRectMake(CGRectGetMinX(_titleLabel.frame),
+                                  CGRectGetMaxY(_titleLabel.frame) - 5,
                                   CGRectGetWidth(_titleLabel.frame),
-                                  37);
-    CGRect frame = _unitLabel.frame;
-    frame.origin.y = CGRectGetMaxY(frame);
+                                  30);
+    
+    CGRect frame = _priceLabel.bounds;
+    frame.origin = CGPointMake(CGRectGetMinX(_unitLabel.frame),
+                               CGRectGetMaxY(_unitLabel.frame) - 5);
     _priceLabel.frame = frame;
     
+    frame = _priceLabel.frame;
+    frame.origin.x = CGRectGetMaxX(frame) + 3;
+    _originPriceLabel.frame = frame;
     
+    frame = _saleCountLabel.bounds;
+    frame.origin = CGPointMake(CGRectGetMinX(_priceLabel.frame),
+                               CGRectGetMaxY(_priceLabel.frame) + 3);
+    _saleCountLabel.frame = frame;
 }
 
 - (void)dealloc

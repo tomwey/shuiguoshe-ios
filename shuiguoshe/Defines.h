@@ -89,6 +89,7 @@ static inline UIImage* resizeImageForImage(UIImage* srcImage, CGSize newSize)
 #import "ItemView.h"
 #import "LogoTitleView.h"
 #import "PhoneNumberView.h"
+#import "LPLabel.h"
 
 #import "BaseViewController.h"
 #import "HomeViewController.h"

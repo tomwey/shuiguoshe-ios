@@ -38,6 +38,7 @@
 		975201A11A89F5930070FE1F /* PhoneNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 975201A01A89F5930070FE1F /* PhoneNumberView.m */; };
 		975201A31A89FC8A0070FE1F /* btn_phone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 975201A21A89FC8A0070FE1F /* btn_phone@2x.png */; };
 		975201A51A89FC9D0070FE1F /* btn_phone@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 975201A41A89FC9D0070FE1F /* btn_phone@3x.png */; };
+		9921EAB91A8A4627006B57D1 /* LPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9921EAB81A8A4627006B57D1 /* LPLabel.m */; };
 		99A7BD7B1A519D840092EA89 /* SaleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7BD7A1A519D840092EA89 /* SaleView.m */; };
 		99A7BD7F1A519DD10092EA89 /* Sale.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7BD7E1A519DD10092EA89 /* Sale.m */; };
 		99A7BD821A519DDB0092EA89 /* Banner.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7BD811A519DDB0092EA89 /* Banner.m */; };
@@ -128,6 +129,8 @@
 		975201A01A89F5930070FE1F /* PhoneNumberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumberView.m; sourceTree = "<group>"; };
 		975201A21A89FC8A0070FE1F /* btn_phone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_phone@2x.png"; sourceTree = "<group>"; };
 		975201A41A89FC9D0070FE1F /* btn_phone@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_phone@3x.png"; sourceTree = "<group>"; };
+		9921EAB71A8A4627006B57D1 /* LPLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPLabel.h; sourceTree = "<group>"; };
+		9921EAB81A8A4627006B57D1 /* LPLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPLabel.m; sourceTree = "<group>"; };
 		99A7BD791A519D840092EA89 /* SaleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaleView.h; sourceTree = "<group>"; };
 		99A7BD7A1A519D840092EA89 /* SaleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaleView.m; sourceTree = "<group>"; };
 		99A7BD7D1A519DD10092EA89 /* Sale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sale.h; sourceTree = "<group>"; };
@@ -398,6 +401,8 @@
 				99C274F81A4F0A6D00898741 /* InfinitePagingView.m */,
 				99C274BD1A4EECD000898741 /* BannerView.h */,
 				99C274BE1A4EECD000898741 /* BannerView.m */,
+				9921EAB71A8A4627006B57D1 /* LPLabel.h */,
+				9921EAB81A8A4627006B57D1 /* LPLabel.m */,
 				99A7BD791A519D840092EA89 /* SaleView.h */,
 				99A7BD7A1A519D840092EA89 /* SaleView.m */,
 				973821001A88971700B54EEC /* ItemView.h */,
@@ -587,6 +592,7 @@
 				99C274881A4EE2CF00898741 /* BaseViewController.m in Sources */,
 				99C274EF1A4EF00D00898741 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				99C274F31A4EF00D00898741 /* UIImageView+AFNetworking.m in Sources */,
+				9921EAB91A8A4627006B57D1 /* LPLabel.m in Sources */,
 				99C274D91A4EEE1900898741 /* AFURLConnectionOperation.m in Sources */,
 				975201A11A89F5930070FE1F /* PhoneNumberView.m in Sources */,
 				975201781A89C24E0070FE1F /* OrderStateView.m in Sources */,
