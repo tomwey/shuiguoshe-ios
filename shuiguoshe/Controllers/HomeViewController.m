@@ -8,7 +8,7 @@
 
 #import "HomeViewController.h"
 
-@interface HomeViewController ()
+@interface HomeViewController () <UITableViewDataSource>
 
 @end
 
@@ -41,6 +41,8 @@
     [tableView release];
     
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    tableView.dataSource = self;
     
     UIScrollView* scrollView = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, mainScreenBounds.size.width, mainScreenBounds.size.height - 0 - 49)] autorelease];
 //    [self.view addSubview:scrollView];
@@ -124,6 +126,22 @@
     }];
     
     scrollView.contentSize = CGSizeMake(CGRectGetWidth(scrollView.bounds), 1000);
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 4;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString* cellId = [NSString stringWithFormat:@"row:%d", indexPath.row];
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if ( !cell ) {
+        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId] autorelease];
+    }
+    
+    return cell;
 }
 
 - (void)gotoUserProfile
