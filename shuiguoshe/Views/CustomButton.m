@@ -10,4 +10,10 @@
 
 @implementation CustomButton
 
+- (void)dealloc
+{
+    self.userData = nil;
+    [super dealloc];
+}
+
 @end

@@ -10,4 +10,6 @@
 
 @interface CustomButton : UIButton
 
+@property (nonatomic, retain) id userData;
+
 @end

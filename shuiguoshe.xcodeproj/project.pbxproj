@@ -39,6 +39,9 @@
 		975201A31A89FC8A0070FE1F /* btn_phone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 975201A21A89FC8A0070FE1F /* btn_phone@2x.png */; };
 		975201A51A89FC9D0070FE1F /* btn_phone@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 975201A41A89FC9D0070FE1F /* btn_phone@3x.png */; };
 		9921EAB91A8A4627006B57D1 /* LPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9921EAB81A8A4627006B57D1 /* LPLabel.m */; };
+		9921EABB1A8A5121006B57D1 /* btn_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9921EABA1A8A5121006B57D1 /* btn_back@3x.png */; };
+		9921EABD1A8A515E006B57D1 /* btn_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9921EABC1A8A515E006B57D1 /* btn_back@2x.png */; };
+		9921EAC01A8A528C006B57D1 /* ItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9921EABF1A8A528C006B57D1 /* ItemDetailViewController.m */; };
 		99A7BD7B1A519D840092EA89 /* SaleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7BD7A1A519D840092EA89 /* SaleView.m */; };
 		99A7BD7F1A519DD10092EA89 /* Sale.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7BD7E1A519DD10092EA89 /* Sale.m */; };
 		99A7BD821A519DDB0092EA89 /* Banner.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7BD811A519DDB0092EA89 /* Banner.m */; };
@@ -131,6 +134,10 @@
 		975201A41A89FC9D0070FE1F /* btn_phone@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_phone@3x.png"; sourceTree = "<group>"; };
 		9921EAB71A8A4627006B57D1 /* LPLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPLabel.h; sourceTree = "<group>"; };
 		9921EAB81A8A4627006B57D1 /* LPLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPLabel.m; sourceTree = "<group>"; };
+		9921EABA1A8A5121006B57D1 /* btn_back@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_back@3x.png"; sourceTree = "<group>"; };
+		9921EABC1A8A515E006B57D1 /* btn_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_back@2x.png"; sourceTree = "<group>"; };
+		9921EABE1A8A528C006B57D1 /* ItemDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemDetailViewController.h; sourceTree = "<group>"; };
+		9921EABF1A8A528C006B57D1 /* ItemDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDetailViewController.m; sourceTree = "<group>"; };
 		99A7BD791A519D840092EA89 /* SaleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaleView.h; sourceTree = "<group>"; };
 		99A7BD7A1A519D840092EA89 /* SaleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaleView.m; sourceTree = "<group>"; };
 		99A7BD7D1A519DD10092EA89 /* Sale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sale.h; sourceTree = "<group>"; };
@@ -234,6 +241,8 @@
 		973820FA1A884E7D00B54EEC /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				9921EABC1A8A515E006B57D1 /* btn_back@2x.png */,
+				9921EABA1A8A5121006B57D1 /* btn_back@3x.png */,
 				9752018B1A89E3920070FE1F /* section_icon@2x.png */,
 				9752018D1A89E3A60070FE1F /* section_icon@3x.png */,
 				975201741A89A8610070FE1F /* btn_close@2x.png */,
@@ -387,6 +396,8 @@
 				99C274841A4EE1F200898741 /* ItemsViewController.m */,
 				99C274861A4EE2CF00898741 /* BaseViewController.h */,
 				99C274871A4EE2CF00898741 /* BaseViewController.m */,
+				9921EABE1A8A528C006B57D1 /* ItemDetailViewController.h */,
+				9921EABF1A8A528C006B57D1 /* ItemDetailViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -560,10 +571,12 @@
 				975201A51A89FC9D0070FE1F /* btn_phone@3x.png in Resources */,
 				975201991A89EEB30070FE1F /* down_arrow@3x.png in Resources */,
 				975201921A89EDB40070FE1F /* logo_title@3x.png in Resources */,
+				9921EABD1A8A515E006B57D1 /* btn_back@2x.png in Resources */,
 				9752019D1A89EEE70070FE1F /* down_arrow@2x.png in Resources */,
 				975201751A89A8610070FE1F /* btn_close@2x.png in Resources */,
 				9752019A1A89EEB30070FE1F /* up_arrow@3x.png in Resources */,
 				975201661A8997740070FE1F /* btn_user@2x.png in Resources */,
+				9921EABB1A8A5121006B57D1 /* btn_back@3x.png in Resources */,
 				975201881A89E33F0070FE1F /* btn_close@3x.png in Resources */,
 				975201861A89E3280070FE1F /* btn_user@3x.png in Resources */,
 			);
@@ -625,6 +638,7 @@
 				975201821A89E1FA0070FE1F /* SectionView.m in Sources */,
 				9752017F1A89DD6A0070FE1F /* MBProgressHUD.m in Sources */,
 				9752017B1A89C2C10070FE1F /* OrderState.m in Sources */,
+				9921EAC01A8A528C006B57D1 /* ItemDetailViewController.m in Sources */,
 				99C2744B1A4EDF3300898741 /* main.m in Sources */,
 				99C274F91A4F0A6D00898741 /* InfinitePagingView.m in Sources */,
 				973820FF1A8890A600B54EEC /* Catalog.m in Sources */,

@@ -15,4 +15,6 @@
 - (void)setLeftBarButtonWithImage:(NSString *)imageName target:(id)target action:(SEL)action;
 - (void)setRightBarButtonWithImage:(NSString *)imageName target:(id)target action:(SEL)action;
 
+- (void)back;
+
 @end

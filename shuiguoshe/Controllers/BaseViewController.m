@@ -51,6 +51,11 @@
     
 }
 
+- (void)back
+{
+    [self.navigationController popViewControllerAnimated:self];
+}
+
 - (void)setLeftBarButtonWithImage:(NSString *)imageName target:(id)target action:(SEL)action
 {
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];

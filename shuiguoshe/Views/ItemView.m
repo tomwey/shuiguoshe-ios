@@ -74,8 +74,21 @@
         _saleCountLabel.textColor = [UIColor whiteColor];
         _saleCountLabel.font = [UIFont systemFontOfSize:12];
         
+        UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap)];
+        
+        [self addGestureRecognizer:tap];
+        [tap release];
+        
+        self.exclusiveTouch = YES;
     }
     return self;
+}
+
+- (void)tap
+{
+    if ( self.didSelectBlock ) {
+        self.didSelectBlock(self);
+    }
 }
 
 - (void)setItem:(Item *)item

@@ -13,9 +13,6 @@
 @end
 
 @implementation HomeViewController
-{
-    CGFloat _currentHeight;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -54,7 +51,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString* cellId = [NSString stringWithFormat:@"row:%d", indexPath.row];
+    NSString* cellId = [NSString stringWithFormat:@"row:%ld", indexPath.row];
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if ( !cell ) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId] autorelease];
@@ -106,7 +103,9 @@
     }
     
     // 分类
-    [[DataService sharedService] loadEntityForClass:@"Catalog" URI:@"/catalogs" completion:^(id result, BOOL succeed) {
+    [[DataService sharedService] loadEntityForClass:@"Catalog"
+                                                URI:@"/catalogs"
+                                         completion:^(id result, BOOL succeed) {
         
         int numberOfCol = 2;
         CGFloat padding = 20;
@@ -115,14 +114,15 @@
         
         for (int i=0; i<[result count]; i++) {
             
-            UIButton* btn = (UIButton *)[cell.contentView viewWithTag:2000 + i];
+            Catalog* cata = [result objectAtIndex:i];
+            NSUInteger tag = 2000 + cata.cid;
+            CustomButton* btn = (CustomButton *)[cell.contentView viewWithTag:tag];
             if ( !btn ) {
-                btn = [UIButton buttonWithType:UIButtonTypeCustom];
-                btn.tag = 2000 + i;
+                btn = [CustomButton buttonWithType:UIButtonTypeCustom];
+                btn.tag = tag;
                 [cell.contentView addSubview:btn];
             }
             
-            Catalog* cata = [result objectAtIndex:i];
             [btn setTitle:cata.name forState:UIControlStateNormal];
             btn.backgroundColor = RGB(232,233,232);
             
@@ -133,6 +133,8 @@
             btn.frame = CGRectMake(padding + ( padding + width ) * m,
                                    CGRectGetMaxY(sv.frame) + 20 + ( padding + height ) * n,
                                    width, height);
+            
+            btn.userData = cata;
             
             [btn addTarget:self
                     action:@selector(btnClicked:)
@@ -156,7 +158,7 @@
         [sv setSectionName:@"热门订购"];
     }
     
-    // 分类
+    // 热门订购
     [[DataService sharedService] loadEntityForClass:@"Item"
                                                 URI:@"/items/hot"
                                          completion:^(id result, BOOL succeed) {
@@ -164,7 +166,9 @@
         int numberOfCol = 2;
         CGFloat padding = 20;
         CGFloat width = ( CGRectGetWidth(mainScreenBounds) - numberOfCol * padding - padding / 2 ) / numberOfCol;
-
+        
+        __block HomeViewController* me = self;
+                                             
         for (int i=0; i<[result count]; i++) {
             ItemView* itemView = (ItemView *)[cell.contentView viewWithTag:3000+i];
             if ( !itemView ) {
@@ -174,6 +178,12 @@
             }
             
             itemView.item = [result objectAtIndex:i];
+            itemView.didSelectBlock = ^(ItemView *itemView) {
+                ItemDetailViewController* idvc = [[ItemDetailViewController alloc] init];
+                idvc.item = itemView.item;
+                [me.navigationController pushViewController:idvc animated:YES];
+                [idvc release];
+            };
             
             int m = i % numberOfCol;
             int n = i / numberOfCol;
@@ -197,9 +207,12 @@ static CGFloat heights[] = { 120, 160, 800 };
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (void)btnClicked:(UIButton *)sender
+- (void)btnClicked:(CustomButton *)sender
 {
-    
+    NSAssert([sender.userData isKindOfClass:[Catalog class]], @"不正确的userData");
+    ItemsViewController* ivc = [[[ItemsViewController alloc] init] autorelease];
+    ivc.catalog = sender.userData;
+    [self.navigationController pushViewController:ivc animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
