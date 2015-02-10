@@ -10,6 +10,9 @@
 
 @interface BaseViewController : UIViewController
 
-+ (UIViewController *)viewControllerWithClassName:(NSString *)clzName;
+- (BOOL)shouldShowingCart;
+
+- (void)setLeftBarButtonWithImage:(NSString *)imageName target:(id)target action:(SEL)action;
+- (void)setRightBarButtonWithImage:(NSString *)imageName target:(id)target action:(SEL)action;
 
 @end

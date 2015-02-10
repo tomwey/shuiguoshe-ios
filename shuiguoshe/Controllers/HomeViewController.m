@@ -23,6 +23,8 @@
     
     self.title = @"水果社";
     
+    [self setLeftBarButtonWithImage:@"btn_user.png" target:self action:@selector(gotoUserProfile)];
+    
     UIScrollView* scrollView = [[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, mainScreenBounds.size.width, mainScreenBounds.size.height - 0 - 49)] autorelease];
     [self.view addSubview:scrollView];
 //    scrollView.backgroundColor = [UIColor redColor];
@@ -70,6 +72,13 @@
     }];
     
     scrollView.contentSize = CGSizeMake(CGRectGetWidth(scrollView.bounds), _currentHeight);
+}
+
+- (void)gotoUserProfile
+{
+    UserViewController* uvc = [[[UserViewController alloc] init] autorelease];
+    UINavigationController* nav = [[[UINavigationController alloc] initWithRootViewController:uvc] autorelease];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)btnClicked:(UIButton *)sender

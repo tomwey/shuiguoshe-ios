@@ -25,30 +25,12 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    [[UINavigationBar appearance] setBarTintColor:RGB(7,156,22)];
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
     
-    UITabBarController* tabBar = [[[UITabBarController alloc] init] autorelease];
-    self.window.rootViewController = tabBar;
-    
-    UIViewController* home = [BaseViewController viewControllerWithClassName:@"HomeViewController"];
-    home.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"首页"
-                                                     image:nil
-                                             selectedImage:nil] autorelease];
-    
-    UIViewController* cart = [BaseViewController viewControllerWithClassName:@"CartViewController"];
-    cart.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"购物车"
-                                                      image:nil
-                                              selectedImage:nil] autorelease];
-    
-    UIViewController* user = [BaseViewController viewControllerWithClassName:@"UserViewController"];
-    
-    user.tabBarItem = [[[UITabBarItem alloc] initWithTitle:@"我的"
-                                                     image:nil
-                                             selectedImage:nil] autorelease];
-    
-    NSArray* controllers = @[home, cart, user];
-    tabBar.viewControllers = controllers;
+    HomeViewController* hvc = [[[HomeViewController alloc] init] autorelease];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:hvc];
+    self.window.rootViewController = [nav autorelease];
     
     return YES;
 }
