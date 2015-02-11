@@ -24,8 +24,13 @@
 
 @property (nonatomic, copy)   NSString* unit;
 @property (nonatomic, assign) NSUInteger ordersCount;
+
+@property (nonatomic, assign) NSUInteger discountScore;
 @property (nonatomic, copy)   NSString* discountedAt;
 
 - (Item *)initWithDictionary:(NSDictionary *)jsonObj;
+
+- (NSString *)lowPriceText;
+- (NSString *)originPriceText;
 
 @end

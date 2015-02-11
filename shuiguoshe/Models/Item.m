@@ -27,6 +27,7 @@
         
         self.unit          = [jsonObj objectForKey:@"unit"];
         self.ordersCount   = [[jsonObj objectForKey:@"orders_count"] integerValue];
+        self.discountScore = [[jsonObj objectForKey:@"discount_score"] integerValue];
         self.discountedAt  = [jsonObj objectForKey:@"discounted_at"];
     }
     
@@ -49,6 +50,16 @@
     self.discountedAt  = nil;
     
     [super dealloc];
+}
+
+- (NSString *)lowPriceText
+{
+    return [NSString stringWithFormat:@"￥%@", self.lowPrice];
+}
+
+- (NSString *)originPriceText
+{
+    return [NSString stringWithFormat:@"￥%@", self.originPrice];
 }
 
 @end

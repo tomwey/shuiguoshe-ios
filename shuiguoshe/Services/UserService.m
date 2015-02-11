@@ -39,7 +39,7 @@
     
     [MBProgressHUD showHUDAddedTo:window animated:YES];
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:@"http://10.0.16.11:3000/api/v1/user/update_avatar.json"
+    [manager POST:[NSString stringWithFormat:@"%@/user/update_avatar.json", kAPIHost]
        parameters:@{@"token" : @"dc74a76f96062cdbaf17:10"}
     constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         

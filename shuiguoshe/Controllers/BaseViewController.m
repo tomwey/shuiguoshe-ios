@@ -53,7 +53,7 @@
 
 - (void)back
 {
-    [self.navigationController popViewControllerAnimated:self];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)setLeftBarButtonWithImage:(NSString *)imageName target:(id)target action:(SEL)action

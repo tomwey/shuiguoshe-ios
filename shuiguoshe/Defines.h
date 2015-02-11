@@ -18,6 +18,10 @@
                                        alpha:1.0]
 #define mainScreenBounds [[UIScreen mainScreen] bounds]
 
+#define GREEN_COLOR RGB(7, 156, 22)
+
+#define kAPIHost @"http://10.0.16.11:3000/api/v1"
+
 static inline UIButton* createButton(NSString* imageName, id target, SEL action)
 {
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -74,6 +78,8 @@ static inline UIImage* resizeImageForImage(UIImage* srcImage, CGSize newSize)
 #import "Catalog.h"
 #import "User.h"
 #import "OrderState.h"
+#import "ItemDetail.h"
+#import "Photo.h"
 
 #import "DataService.h"
 #import "UserService.h"

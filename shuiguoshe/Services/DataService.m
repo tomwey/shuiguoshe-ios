@@ -8,8 +8,6 @@
 
 #import "DataService.h"
 
-static NSString * const kAPIHost = @"http://shuiguoshe.com/api/v1";
-
 @implementation DataService
 {
     NSMutableDictionary* _cacheDict;
@@ -98,16 +96,22 @@ static NSString * const kAPIHost = @"http://shuiguoshe.com/api/v1";
          }];
 }
 
-- (NSArray *)handleResponse:(id)responseObject forClass:(NSString *)clz
+- (id)handleResponse:(id)responseObject forClass:(NSString *)clz
 {
-    NSArray* array = [responseObject objectForKey:@"data"];
-    NSMutableArray* temp = [NSMutableArray array];
-    for (NSDictionary* dict in array) {
-        id obj = [[NSClassFromString(clz) alloc] initWithDictionary:dict];
-        [temp addObject:obj];
-        [obj release];
+    id result = [responseObject objectForKey:@"data"];
+    if ( [result isKindOfClass:[NSArray class]] ) {
+        NSMutableArray* temp = [NSMutableArray array];
+        for (NSDictionary* dict in result) {
+            id obj = [[NSClassFromString(clz) alloc] initWithDictionary:dict];
+            [temp addObject:obj];
+            [obj release];
+        }
+        return temp;
+    } else if ( [result isKindOfClass:[NSDictionary class]] ) {
+        return [[[NSClassFromString(clz) alloc] initWithDictionary:result] autorelease];
     }
-    return temp;
+    
+    return nil;
 }
 
 @end

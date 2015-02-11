@@ -57,6 +57,7 @@
         [self addSubview:_priceLabel];
         [_priceLabel release];
         _priceLabel.font = [UIFont systemFontOfSize:14];
+        _priceLabel.textColor = GREEN_COLOR;
         
         _originPriceLabel = [[LPLabel alloc] init];
         [self addSubview:_originPriceLabel];
@@ -70,7 +71,7 @@
         [self addSubview:_saleCountLabel];
         [_saleCountLabel release];
         
-        _saleCountLabel.backgroundColor = RGB(7,156,22);
+        _saleCountLabel.backgroundColor = GREEN_COLOR;
         _saleCountLabel.textColor = [UIColor whiteColor];
         _saleCountLabel.font = [UIFont systemFontOfSize:12];
         
@@ -100,8 +101,8 @@
         [_avatarView setImageWithURL:[NSURL URLWithString:item.thumbImageUrl] placeholderImage:nil];
         _titleLabel.text = item.title;
         _unitLabel.text = item.unit;
-        _priceLabel.text = [NSString stringWithFormat:@"￥%@",item.lowPrice];
-        _originPriceLabel.text = [NSString stringWithFormat:@"￥%@", item.originPrice];
+        _priceLabel.text = item.lowPriceText;
+        _originPriceLabel.text = item.originPriceText;
         
         CGSize size2 = [_priceLabel.text sizeWithFont:_priceLabel.font
                                     constrainedToSize:

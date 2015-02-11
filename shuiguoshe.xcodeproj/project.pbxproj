@@ -38,6 +38,8 @@
 		975201A11A89F5930070FE1F /* PhoneNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 975201A01A89F5930070FE1F /* PhoneNumberView.m */; };
 		975201A31A89FC8A0070FE1F /* btn_phone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 975201A21A89FC8A0070FE1F /* btn_phone@2x.png */; };
 		975201A51A89FC9D0070FE1F /* btn_phone@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 975201A41A89FC9D0070FE1F /* btn_phone@3x.png */; };
+		97D1E3991A8AE92E00A8B3B6 /* ItemDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1E3981A8AE92E00A8B3B6 /* ItemDetail.m */; };
+		97D1E3A01A8B24A500A8B3B6 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1E39F1A8B24A500A8B3B6 /* Photo.m */; };
 		9921EAB91A8A4627006B57D1 /* LPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9921EAB81A8A4627006B57D1 /* LPLabel.m */; };
 		9921EABB1A8A5121006B57D1 /* btn_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9921EABA1A8A5121006B57D1 /* btn_back@3x.png */; };
 		9921EABD1A8A515E006B57D1 /* btn_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9921EABC1A8A515E006B57D1 /* btn_back@2x.png */; };
@@ -132,6 +134,10 @@
 		975201A01A89F5930070FE1F /* PhoneNumberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumberView.m; sourceTree = "<group>"; };
 		975201A21A89FC8A0070FE1F /* btn_phone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_phone@2x.png"; sourceTree = "<group>"; };
 		975201A41A89FC9D0070FE1F /* btn_phone@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_phone@3x.png"; sourceTree = "<group>"; };
+		97D1E3971A8AE92E00A8B3B6 /* ItemDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemDetail.h; sourceTree = "<group>"; };
+		97D1E3981A8AE92E00A8B3B6 /* ItemDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDetail.m; sourceTree = "<group>"; };
+		97D1E39E1A8B24A500A8B3B6 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
+		97D1E39F1A8B24A500A8B3B6 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
 		9921EAB71A8A4627006B57D1 /* LPLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPLabel.h; sourceTree = "<group>"; };
 		9921EAB81A8A4627006B57D1 /* LPLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPLabel.m; sourceTree = "<group>"; };
 		9921EABA1A8A5121006B57D1 /* btn_back@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_back@3x.png"; sourceTree = "<group>"; };
@@ -288,6 +294,13 @@
 			name = Home;
 			sourceTree = "<group>";
 		};
+		97D1E39A1A8AFAF700A8B3B6 /* Additions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Additions;
+			sourceTree = "<group>";
+		};
 		99A7BD7C1A519DBD0092EA89 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,6 +316,10 @@
 				9752016F1A89A0AF0070FE1F /* User.m */,
 				975201791A89C2C10070FE1F /* OrderState.h */,
 				9752017A1A89C2C10070FE1F /* OrderState.m */,
+				97D1E3971A8AE92E00A8B3B6 /* ItemDetail.h */,
+				97D1E3981A8AE92E00A8B3B6 /* ItemDetail.m */,
+				97D1E39E1A8B24A500A8B3B6 /* Photo.h */,
+				97D1E39F1A8B24A500A8B3B6 /* Photo.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -340,6 +357,7 @@
 		99C274471A4EDF3300898741 /* shuiguoshe */ = {
 			isa = PBXGroup;
 			children = (
+				97D1E39A1A8AFAF700A8B3B6 /* Additions */,
 				973820F91A884E6F00B54EEC /* Resources */,
 				99A7BD861A519E290092EA89 /* Services */,
 				99A7BD7C1A519DBD0092EA89 /* Models */,
@@ -604,9 +622,11 @@
 				99C274D71A4EEE1900898741 /* AFNetworkReachabilityManager.m in Sources */,
 				99C274881A4EE2CF00898741 /* BaseViewController.m in Sources */,
 				99C274EF1A4EF00D00898741 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				97D1E3991A8AE92E00A8B3B6 /* ItemDetail.m in Sources */,
 				99C274F31A4EF00D00898741 /* UIImageView+AFNetworking.m in Sources */,
 				9921EAB91A8A4627006B57D1 /* LPLabel.m in Sources */,
 				99C274D91A4EEE1900898741 /* AFURLConnectionOperation.m in Sources */,
+				97D1E3A01A8B24A500A8B3B6 /* Photo.m in Sources */,
 				975201A11A89F5930070FE1F /* PhoneNumberView.m in Sources */,
 				975201781A89C24E0070FE1F /* OrderStateView.m in Sources */,
 				99C274F01A4EF00D00898741 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
