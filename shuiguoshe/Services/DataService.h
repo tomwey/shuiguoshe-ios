@@ -16,4 +16,8 @@
                        URI:(NSString *)uri
                 completion:( void (^)(id result, BOOL succeed) )completion;
 
+- (void)post:(NSString *)uri
+      params:(NSDictionary *)params
+  completion:( void (^)(id result, BOOL succeed) )completion;
+
 @end

@@ -49,6 +49,18 @@
 //        tableView.layoutMargins = UIEdgeInsetsZero;
 //    }
     
+//    tableView.separatorColor = [UIColor clearColor];
+    
+    tableView.tableFooterView = [[[UIView alloc] init] autorelease];
+    
+    DetailToolbar* toolbar = [[[DetailToolbar alloc] init] autorelease];
+    [self.view addSubview:toolbar];
+    toolbar.item = self.item;
+    
+    CGRect frame = toolbar.frame;
+    frame.origin = CGPointMake(0, CGRectGetHeight(mainScreenBounds) - CGRectGetHeight(frame));
+    toolbar.frame = frame;
+    
     __block ItemDetailViewController* me = self;
     
     [[DataService sharedService] loadEntityForClass:@"ItemDetail"
@@ -62,6 +74,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if ( self.itemDetail.photos.count == 0 ) {
+        return 2;
+    }
     return 3;
 }
 

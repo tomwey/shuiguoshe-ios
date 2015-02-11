@@ -60,6 +60,20 @@
     return url;
 }
 
+- (void)post:(NSString *)uri
+      params:(NSDictionary *)params
+  completion:( void (^)(id result, BOOL succeed) )completion
+{
+    NSString* url = [self buildUrlFor:uri];
+    
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error: %@", error);
+    }];
+}
+
 - (void)loadEntityForClass:(NSString *)clz
                        URI:(NSString *)uri
                 completion:( void (^)(id result, BOOL succeed) )completion;

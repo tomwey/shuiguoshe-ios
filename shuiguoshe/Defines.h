@@ -97,6 +97,7 @@ static inline UIImage* resizeImageForImage(UIImage* srcImage, CGSize newSize)
 #import "PhoneNumberView.h"
 #import "LPLabel.h"
 #import "CustomButton.h"
+#import "DetailToolbar.h"
 
 #import "BaseViewController.h"
 #import "HomeViewController.h"
