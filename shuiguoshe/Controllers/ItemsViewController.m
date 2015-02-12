@@ -31,13 +31,7 @@
     [super viewDidLoad];
     
     self.title = [self.userData name];
-    
-    [self setLeftBarButtonWithImage:@"btn_back.png"
-                            command:[ForwardCommand buildCommandWithForward:
-                                     [Forward buildForwardWithType:ForwardTypePop
-                                                              from:self
-                                                      toController:nil]]];
-    
+        
     _numberOfCols = 2;
     
     UITableView* tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(mainScreenBounds),
@@ -66,6 +60,7 @@
                                                  
                                              }
                                          }];
+
 }
 
 - (NSInteger)tableView:(UITableView *)tableView

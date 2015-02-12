@@ -24,17 +24,69 @@
 
 - (BOOL)isLogin
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:@"isLogin"];
+    return [[self token] length] > 0;
 }
 
-- (void)login:(User *)aUser
+- (NSString *)token
 {
+    NSString* token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
+    if ( !token ) return nil;
     
+    return [[[NSString alloc] initWithData:[GTMBase64 decodeString:token] encoding:NSUTF8StringEncoding] autorelease];
 }
 
-- (void)logout
+- (void)saveToken:(NSString *)token
 {
+    if ( !token ) {
+        [[NSUserDefaults standardUserDefaults] setObject:@""
+                                                  forKey:@"token"];
+    } else {
+        NSData* data = [GTMBase64 encodeData:[token dataUsingEncoding:NSUTF8StringEncoding]];
+        [[NSUserDefaults standardUserDefaults] setObject:[[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease]
+                                                  forKey:@"token"];
+    }
     
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)login:(User *)aUser completion:( void (^)(BOOL succeed, NSString* errorMsg) )completion
+{
+    [[DataService sharedService] post:@"/account/login"
+                               params:@{ @"login": aUser.name, @"password": aUser.password }
+                           completion:^(id result, BOOL succeed2)
+    {
+        if ( succeed2 ) {
+            if ( completion ) {
+                NSString* token = [[result objectForKey:@"data"] objectForKey:@"token"];
+                [self saveToken:token];
+                
+                completion(YES, nil);
+            }
+        } else {
+            if ( completion ) {
+                completion(NO, [result objectForKey:@"message"]);
+            }
+        }
+    }];
+}
+
+- (void)logout:(void (^)(BOOL outSuccess, NSString *error))completion
+{
+    [[DataService sharedService] post:@"/account/logout"
+                               params:@{ @"token" : [self token] }
+                           completion:^(id result, BOOL succeed) {
+                               if ( succeed ) {
+                                   [self saveToken:nil];
+                               }
+                               
+                               if ( completion ) {
+                                   if ( succeed ) {
+                                       completion(YES, nil);
+                                   } else {
+                                       completion(NO, [result objectForKey:@"message"]);
+                                   }
+                               }
+                           }];
 }
 
 - (User *)loadUser
@@ -48,33 +100,12 @@
 
 - (void)uploadAvatar:(id)anImage completion:(void (^)(BOOL succeed))completion
 {
-    NSData* imageData = UIImageJPEGRepresentation(anImage, 0.5);
-    
-    UIWindow* window = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
-    
-    [MBProgressHUD showHUDAddedTo:window animated:YES];
-    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:[NSString stringWithFormat:@"%@/user/update_avatar.json", kAPIHost]
-       parameters:@{@"token" : @"dc74a76f96062cdbaf17:10"}
-    constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        
-        [formData appendPartWithFileData:imageData name:@"avatar" fileName:@"photo.jpg" mimeType:@"image/jpeg"];
-        
-        }
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              NSLog(@"upload success");
-              [MBProgressHUD hideHUDForView:window animated:YES];
-              if ( completion ) {
-                  completion(YES);
-              }
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"upload error");
-              [MBProgressHUD hideHUDForView:window animated:YES];
-              if ( completion ) {
-                  completion(NO);
-              }
-          }];
+    [[DataService sharedService] uploadImage:anImage
+                                         URI:@"/user/update_avatar.json"
+                                      params:@{ @"token": [self token] }
+                                  completion:^(id result, BOOL succeed) {
+                                      NSLog(@"result:%@", result);
+                                  }];
 }
 
 @end

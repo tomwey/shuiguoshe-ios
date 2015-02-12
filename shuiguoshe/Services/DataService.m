@@ -41,6 +41,18 @@
     [super dealloc];
 }
 
+- (void)startRequest
+{
+    UIView* view = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
+    [MBProgressHUD showHUDAddedTo:view animated:YES];
+}
+
+- (void)finishRequest
+{
+    UIView* view = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
+    [MBProgressHUD hideHUDForView:view animated:YES];
+}
+
 - (NSString *)buildUrlFor:(NSString *)uri
 {
     if ( !uri ) {
@@ -66,11 +78,30 @@
 {
     NSString* url = [self buildUrlFor:uri];
     
+    [self startRequest];
+    
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     [manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@", responseObject);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self finishRequest];
+            if ( completion ) {
+                if ( [[responseObject objectForKey:@"code"] intValue] == 0 ) {
+                    completion(responseObject, YES);
+                } else {
+                    completion(@{ @"code": [responseObject objectForKey:@"code"], @"message": [responseObject objectForKey:@"message"] }, NO);
+                }
+                
+            }
+        });
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error: %@", error);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self finishRequest];
+            if ( completion ) {
+                completion(@{ @"code": @(error.code), @"message": error.domain }, NO);
+            }
+        });
     }];
 }
 
@@ -85,29 +116,67 @@
         return;
     }
     
+//    [self startRequest];
+    
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             int code = [[responseObject objectForKey:@"code"] intValue];
-             if ( code == 0 ) {
-                 [_cacheDict setObject:responseObject forKey:url];
+             
+             dispatch_async(dispatch_get_main_queue(), ^{
+//                 [self finishRequest];
+             
+                 int code = [[responseObject objectForKey:@"code"] intValue];
                  
-                 dispatch_async(dispatch_get_main_queue(), ^{
+                 if ( code == 0 ) {
+                     [_cacheDict setObject:responseObject forKey:url];
+                     
                      if ( completion ) {
                          completion([self handleResponse:responseObject forClass:clz], YES);
                      }
-                 });
-             } else {
-                 if ( completion ) {
-                     completion(nil, NO);
+                 } else {
+                     if ( completion ) {
+                         completion(nil, NO);
+                     }
                  }
-             }
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            });
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Load Entity Error: %@", error);
+//             [self finishRequest];
              if ( completion ) {
                  completion(nil, NO);
              }
          }];
+}
+
+- (void)uploadImage:(UIImage *)anImage URI:(NSString *)uri params:(NSDictionary *)params completion:( void (^)(id result, BOOL succeed) )completion
+{
+    NSData* imageData = UIImageJPEGRepresentation(anImage, 0.5);
+    
+    [self startRequest];
+    
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    [manager POST:[NSString stringWithFormat:@"%@%@", kAPIHost, uri]
+       parameters:params
+constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    
+    [formData appendPartWithFileData:imageData name:@"avatar" fileName:@"photo.jpg" mimeType:@"image/jpeg"];
+    
+}
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              NSLog(@"upload success");
+              [self finishRequest];
+              if ( completion ) {
+                  completion(nil, YES);
+              }
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"upload error");
+              [self finishRequest];
+              if ( completion ) {
+                  completion(nil, NO);
+              }
+          }];
 }
 
 - (id)handleResponse:(id)responseObject forClass:(NSString *)clz

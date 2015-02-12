@@ -21,4 +21,6 @@
 
 - (CommandButton *)createCommandButton:(NSString*)imageName command:(Command *)aCommand;
 
+- (CommandButton *)createTextButton:(NSString *)title font:(UIFont *)font titleColor:(UIColor *)color command:(Command *)aCommand;
+
 @end

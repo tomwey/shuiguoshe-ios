@@ -117,6 +117,23 @@
     return cmdBtn;
 }
 
+- (CommandButton *)createTextButton:(NSString *)title font:(UIFont *)font titleColor:(UIColor *)color command:(Command *)aCommand
+{
+    CommandButton* cmdBtn = [CommandButton buttonWithType:UIButtonTypeCustom];
+    
+    [cmdBtn setTitle:title forState:UIControlStateNormal];
+    [cmdBtn setTitleColor:color forState:UIControlStateNormal];
+    
+    cmdBtn.titleLabel.font = font;
+    
+    [cmdBtn sizeToFit];
+    cmdBtn.command = aCommand;
+    
+    [cmdBtn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return cmdBtn;
+}
+
 - (void)btnClicked:(CommandButton *)sender
 {
     [sender.command execute];

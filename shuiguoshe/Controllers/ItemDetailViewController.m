@@ -28,13 +28,6 @@
     
     self.title = @"商品详情";
     
-    [self setLeftBarButtonWithImage:@"btn_back.png"
-                            command:[ForwardCommand buildCommandWithForward:
-                                     [Forward buildForwardWithType:ForwardTypePop
-                                                              from:self
-                                                      toController:nil]]];
-    
-    
     self.item = self.userData;
     
     UITableView* tableView = [[UITableView alloc] initWithFrame:self.view.bounds

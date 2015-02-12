@@ -42,21 +42,25 @@
         
         self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:btn] autorelease];
     }
-}
-
-- (void)gotoCart
-{
     
+    [self setLeftBarButtonWithImage:@"btn_back.png"
+                            command:[ForwardCommand buildCommandWithForward:
+                                     [Forward buildForwardWithType:ForwardTypePop
+                                                              from:self
+                                                      toController:nil]]];
+    
+    UISwipeGestureRecognizer* leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe)];
+    [self.view addGestureRecognizer:leftSwipe];
+    leftSwipe.direction = UISwipeGestureRecognizerDirectionRight;
+    [leftSwipe release];
 }
 
-- (void)back
+- (void)swipe
 {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)close
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
+    ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePop
+                                                                                                from:self
+                                                                                        toController:nil]];
+    [aCommand execute];
 }
 
 - (void)setLeftBarButtonWithImage:(NSString *)imageName target:(id)target action:(SEL)action

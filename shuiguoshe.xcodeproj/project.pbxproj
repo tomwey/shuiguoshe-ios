@@ -44,6 +44,15 @@
 		976EF3031A8C3E2B00A94B15 /* Forward.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF3021A8C3E2B00A94B15 /* Forward.m */; };
 		976EF3061A8C3FD000A94B15 /* CoordinatorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF3051A8C3FD000A94B15 /* CoordinatorController.m */; };
 		976EF3091A8C44C200A94B15 /* CommandButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF3081A8C44C200A94B15 /* CommandButton.m */; };
+		976EF30B1A8C6A6E00A94B15 /* btn_login@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 976EF30A1A8C6A6E00A94B15 /* btn_login@2x.png */; };
+		976EF30D1A8C6A8C00A94B15 /* btn_login@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 976EF30C1A8C6A8C00A94B15 /* btn_login@3x.png */; };
+		976EF3101A8C6ED500A94B15 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF30F1A8C6ED500A94B15 /* RegisterViewController.m */; };
+		976EF3131A8C6EFD00A94B15 /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF3121A8C6EFD00A94B15 /* ForgetPasswordViewController.m */; };
+		976EF3171A8C7A7F00A94B15 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF3161A8C7A7F00A94B15 /* UIView+Toast.m */; };
+		976EF31A1A8C7E1600A94B15 /* FormItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF3191A8C7E1600A94B15 /* FormItem.m */; };
+		976EF31D1A8C7FFF00A94B15 /* UITextField+Attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF31C1A8C7FFF00A94B15 /* UITextField+Attributes.m */; };
+		976EF3201A8C811F00A94B15 /* InputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF31F1A8C811F00A94B15 /* InputTextField.m */; };
+		976EF3281A8C993700A94B15 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF3261A8C993700A94B15 /* GTMBase64.m */; };
 		97D1E3991A8AE92E00A8B3B6 /* ItemDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1E3981A8AE92E00A8B3B6 /* ItemDetail.m */; };
 		97D1E3A01A8B24A500A8B3B6 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1E39F1A8B24A500A8B3B6 /* Photo.m */; };
 		97D1E3A31A8B3A2600A8B3B6 /* DetailToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1E3A21A8B3A2600A8B3B6 /* DetailToolbar.m */; };
@@ -155,6 +164,23 @@
 		976EF3051A8C3FD000A94B15 /* CoordinatorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoordinatorController.m; sourceTree = "<group>"; };
 		976EF3071A8C44C200A94B15 /* CommandButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandButton.h; sourceTree = "<group>"; };
 		976EF3081A8C44C200A94B15 /* CommandButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandButton.m; sourceTree = "<group>"; };
+		976EF30A1A8C6A6E00A94B15 /* btn_login@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_login@2x.png"; sourceTree = "<group>"; };
+		976EF30C1A8C6A8C00A94B15 /* btn_login@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_login@3x.png"; sourceTree = "<group>"; };
+		976EF30E1A8C6ED500A94B15 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		976EF30F1A8C6ED500A94B15 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		976EF3111A8C6EFD00A94B15 /* ForgetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordViewController.h; sourceTree = "<group>"; };
+		976EF3121A8C6EFD00A94B15 /* ForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordViewController.m; sourceTree = "<group>"; };
+		976EF3151A8C7A7F00A94B15 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
+		976EF3161A8C7A7F00A94B15 /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
+		976EF3181A8C7E1600A94B15 /* FormItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormItem.h; sourceTree = "<group>"; };
+		976EF3191A8C7E1600A94B15 /* FormItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormItem.m; sourceTree = "<group>"; };
+		976EF31B1A8C7FFF00A94B15 /* UITextField+Attributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+Attributes.h"; sourceTree = "<group>"; };
+		976EF31C1A8C7FFF00A94B15 /* UITextField+Attributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+Attributes.m"; sourceTree = "<group>"; };
+		976EF31E1A8C811F00A94B15 /* InputTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputTextField.h; sourceTree = "<group>"; };
+		976EF31F1A8C811F00A94B15 /* InputTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputTextField.m; sourceTree = "<group>"; };
+		976EF3251A8C993700A94B15 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		976EF3261A8C993700A94B15 /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		976EF3271A8C993700A94B15 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		97D1E3971A8AE92E00A8B3B6 /* ItemDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemDetail.h; sourceTree = "<group>"; };
 		97D1E3981A8AE92E00A8B3B6 /* ItemDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDetail.m; sourceTree = "<group>"; };
 		97D1E39E1A8B24A500A8B3B6 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
@@ -272,6 +298,8 @@
 		973820FA1A884E7D00B54EEC /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				976EF30A1A8C6A6E00A94B15 /* btn_login@2x.png */,
+				976EF30C1A8C6A8C00A94B15 /* btn_login@3x.png */,
 				97D1E3A41A8B3BD100A8B3B6 /* btn_add_to_cart@2x.png */,
 				97D1E3A61A8B3BEE00A8B3B6 /* btn_add_to_cart@3x.png */,
 				9921EABC1A8A515E006B57D1 /* btn_back@2x.png */,
@@ -332,9 +360,38 @@
 			path = Command;
 			sourceTree = "<group>";
 		};
+		976EF3141A8C6F3800A94B15 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				99C274801A4EE16B00898741 /* UserViewController.h */,
+				99C274811A4EE16B00898741 /* UserViewController.m */,
+				976EF2F71A8C37F300A94B15 /* LoginViewController.h */,
+				976EF2F81A8C37F300A94B15 /* LoginViewController.m */,
+				976EF30E1A8C6ED500A94B15 /* RegisterViewController.h */,
+				976EF30F1A8C6ED500A94B15 /* RegisterViewController.m */,
+				976EF3111A8C6EFD00A94B15 /* ForgetPasswordViewController.h */,
+				976EF3121A8C6EFD00A94B15 /* ForgetPasswordViewController.m */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
+		976EF3241A8C993700A94B15 /* GTMBase64 */ = {
+			isa = PBXGroup;
+			children = (
+				976EF3251A8C993700A94B15 /* GTMBase64.h */,
+				976EF3261A8C993700A94B15 /* GTMBase64.m */,
+				976EF3271A8C993700A94B15 /* GTMDefines.h */,
+			);
+			path = GTMBase64;
+			sourceTree = "<group>";
+		};
 		97D1E39A1A8AFAF700A8B3B6 /* Additions */ = {
 			isa = PBXGroup;
 			children = (
+				976EF3151A8C7A7F00A94B15 /* UIView+Toast.h */,
+				976EF3161A8C7A7F00A94B15 /* UIView+Toast.m */,
+				976EF31B1A8C7FFF00A94B15 /* UITextField+Attributes.h */,
+				976EF31C1A8C7FFF00A94B15 /* UITextField+Attributes.m */,
 			);
 			path = Additions;
 			sourceTree = "<group>";
@@ -360,6 +417,8 @@
 				97D1E39F1A8B24A500A8B3B6 /* Photo.m */,
 				976EF3011A8C3E2B00A94B15 /* Forward.h */,
 				976EF3021A8C3E2B00A94B15 /* Forward.m */,
+				976EF3181A8C7E1600A94B15 /* FormItem.h */,
+				976EF3191A8C7E1600A94B15 /* FormItem.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -397,6 +456,7 @@
 		99C274471A4EDF3300898741 /* shuiguoshe */ = {
 			isa = PBXGroup;
 			children = (
+				976EF3241A8C993700A94B15 /* GTMBase64 */,
 				976EF2FA1A8C393100A94B15 /* Command */,
 				97D1E39A1A8AFAF700A8B3B6 /* Additions */,
 				973820F91A884E6F00B54EEC /* Resources */,
@@ -443,22 +503,19 @@
 		99C274761A4EE15300898741 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				976EF3141A8C6F3800A94B15 /* User */,
 				99C274771A4EE15300898741 /* ApartmentsViewController.h */,
 				99C274781A4EE15300898741 /* ApartmentsViewController.m */,
 				99C274791A4EE15300898741 /* CartViewController.h */,
 				99C2747A1A4EE15300898741 /* CartViewController.m */,
 				99C2747B1A4EE15300898741 /* HomeViewController.h */,
 				99C2747C1A4EE15300898741 /* HomeViewController.m */,
-				99C274801A4EE16B00898741 /* UserViewController.h */,
-				99C274811A4EE16B00898741 /* UserViewController.m */,
 				99C274831A4EE1F200898741 /* ItemsViewController.h */,
 				99C274841A4EE1F200898741 /* ItemsViewController.m */,
 				99C274861A4EE2CF00898741 /* BaseViewController.h */,
 				99C274871A4EE2CF00898741 /* BaseViewController.m */,
 				9921EABE1A8A528C006B57D1 /* ItemDetailViewController.h */,
 				9921EABF1A8A528C006B57D1 /* ItemDetailViewController.m */,
-				976EF2F71A8C37F300A94B15 /* LoginViewController.h */,
-				976EF2F81A8C37F300A94B15 /* LoginViewController.m */,
 				976EF3041A8C3FD000A94B15 /* CoordinatorController.h */,
 				976EF3051A8C3FD000A94B15 /* CoordinatorController.m */,
 			);
@@ -490,6 +547,8 @@
 				97D1E3A21A8B3A2600A8B3B6 /* DetailToolbar.m */,
 				976EF3071A8C44C200A94B15 /* CommandButton.h */,
 				976EF3081A8C44C200A94B15 /* CommandButton.m */,
+				976EF31E1A8C811F00A94B15 /* InputTextField.h */,
+				976EF31F1A8C811F00A94B15 /* InputTextField.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -627,6 +686,7 @@
 				99C2746F1A4EDF7900898741 /* Default-568h@2x.png in Resources */,
 				9752018A1A89E3640070FE1F /* user_bg@3x.png in Resources */,
 				9752018E1A89E3A60070FE1F /* section_icon@3x.png in Resources */,
+				976EF30B1A8C6A6E00A94B15 /* btn_login@2x.png in Resources */,
 				97D1E3A71A8B3BEE00A8B3B6 /* btn_add_to_cart@3x.png in Resources */,
 				9752019E1A89EEE70070FE1F /* up_arrow@2x.png in Resources */,
 				975201851A89E3280070FE1F /* btn_cart@3x.png in Resources */,
@@ -643,6 +703,7 @@
 				9921EABD1A8A515E006B57D1 /* btn_back@2x.png in Resources */,
 				9752019D1A89EEE70070FE1F /* down_arrow@2x.png in Resources */,
 				975201751A89A8610070FE1F /* btn_close@2x.png in Resources */,
+				976EF30D1A8C6A8C00A94B15 /* btn_login@3x.png in Resources */,
 				9752019A1A89EEB30070FE1F /* up_arrow@3x.png in Resources */,
 				975201661A8997740070FE1F /* btn_user@2x.png in Resources */,
 				9921EABB1A8A5121006B57D1 /* btn_back@3x.png in Resources */,
@@ -687,7 +748,10 @@
 				99C274F61A4EF00D00898741 /* UIWebView+AFNetworking.m in Sources */,
 				9752016D1A89A0A10070FE1F /* UserProfileView.m in Sources */,
 				973821021A88971700B54EEC /* ItemView.m in Sources */,
+				976EF31A1A8C7E1600A94B15 /* FormItem.m in Sources */,
 				99C274D41A4EEE1900898741 /* AFHTTPRequestOperation.m in Sources */,
+				976EF3131A8C6EFD00A94B15 /* ForgetPasswordViewController.m in Sources */,
+				976EF3171A8C7A7F00A94B15 /* UIView+Toast.m in Sources */,
 				99C274D61A4EEE1900898741 /* AFHTTPSessionManager.m in Sources */,
 				99C274F11A4EF00D00898741 /* UIAlertView+AFNetworking.m in Sources */,
 				976EF3001A8C3C6600A94B15 /* ForwardCommand.m in Sources */,
@@ -698,17 +762,21 @@
 				99C274DC1A4EEE1900898741 /* AFURLSessionManager.m in Sources */,
 				99A7BD7F1A519DD10092EA89 /* Sale.m in Sources */,
 				976EF2FD1A8C394000A94B15 /* Command.m in Sources */,
+				976EF31D1A8C7FFF00A94B15 /* UITextField+Attributes.m in Sources */,
 				99C2744E1A4EDF3300898741 /* AppDelegate.m in Sources */,
 				99A7BD891A519E370092EA89 /* DataService.m in Sources */,
 				99C274D51A4EEE1900898741 /* AFHTTPRequestOperationManager.m in Sources */,
 				99A7BD821A519DDB0092EA89 /* Banner.m in Sources */,
 				975201961A89EDCE0070FE1F /* LogoTitleView.m in Sources */,
 				99C274F41A4EF00D00898741 /* UIProgressView+AFNetworking.m in Sources */,
+				976EF3101A8C6ED500A94B15 /* RegisterViewController.m in Sources */,
 				975201731A89A6460070FE1F /* UserService.m in Sources */,
 				99C274851A4EE1F200898741 /* ItemsViewController.m in Sources */,
 				99C274F21A4EF00D00898741 /* UIButton+AFNetworking.m in Sources */,
 				99C274DB1A4EEE1900898741 /* AFURLResponseSerialization.m in Sources */,
 				99C2747D1A4EE15300898741 /* ApartmentsViewController.m in Sources */,
+				976EF3281A8C993700A94B15 /* GTMBase64.m in Sources */,
+				976EF3201A8C811F00A94B15 /* InputTextField.m in Sources */,
 				99C274821A4EE16B00898741 /* UserViewController.m in Sources */,
 				99C274F51A4EF00D00898741 /* UIRefreshControl+AFNetworking.m in Sources */,
 				99C2747F1A4EE15300898741 /* HomeViewController.m in Sources */,

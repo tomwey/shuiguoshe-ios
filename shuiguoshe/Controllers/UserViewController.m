@@ -182,8 +182,33 @@ static NSString* label2s[] = { @"收货地址设置", @"修改密码", @"退出�
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if ( indexPath.section > 0 ) {
-        
+    switch (indexPath.section) {
+        case 0:
+        {
+            
+        }
+            break;
+        case 1:
+        {
+            
+        }
+            break;
+        case 2:
+        {
+            if ( indexPath.row == 2 ) {
+                [[UserService sharedService] logout:^(BOOL succeed, NSString *errorMsg) {
+                    if ( succeed ) {
+                        [self dismissViewControllerAnimated:YES completion:nil];
+                    } else {
+                        [self.view makeToast:errorMsg];
+                    }
+                }];
+            }
+        }
+            break;
+            
+        default:
+            break;
     }
 }
 

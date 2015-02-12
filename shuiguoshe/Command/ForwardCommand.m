@@ -14,6 +14,14 @@
 
 - (void)execute:(void (^)(id))result
 {
+    if ( [self.forward.toController isEqualToString:@"UserViewController"] ||
+         [self.forward.toController isEqualToString:@"LoginViewController"] ) {
+        if ( [[UserService sharedService] isLogin] ) {
+            self.forward.toController = @"UserViewController";
+        } else {
+            self.forward.toController = @"LoginViewController";
+        }
+    }
     self.forward.userData = self.userData;
     [[CoordinatorController sharedInstance] forwardTo:self.forward];
 }

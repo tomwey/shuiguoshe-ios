@@ -18,7 +18,9 @@
 
 - (BOOL)isLogin;
 
-- (void)login:(User *)aUser;
-- (void)logout;
+- (NSString *)token;
+
+- (void)login:(User *)aUser completion:( void (^)(BOOL succeed, NSString* errorMsg) )completion;
+- (void)logout:( void (^)(BOOL succeed, NSString* errorMsg) )completion;
 
 @end

@@ -19,10 +19,6 @@
 - (void)setLeftBarButtonWithImage:(NSString *)imageName command:(Command *)aCommand;
 - (void)setRightBarButtonWithImage:(NSString *)imageName command:(Command *)aCommand;
 
-- (void)back;
-
-- (void)close;
-
 @property (nonatomic, retain) id userData;
 
 @end

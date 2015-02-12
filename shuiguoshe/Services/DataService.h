@@ -20,4 +20,9 @@
       params:(NSDictionary *)params
   completion:( void (^)(id result, BOOL succeed) )completion;
 
+- (void)uploadImage:(UIImage *)anImage
+                URI:(NSString *)uri
+             params:(NSDictionary *)params
+         completion:( void (^)(id result, BOOL succeed) )completion;
+
 @end
