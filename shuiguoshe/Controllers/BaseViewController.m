@@ -15,7 +15,6 @@
 
 @implementation BaseViewController
 
-
 - (BOOL)shouldShowingCart
 {
     return YES;
@@ -27,10 +26,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     if ( [self shouldShowingCart] ) {
-        UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setImage:[UIImage imageNamed:@"btn_cart.png"] forState:UIControlStateNormal];
-        [btn addTarget:self action:@selector(gotoCart) forControlEvents:UIControlEventTouchUpInside];
-        [btn sizeToFit];
+        ForwardCommand* aCommand = [[[ForwardCommand alloc] init] autorelease];
+        aCommand.forward = [Forward buildForwardWithType:ForwardTypeModal from:self toControllerName:@"CartViewController"];
+        CommandButton* btn = [[CoordinatorController sharedInstance] createCommandButton:@"btn_cart.png" command:aCommand];
         
         UILabel* cartLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(btn.bounds) - 20,
                                                                        0, 22, CGRectGetHeight(btn.bounds))];
@@ -56,6 +54,11 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)close
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)setLeftBarButtonWithImage:(NSString *)imageName target:(id)target action:(SEL)action
 {
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -76,9 +79,25 @@
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:btn] autorelease];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)setLeftBarButtonWithImage:(NSString *)imageName command:(Command *)aCommand
+{
+    CommandButton* cmdBtn = [[CoordinatorController sharedInstance] createCommandButton:imageName command:aCommand];
+    self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:cmdBtn] autorelease];
+}
+
+- (void)setRightBarButtonWithImage:(NSString *)imageName command:(Command *)aCommand
+{
+    CommandButton* cmdBtn = [[CoordinatorController sharedInstance] createCommandButton:imageName command:aCommand];
+    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:cmdBtn] autorelease];
+}
+
+- (void)dealloc
+{
+#if DEBUG
+    NSLog(@"############# %@ dealloc #############", NSStringFromClass([self class]));
+#endif
+    self.userData = nil;
+    [super dealloc];
 }
 
 @end

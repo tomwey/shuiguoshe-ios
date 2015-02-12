@@ -16,6 +16,7 @@
 @interface ItemDetailViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, retain) ItemDetail* itemDetail;
+@property (nonatomic, retain) Item*       item;
 
 @end
 
@@ -28,9 +29,13 @@
     self.title = @"商品详情";
     
     [self setLeftBarButtonWithImage:@"btn_back.png"
-                             target:self
-                             action:@selector(back)];
+                            command:[ForwardCommand buildCommandWithForward:
+                                     [Forward buildForwardWithType:ForwardTypePop
+                                                              from:self
+                                                      toController:nil]]];
     
+    
+    self.item = self.userData;
     
     UITableView* tableView = [[UITableView alloc] initWithFrame:self.view.bounds
                                                           style:UITableViewStylePlain];

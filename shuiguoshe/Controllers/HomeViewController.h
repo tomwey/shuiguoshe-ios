@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 shuiguoshe. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "Defines.h"
+//#import "Defines.h"
+#import "BaseViewController.h"
 
 @interface HomeViewController : BaseViewController
 

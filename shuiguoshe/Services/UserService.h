@@ -16,4 +16,9 @@
 
 - (void)uploadAvatar:(UIImage *)anImage completion:(void (^)(BOOL succeed))completion;
 
+- (BOOL)isLogin;
+
+- (void)login:(User *)aUser;
+- (void)logout;
+
 @end

@@ -11,6 +11,4 @@
 
 @interface ItemDetailViewController : BaseViewController
 
-@property (nonatomic, retain) Item* item;
-
 @end

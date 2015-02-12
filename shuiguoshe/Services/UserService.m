@@ -22,6 +22,21 @@
     return service;
 }
 
+- (BOOL)isLogin
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"isLogin"];
+}
+
+- (void)login:(User *)aUser
+{
+    
+}
+
+- (void)logout
+{
+    
+}
+
 - (User *)loadUser
 {
     User* u = [[[User alloc] init] autorelease];

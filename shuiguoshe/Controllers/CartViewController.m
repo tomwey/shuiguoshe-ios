@@ -18,7 +18,15 @@
     [super viewDidLoad];
     
     self.title = @"我的购物车";
+    
+    [self setLeftBarButtonWithImage:@"btn_close.png"
+                            command:[ForwardCommand buildCommandWithForward:
+                                     [Forward buildForwardWithType:ForwardTypeDismiss
+                                                              from:self
+                                                      toController:nil]]];
 }
+
+- (BOOL)shouldShowingCart { return NO; }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -38,6 +38,12 @@
 		975201A11A89F5930070FE1F /* PhoneNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 975201A01A89F5930070FE1F /* PhoneNumberView.m */; };
 		975201A31A89FC8A0070FE1F /* btn_phone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 975201A21A89FC8A0070FE1F /* btn_phone@2x.png */; };
 		975201A51A89FC9D0070FE1F /* btn_phone@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 975201A41A89FC9D0070FE1F /* btn_phone@3x.png */; };
+		976EF2F91A8C37F300A94B15 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF2F81A8C37F300A94B15 /* LoginViewController.m */; };
+		976EF2FD1A8C394000A94B15 /* Command.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF2FC1A8C394000A94B15 /* Command.m */; };
+		976EF3001A8C3C6600A94B15 /* ForwardCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF2FF1A8C3C6600A94B15 /* ForwardCommand.m */; };
+		976EF3031A8C3E2B00A94B15 /* Forward.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF3021A8C3E2B00A94B15 /* Forward.m */; };
+		976EF3061A8C3FD000A94B15 /* CoordinatorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF3051A8C3FD000A94B15 /* CoordinatorController.m */; };
+		976EF3091A8C44C200A94B15 /* CommandButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF3081A8C44C200A94B15 /* CommandButton.m */; };
 		97D1E3991A8AE92E00A8B3B6 /* ItemDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1E3981A8AE92E00A8B3B6 /* ItemDetail.m */; };
 		97D1E3A01A8B24A500A8B3B6 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1E39F1A8B24A500A8B3B6 /* Photo.m */; };
 		97D1E3A31A8B3A2600A8B3B6 /* DetailToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1E3A21A8B3A2600A8B3B6 /* DetailToolbar.m */; };
@@ -137,6 +143,18 @@
 		975201A01A89F5930070FE1F /* PhoneNumberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumberView.m; sourceTree = "<group>"; };
 		975201A21A89FC8A0070FE1F /* btn_phone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_phone@2x.png"; sourceTree = "<group>"; };
 		975201A41A89FC9D0070FE1F /* btn_phone@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_phone@3x.png"; sourceTree = "<group>"; };
+		976EF2F71A8C37F300A94B15 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		976EF2F81A8C37F300A94B15 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		976EF2FB1A8C394000A94B15 /* Command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Command.h; sourceTree = "<group>"; };
+		976EF2FC1A8C394000A94B15 /* Command.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Command.m; sourceTree = "<group>"; };
+		976EF2FE1A8C3C6600A94B15 /* ForwardCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForwardCommand.h; sourceTree = "<group>"; };
+		976EF2FF1A8C3C6600A94B15 /* ForwardCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForwardCommand.m; sourceTree = "<group>"; };
+		976EF3011A8C3E2B00A94B15 /* Forward.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Forward.h; sourceTree = "<group>"; };
+		976EF3021A8C3E2B00A94B15 /* Forward.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Forward.m; sourceTree = "<group>"; };
+		976EF3041A8C3FD000A94B15 /* CoordinatorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoordinatorController.h; sourceTree = "<group>"; };
+		976EF3051A8C3FD000A94B15 /* CoordinatorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoordinatorController.m; sourceTree = "<group>"; };
+		976EF3071A8C44C200A94B15 /* CommandButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommandButton.h; sourceTree = "<group>"; };
+		976EF3081A8C44C200A94B15 /* CommandButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommandButton.m; sourceTree = "<group>"; };
 		97D1E3971A8AE92E00A8B3B6 /* ItemDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemDetail.h; sourceTree = "<group>"; };
 		97D1E3981A8AE92E00A8B3B6 /* ItemDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDetail.m; sourceTree = "<group>"; };
 		97D1E39E1A8B24A500A8B3B6 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
@@ -303,6 +321,17 @@
 			name = Home;
 			sourceTree = "<group>";
 		};
+		976EF2FA1A8C393100A94B15 /* Command */ = {
+			isa = PBXGroup;
+			children = (
+				976EF2FB1A8C394000A94B15 /* Command.h */,
+				976EF2FC1A8C394000A94B15 /* Command.m */,
+				976EF2FE1A8C3C6600A94B15 /* ForwardCommand.h */,
+				976EF2FF1A8C3C6600A94B15 /* ForwardCommand.m */,
+			);
+			path = Command;
+			sourceTree = "<group>";
+		};
 		97D1E39A1A8AFAF700A8B3B6 /* Additions */ = {
 			isa = PBXGroup;
 			children = (
@@ -329,6 +358,8 @@
 				97D1E3981A8AE92E00A8B3B6 /* ItemDetail.m */,
 				97D1E39E1A8B24A500A8B3B6 /* Photo.h */,
 				97D1E39F1A8B24A500A8B3B6 /* Photo.m */,
+				976EF3011A8C3E2B00A94B15 /* Forward.h */,
+				976EF3021A8C3E2B00A94B15 /* Forward.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -366,6 +397,7 @@
 		99C274471A4EDF3300898741 /* shuiguoshe */ = {
 			isa = PBXGroup;
 			children = (
+				976EF2FA1A8C393100A94B15 /* Command */,
 				97D1E39A1A8AFAF700A8B3B6 /* Additions */,
 				973820F91A884E6F00B54EEC /* Resources */,
 				99A7BD861A519E290092EA89 /* Services */,
@@ -425,6 +457,10 @@
 				99C274871A4EE2CF00898741 /* BaseViewController.m */,
 				9921EABE1A8A528C006B57D1 /* ItemDetailViewController.h */,
 				9921EABF1A8A528C006B57D1 /* ItemDetailViewController.m */,
+				976EF2F71A8C37F300A94B15 /* LoginViewController.h */,
+				976EF2F81A8C37F300A94B15 /* LoginViewController.m */,
+				976EF3041A8C3FD000A94B15 /* CoordinatorController.h */,
+				976EF3051A8C3FD000A94B15 /* CoordinatorController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -452,6 +488,8 @@
 				975201811A89E1FA0070FE1F /* SectionView.m */,
 				97D1E3A11A8B3A2600A8B3B6 /* DetailToolbar.h */,
 				97D1E3A21A8B3A2600A8B3B6 /* DetailToolbar.m */,
+				976EF3071A8C44C200A94B15 /* CommandButton.h */,
+				976EF3081A8C44C200A94B15 /* CommandButton.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -631,11 +669,14 @@
 				99C274D81A4EEE1900898741 /* AFSecurityPolicy.m in Sources */,
 				99A7BD7B1A519D840092EA89 /* SaleView.m in Sources */,
 				99A7BD851A519DEB0092EA89 /* Item.m in Sources */,
+				976EF2F91A8C37F300A94B15 /* LoginViewController.m in Sources */,
 				99C2747E1A4EE15300898741 /* CartViewController.m in Sources */,
 				99C274D71A4EEE1900898741 /* AFNetworkReachabilityManager.m in Sources */,
 				99C274881A4EE2CF00898741 /* BaseViewController.m in Sources */,
 				99C274EF1A4EF00D00898741 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				97D1E3991A8AE92E00A8B3B6 /* ItemDetail.m in Sources */,
+				976EF3091A8C44C200A94B15 /* CommandButton.m in Sources */,
+				976EF3061A8C3FD000A94B15 /* CoordinatorController.m in Sources */,
 				99C274F31A4EF00D00898741 /* UIImageView+AFNetworking.m in Sources */,
 				9921EAB91A8A4627006B57D1 /* LPLabel.m in Sources */,
 				99C274D91A4EEE1900898741 /* AFURLConnectionOperation.m in Sources */,
@@ -649,11 +690,14 @@
 				99C274D41A4EEE1900898741 /* AFHTTPRequestOperation.m in Sources */,
 				99C274D61A4EEE1900898741 /* AFHTTPSessionManager.m in Sources */,
 				99C274F11A4EF00D00898741 /* UIAlertView+AFNetworking.m in Sources */,
+				976EF3001A8C3C6600A94B15 /* ForwardCommand.m in Sources */,
+				976EF3031A8C3E2B00A94B15 /* Forward.m in Sources */,
 				97D1E3A31A8B3A2600A8B3B6 /* DetailToolbar.m in Sources */,
 				99C274DA1A4EEE1900898741 /* AFURLRequestSerialization.m in Sources */,
 				99C274BF1A4EECD000898741 /* BannerView.m in Sources */,
 				99C274DC1A4EEE1900898741 /* AFURLSessionManager.m in Sources */,
 				99A7BD7F1A519DD10092EA89 /* Sale.m in Sources */,
+				976EF2FD1A8C394000A94B15 /* Command.m in Sources */,
 				99C2744E1A4EDF3300898741 /* AppDelegate.m in Sources */,
 				99A7BD891A519E370092EA89 /* DataService.m in Sources */,
 				99C274D51A4EEE1900898741 /* AFHTTPRequestOperationManager.m in Sources */,

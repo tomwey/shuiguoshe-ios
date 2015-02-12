@@ -80,6 +80,13 @@ static inline UIImage* resizeImageForImage(UIImage* srcImage, CGSize newSize)
 #import "OrderState.h"
 #import "ItemDetail.h"
 #import "Photo.h"
+#import "Forward.h"
+
+#import "Command.h"
+#import "ForwardCommand.h"
+#import "CommandButton.h"
+
+#import "CoordinatorController.h"
 
 #import "DataService.h"
 #import "UserService.h"
@@ -106,6 +113,6 @@ static inline UIImage* resizeImageForImage(UIImage* srcImage, CGSize newSize)
 #import "CartViewController.h"
 #import "ApartmentsViewController.h"
 #import "ItemDetailViewController.h"
-
+#import "LoginViewController.h"
 
 #endif

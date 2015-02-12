@@ -7,6 +7,7 @@
 //
 
 #import "HomeViewController.h"
+#import "Defines.h"
 
 @interface HomeViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -17,8 +18,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setLeftBarButtonWithImage:@"btn_user.png" target:self action:@selector(gotoUserProfile)];
+    // 设置导航条左边按钮
+    ForwardCommand* aCommand = [[[ForwardCommand alloc] init] autorelease];
+    if ( [[UserService sharedService] isLogin] ) {
+        aCommand.forward = [Forward buildForwardWithType:ForwardTypeModal from:self toControllerName:@"UserViewController"];
+    } else {
+        aCommand.forward = [Forward buildForwardWithType:ForwardTypeModal from:self toControllerName:@"LoginViewController"];
+    }
     
+    [self setLeftBarButtonWithImage:@"btn_user.png" command:aCommand];
+    
+    // 设置导航条标题视图
     LogoTitleView* titleView = [[[LogoTitleView alloc] init] autorelease];
     self.navigationItem.titleView = titleView;
     
@@ -31,6 +41,7 @@
         }
     };
     
+    // 创建表视图
     UITableView* tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(mainScreenBounds),
                                                                            CGRectGetHeight(mainScreenBounds))
                                                           style:UITableViewStylePlain];
@@ -116,9 +127,9 @@
             
             Catalog* cata = [result objectAtIndex:i];
             NSUInteger tag = 2000 + cata.cid;
-            CustomButton* btn = (CustomButton *)[cell.contentView viewWithTag:tag];
+            CommandButton* btn = (CommandButton *)[cell.contentView viewWithTag:tag];
             if ( !btn ) {
-                btn = [CustomButton buttonWithType:UIButtonTypeCustom];
+                btn = [[CoordinatorController sharedInstance] createCommandButton:nil command:nil];
                 btn.tag = tag;
                 [cell.contentView addSubview:btn];
             }
@@ -134,11 +145,12 @@
                                    CGRectGetMaxY(sv.frame) + 20 + ( padding + height ) * n,
                                    width, height);
             
-            btn.userData = cata;
+            ForwardCommand* fc = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePush
+                                                                                                  from:self
+                                                                                      toControllerName:@"ItemsViewController"]];
+            btn.command = fc;
+            fc.userData = cata;
             
-            [btn addTarget:self
-                    action:@selector(btnClicked:)
-          forControlEvents:UIControlEventTouchUpInside];
         }
     }];
 }
@@ -166,9 +178,7 @@
         int numberOfCol = 2;
         CGFloat padding = 20;
         CGFloat width = ( CGRectGetWidth(mainScreenBounds) - numberOfCol * padding - padding / 2 ) / numberOfCol;
-        
-        __block HomeViewController* me = self;
-                                             
+                                            
         for (int i=0; i<[result count]; i++) {
             ItemView* itemView = (ItemView *)[cell.contentView viewWithTag:3000+i];
             if ( !itemView ) {
@@ -178,12 +188,6 @@
             }
             
             itemView.item = [result objectAtIndex:i];
-            itemView.didSelectBlock = ^(ItemView *itemView) {
-                ItemDetailViewController* idvc = [[ItemDetailViewController alloc] init];
-                idvc.item = itemView.item;
-                [me.navigationController pushViewController:idvc animated:YES];
-                [idvc release];
-            };
             
             int m = i % numberOfCol;
             int n = i / numberOfCol;
@@ -198,26 +202,6 @@ static CGFloat heights[] = { 120, 160, 800 };
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return heights[indexPath.row];
-}
-
-- (void)gotoUserProfile
-{
-    UserViewController* uvc = [[[UserViewController alloc] init] autorelease];
-    UINavigationController* nav = [[[UINavigationController alloc] initWithRootViewController:uvc] autorelease];
-    [self presentViewController:nav animated:YES completion:nil];
-}
-
-- (void)btnClicked:(CustomButton *)sender
-{
-    NSAssert([sender.userData isKindOfClass:[Catalog class]], @"不正确的userData");
-    ItemsViewController* ivc = [[[ItemsViewController alloc] init] autorelease];
-    ivc.catalog = sender.userData;
-    [self.navigationController pushViewController:ivc animated:YES];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

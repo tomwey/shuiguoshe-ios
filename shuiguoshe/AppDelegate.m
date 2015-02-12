@@ -25,12 +25,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
-    
-    HomeViewController* hvc = [[[HomeViewController alloc] init] autorelease];
-    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:hvc];
-    self.window.rootViewController = [nav autorelease];
+    self.window.rootViewController = [[CoordinatorController sharedInstance] navController];
     
     return YES;
 }

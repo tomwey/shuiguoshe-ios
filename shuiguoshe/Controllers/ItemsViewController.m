@@ -20,7 +20,6 @@
 
 - (void)dealloc
 {
-    self.catalog = nil;
     [_dataSource release];
     
     [super dealloc];
@@ -31,11 +30,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = self.catalog.name;
+    self.title = [self.userData name];
     
     [self setLeftBarButtonWithImage:@"btn_back.png"
-                             target:self
-                             action:@selector(back)];
+                            command:[ForwardCommand buildCommandWithForward:
+                                     [Forward buildForwardWithType:ForwardTypePop
+                                                              from:self
+                                                      toController:nil]]];
     
     _numberOfCols = 2;
     
@@ -55,7 +56,7 @@
     tableView.contentInset = UIEdgeInsetsMake(0, 0, 10, 0);
     
     [[DataService sharedService] loadEntityForClass:@"Item"
-                                                URI:[NSString stringWithFormat:@"/items/type-%ld", self.catalog.cid]
+                                                URI:[NSString stringWithFormat:@"/items/type-%ld", [self.userData cid]]
                                          completion:^(id result, BOOL succeed) {
                                              if ( succeed ) {
                                                  [_dataSource release];
@@ -104,8 +105,6 @@
     CGFloat padding = 20;
     CGFloat width = ( CGRectGetWidth(mainScreenBounds) - _numberOfCols * padding - padding / 2 ) / _numberOfCols;
     
-    __block ItemsViewController* me = self;
-    
     for (int i=0; i<colCount; i++) {
         NSInteger index = row * _numberOfCols + i;
         
@@ -117,13 +116,6 @@
         }
         
         itemView.item = [_dataSource objectAtIndex:index];
-        
-        itemView.didSelectBlock = ^(ItemView *itemView) {
-            ItemDetailViewController* idvc = [[ItemDetailViewController alloc] init];
-            idvc.item = itemView.item;
-            [me.navigationController pushViewController:idvc animated:YES];
-            [idvc release];
-        };
         
         itemView.frame = CGRectMake(padding + (width + padding/2) * i,
                                     10, width, 230);

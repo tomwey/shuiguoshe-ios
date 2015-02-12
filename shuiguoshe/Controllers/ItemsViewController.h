@@ -11,6 +11,4 @@
 
 @interface ItemsViewController : BaseViewController
 
-@property (nonatomic, retain) Catalog* catalog;
-
 @end

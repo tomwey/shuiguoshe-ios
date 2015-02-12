@@ -89,6 +89,12 @@
 {
     if ( self.didSelectBlock ) {
         self.didSelectBlock(self);
+    } else {
+        ForwardCommand* fc = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePush
+                                                                                              from:nil
+                                                                                  toControllerName:@"ItemDetailViewController"]];
+        fc.userData = self.item;
+        [fc execute];
     }
 }
 
