@@ -53,6 +53,7 @@
 		976EF31D1A8C7FFF00A94B15 /* UITextField+Attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF31C1A8C7FFF00A94B15 /* UITextField+Attributes.m */; };
 		976EF3201A8C811F00A94B15 /* InputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF31F1A8C811F00A94B15 /* InputTextField.m */; };
 		976EF3281A8C993700A94B15 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF3261A8C993700A94B15 /* GTMBase64.m */; };
+		976EF32B1A8CA28800A94B15 /* ModalAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF32A1A8CA28800A94B15 /* ModalAlert.m */; };
 		97D1E3991A8AE92E00A8B3B6 /* ItemDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1E3981A8AE92E00A8B3B6 /* ItemDetail.m */; };
 		97D1E3A01A8B24A500A8B3B6 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1E39F1A8B24A500A8B3B6 /* Photo.m */; };
 		97D1E3A31A8B3A2600A8B3B6 /* DetailToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1E3A21A8B3A2600A8B3B6 /* DetailToolbar.m */; };
@@ -181,6 +182,8 @@
 		976EF3251A8C993700A94B15 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
 		976EF3261A8C993700A94B15 /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
 		976EF3271A8C993700A94B15 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		976EF3291A8CA28800A94B15 /* ModalAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalAlert.h; sourceTree = "<group>"; };
+		976EF32A1A8CA28800A94B15 /* ModalAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModalAlert.m; sourceTree = "<group>"; };
 		97D1E3971A8AE92E00A8B3B6 /* ItemDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemDetail.h; sourceTree = "<group>"; };
 		97D1E3981A8AE92E00A8B3B6 /* ItemDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDetail.m; sourceTree = "<group>"; };
 		97D1E39E1A8B24A500A8B3B6 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
@@ -525,6 +528,8 @@
 		99C274BC1A4EECB500898741 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				976EF3291A8CA28800A94B15 /* ModalAlert.h */,
+				976EF32A1A8CA28800A94B15 /* ModalAlert.m */,
 				975201931A89EDBB0070FE1F /* Home */,
 				9752017D1A89DD6A0070FE1F /* MBProgressHUD.h */,
 				9752017E1A89DD6A0070FE1F /* MBProgressHUD.m */,
@@ -737,6 +742,7 @@
 				99C274EF1A4EF00D00898741 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				97D1E3991A8AE92E00A8B3B6 /* ItemDetail.m in Sources */,
 				976EF3091A8C44C200A94B15 /* CommandButton.m in Sources */,
+				976EF32B1A8CA28800A94B15 /* ModalAlert.m in Sources */,
 				976EF3061A8C3FD000A94B15 /* CoordinatorController.m in Sources */,
 				99C274F31A4EF00D00898741 /* UIImageView+AFNetworking.m in Sources */,
 				9921EAB91A8A4627006B57D1 /* LPLabel.m in Sources */,

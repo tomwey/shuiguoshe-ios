@@ -98,6 +98,7 @@ static inline UIImage* resizeImageForImage(UIImage* srcImage, CGSize newSize)
 #import "UIView+Toast.h"
 #import "InfinitePagingView.h"
 #import "MBProgressHUD.h"
+#import "ModalAlert.h"
 
 #import "BannerView.h"
 #import "UserProfileView.h"
