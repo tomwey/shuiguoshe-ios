@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Defines.h"
 
+typedef BOOL (^CheckUserLoginBlock)(void);
+
+@class ItemDetail;
 @interface DetailToolbar : UIView
 
-@property (nonatomic, retain) Item* item;
+@property (nonatomic, retain) ItemDetail* itemDetail;
+
+@property (nonatomic, copy) CheckUserLoginBlock checkUserLoginBlock;
 
 @end

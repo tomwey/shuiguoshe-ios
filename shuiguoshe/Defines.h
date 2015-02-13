@@ -82,6 +82,7 @@ static inline UIImage* resizeImageForImage(UIImage* srcImage, CGSize newSize)
 #import "Photo.h"
 #import "Forward.h"
 #import "FormItem.h"
+#import "Cart.h"
 
 #import "GTMBase64.h"
 

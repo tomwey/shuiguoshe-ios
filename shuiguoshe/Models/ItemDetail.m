@@ -17,6 +17,8 @@
         self.note = [jsonResult objectForKey:@"note"];
         self.deliverInfo = [jsonResult objectForKey:@"deliver_info"];
         
+        self.likesCount = [[jsonResult objectForKey:@"likes_count"] integerValue];
+        
         NSMutableArray* temp = [NSMutableArray array];
         NSArray* photos = [jsonResult objectForKey:@"intro_images"];
         for (id item in photos) {

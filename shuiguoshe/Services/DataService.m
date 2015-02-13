@@ -105,16 +105,49 @@
     }];
 }
 
+- (void)delete:(NSString *)uri
+      params:(NSDictionary *)params
+  completion:( void (^)(id result, BOOL succeed) )completion
+{
+    NSString* url = [self buildUrlFor:uri];
+    
+    [self startRequest];
+    
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
+    [manager DELETE:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@", responseObject);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self finishRequest];
+            if ( completion ) {
+                if ( [[responseObject objectForKey:@"code"] intValue] == 0 ) {
+                    completion(responseObject, YES);
+                } else {
+                    completion(@{ @"code": [responseObject objectForKey:@"code"], @"message": [responseObject objectForKey:@"message"] }, NO);
+                }
+                
+            }
+        });
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error: %@", error);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self finishRequest];
+            if ( completion ) {
+                completion(@{ @"code": @(error.code), @"message": error.domain }, NO);
+            }
+        });
+    }];
+}
+
 - (void)loadEntityForClass:(NSString *)clz
                        URI:(NSString *)uri
                 completion:( void (^)(id result, BOOL succeed) )completion;
 {
     NSString* url = [self buildUrlFor:uri];
-    id responseObject = [_cacheDict objectForKey:url];
-    if ( responseObject && completion ) {
-        completion([self handleResponse:responseObject forClass:clz], YES);
-        return;
-    }
+//    id responseObject = [_cacheDict objectForKey:url];
+//    if ( responseObject && completion ) {
+//        completion([self handleResponse:responseObject forClass:clz], YES);
+//        return;
+//    }
     
 //    [self startRequest];
     

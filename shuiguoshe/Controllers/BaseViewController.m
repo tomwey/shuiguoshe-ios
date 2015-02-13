@@ -14,6 +14,9 @@
 @end
 
 @implementation BaseViewController
+{
+    UILabel* _cartLabel;
+}
 
 - (BOOL)shouldShowingCart
 {
@@ -30,17 +33,22 @@
         aCommand.forward = [Forward buildForwardWithType:ForwardTypeModal from:self toControllerName:@"CartViewController"];
         CommandButton* btn = [[CoordinatorController sharedInstance] createCommandButton:@"btn_cart.png" command:aCommand];
         
-        UILabel* cartLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(btn.bounds) - 20,
+        _cartLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(btn.bounds) - 20,
                                                                        0, 22, CGRectGetHeight(btn.bounds))];
-        [btn addSubview:cartLabel];
-        [cartLabel release];
+        [btn addSubview:_cartLabel];
+        [_cartLabel release];
         
-        cartLabel.textColor = RGB(217, 79, 16);
-        cartLabel.backgroundColor = [UIColor clearColor];
-        cartLabel.text = @"0";
-        cartLabel.font = [UIFont systemFontOfSize:15];
+        _cartLabel.textColor = RGB(217, 79, 16);
+        _cartLabel.backgroundColor = [UIColor clearColor];
+        _cartLabel.text = NSStringFromInteger([[Cart currentCart] totalCount]);
+        _cartLabel.font = [UIFont systemFontOfSize:15];
         
         self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:btn] autorelease];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didAddToCart)
+                                                     name:kAddToCartNotification
+                                                   object:nil];
     }
     
     [self setLeftBarButtonWithImage:@"btn_back.png"
@@ -53,6 +61,14 @@
     [self.view addGestureRecognizer:leftSwipe];
     leftSwipe.direction = UISwipeGestureRecognizerDirectionRight;
     [leftSwipe release];
+}
+
+- (void)didAddToCart
+{
+    int total = _cartLabel.text.integerValue;
+    total += 1;
+    [[Cart currentCart] setTotalCount:total];
+    _cartLabel.text = NSStringFromInteger(total);
 }
 
 - (void)swipe
@@ -100,6 +116,7 @@
 #if DEBUG
     NSLog(@"############# %@ dealloc #############", NSStringFromClass([self class]));
 #endif
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.userData = nil;
     [super dealloc];
 }

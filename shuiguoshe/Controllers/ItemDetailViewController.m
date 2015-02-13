@@ -51,20 +51,33 @@
     
     tableView.tableFooterView = [[[UIView alloc] init] autorelease];
     
+    __block ItemDetailViewController* me = self;
     DetailToolbar* toolbar = [[[DetailToolbar alloc] init] autorelease];
     [self.view addSubview:toolbar];
-    toolbar.item = self.item;
+    
+    toolbar.checkUserLoginBlock = ^{
+        if ( [[UserService sharedService] isLogin] == NO ) {
+            ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypeModal
+                                                                                                        from:me
+                                                                                            toControllerName:@"LoginViewController"]];
+            [aCommand execute];
+            return NO;
+        }
+        return YES;
+    };
     
     CGRect frame = toolbar.frame;
     frame.origin = CGPointMake(0, CGRectGetHeight(mainScreenBounds) - CGRectGetHeight(frame));
     toolbar.frame = frame;
     
-    __block ItemDetailViewController* me = self;
-    
     [[DataService sharedService] loadEntityForClass:@"ItemDetail"
                                                 URI:[NSString stringWithFormat:@"/items/%d", self.item.iid]
                                          completion:^(id result, BOOL succeed) {
                                              me.itemDetail = result;
+                                             
+                                             me.itemDetail.itemId = me.item.iid;
+                                             toolbar.itemDetail = me.itemDetail;
+                                             
                                              [tableView reloadData];
                                          }];
     

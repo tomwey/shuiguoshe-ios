@@ -28,9 +28,13 @@
 @property (nonatomic, assign) NSUInteger discountScore;
 @property (nonatomic, copy)   NSString* discountedAt;
 
+@property (nonatomic, assign) NSUInteger likesCount;
+
 - (Item *)initWithDictionary:(NSDictionary *)jsonObj;
 
 - (NSString *)lowPriceText;
 - (NSString *)originPriceText;
+
+- (BOOL)liked;
 
 @end

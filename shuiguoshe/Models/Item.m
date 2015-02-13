@@ -29,6 +29,8 @@
         self.ordersCount   = [[jsonObj objectForKey:@"orders_count"] integerValue];
         self.discountScore = [[jsonObj objectForKey:@"discount_score"] integerValue];
         self.discountedAt  = [jsonObj objectForKey:@"discounted_at"];
+        
+        self.likesCount   = [[jsonObj objectForKey:@"likes_count"] integerValue];
     }
     
     return self;
@@ -50,6 +52,11 @@
     self.discountedAt  = nil;
     
     [super dealloc];
+}
+
+- (BOOL)liked
+{
+    return self.likesCount > 0;
 }
 
 - (NSString *)lowPriceText

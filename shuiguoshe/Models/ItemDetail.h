@@ -16,6 +16,9 @@
 @property (nonatomic, copy) NSString* deliverInfo;
 @property (nonatomic, copy) NSArray* photos;
 
+@property (nonatomic, assign) NSUInteger itemId;
+@property (nonatomic, assign) NSUInteger likesCount;
+
 - (id)initWithDictionary:(NSDictionary *)jsonResult;
 
 - (CGFloat)totalHeightForImages;

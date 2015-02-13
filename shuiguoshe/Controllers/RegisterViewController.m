@@ -209,7 +209,7 @@
 
 - (BOOL)textFieldShouldBeginEditing:(InputTextField *)textField
 {
-    if ( [textField.name isEqualToString:@"code"] ) {
+    if ( [textField.name isEqualToString:@"code"] && CGRectGetHeight(mainScreenBounds) == 480 ) {
         [UIView animateWithDuration:.35
                          animations:^{
                              CGPoint offset = _tableOffset;
