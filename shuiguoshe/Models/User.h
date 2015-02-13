@@ -13,6 +13,9 @@
 @property (nonatomic, copy) NSString* name;
 @property (nonatomic, copy) NSString* password;
 
+@property (nonatomic, copy) NSString* code;
+@property (nonatomic, copy) NSString* codeType;
+
 @property (nonatomic, assign) NSUInteger score;
 @property (nonatomic, copy) NSString* avatarUrl;
 
@@ -24,5 +27,6 @@
 - (NSArray *)errors;
 
 - (BOOL)checkValue;
+- (BOOL)checkMobile;
 
 @end

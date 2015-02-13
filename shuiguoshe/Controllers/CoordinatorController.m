@@ -108,7 +108,7 @@
     CommandButton* cmdBtn = [CommandButton buttonWithType:UIButtonTypeCustom];
     
     [cmdBtn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-    
+    cmdBtn.exclusiveTouch = YES;
     [cmdBtn sizeToFit];
     cmdBtn.command = aCommand;
     
@@ -123,7 +123,7 @@
     
     [cmdBtn setTitle:title forState:UIControlStateNormal];
     [cmdBtn setTitleColor:color forState:UIControlStateNormal];
-    
+    cmdBtn.exclusiveTouch = YES;
     cmdBtn.titleLabel.font = font;
     
     [cmdBtn sizeToFit];

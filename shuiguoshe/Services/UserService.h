@@ -23,4 +23,10 @@
 - (void)login:(User *)aUser completion:( void (^)(BOOL succeed, NSString* errorMsg) )completion;
 - (void)logout:( void (^)(BOOL succeed, NSString* errorMsg) )completion;
 
+- (void)fetchCode:(User *)aUser completion:( void (^)(BOOL succeed, NSString* errorMsg) )completion;
+
+- (void)signup:(User *)aUser completion:( void (^)(BOOL succeed, NSString* errorMsg) )completion;
+
+- (void)forgetPassword:(User *)aUser completion:( void (^)(BOOL succeed, NSString* errorMsg) )completion;
+
 @end
