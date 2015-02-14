@@ -6,14 +6,15 @@
 //  Copyright (c) 2015年 shuiguoshe. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
-extern NSString * const kAddToCartNotification;
+#import <Foundation/Foundation.h>
 
 @interface Cart : NSObject
 
-@property (nonatomic, assign) NSUInteger totalCount;
+@property (nonatomic, assign) NSUInteger totalQuantity; // 总的商品数
+@property (nonatomic, assign) float totalPrice; // 总钱数
 
-+ (id)currentCart;
+@property (nonatomic, copy) NSArray* items;
+
+- (id)initWithDictionary:(NSDictionary *)jsonObj;
 
 @end

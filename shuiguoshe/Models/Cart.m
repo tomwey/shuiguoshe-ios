@@ -9,28 +9,29 @@
 #import "Cart.h"
 #import "Defines.h"
 
-NSString * const kAddToCartNotification = @"kAddToCartNotification";
-
 @implementation Cart
-{
-    UILabel* _resultLabel;
-}
 
-+ (id)currentCart
+- (id)initWithDictionary:(NSDictionary *)jsonObj
 {
-    static Cart* instance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        if ( !instance ) {
-            instance = [[Cart alloc] init];
+    if ( self = [super init] ) {
+        self.totalPrice = [[jsonObj objectForKey:@"total_price"] floatValue];
+        self.totalQuantity = [[jsonObj objectForKey:@"total"] integerValue];
+        
+        NSMutableArray* temp = [NSMutableArray array];
+        for ( id dict in [jsonObj objectForKey:@"items"]) {
+            LineItem* item = [[[LineItem alloc] initWithDictionary:dict] autorelease];
+            [temp addObject:item];
         }
-    });
-    return instance;
+        
+        self.items = temp;
+    }
+    return self;
 }
 
-- (void)setTotalCount:(NSUInteger)totalCount
+- (void)dealloc
 {
-    _totalCount = totalCount;
+    self.items = nil;
+    [super dealloc];
 }
 
 @end

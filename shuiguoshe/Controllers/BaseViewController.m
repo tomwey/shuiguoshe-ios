@@ -40,7 +40,7 @@
         
         _cartLabel.textColor = RGB(217, 79, 16);
         _cartLabel.backgroundColor = [UIColor clearColor];
-        _cartLabel.text = NSStringFromInteger([[Cart currentCart] totalCount]);
+        _cartLabel.text = @"0";//NSStringFromInteger([[Cart currentCart] totalCount]);
         _cartLabel.font = [UIFont systemFontOfSize:15];
         
         self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:btn] autorelease];

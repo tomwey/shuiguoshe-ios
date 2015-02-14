@@ -83,6 +83,7 @@ static inline UIImage* resizeImageForImage(UIImage* srcImage, CGSize newSize)
 #import "Forward.h"
 #import "FormItem.h"
 #import "Cart.h"
+#import "LineItem.h"
 
 #import "GTMBase64.h"
 
@@ -94,6 +95,7 @@ static inline UIImage* resizeImageForImage(UIImage* srcImage, CGSize newSize)
 
 #import "DataService.h"
 #import "UserService.h"
+#import "CartService.h"
 
 #import "UIImageView+AFNetworking.h"
 #import "UIView+Toast.h"
@@ -112,6 +114,8 @@ static inline UIImage* resizeImageForImage(UIImage* srcImage, CGSize newSize)
 #import "CustomButton.h"
 #import "DetailToolbar.h"
 #import "InputTextField.h"
+#import "Checkbox.h"
+#import "NumberControl.h"
 
 #import "BaseViewController.h"
 #import "HomeViewController.h"
