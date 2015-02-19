@@ -30,7 +30,10 @@
     
     self.item = self.userData;
     
-    UITableView* tableView = [[UITableView alloc] initWithFrame:self.view.bounds
+    CGRect frame = self.view.bounds;
+    frame.size.height -= 49;
+    
+    UITableView* tableView = [[UITableView alloc] initWithFrame:frame
                                                           style:UITableViewStylePlain];
     
     [self.view addSubview:tableView];
@@ -66,7 +69,7 @@
         return YES;
     };
     
-    CGRect frame = toolbar.frame;
+    frame = toolbar.frame;
     frame.origin = CGPointMake(0, CGRectGetHeight(mainScreenBounds) - CGRectGetHeight(frame));
     toolbar.frame = frame;
     
@@ -133,8 +136,6 @@
         
         largeImageView.frame = CGRectMake(0, 0, width,
                                           width * 10 / 13);
-        
-        
     }
     
     [largeImageView setImageWithURL:[NSURL URLWithString:self.itemDetail.largeImage] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
@@ -147,12 +148,13 @@
         titleLabel.tag = 1002;
         titleLabel.numberOfLines = 0;
         titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        CGSize size = [self.item.title sizeWithFont:kTitleLabelFont
-                                  constrainedToSize:CGSizeMake(width - kLeftMargin * 2, 1000)
-                                      lineBreakMode:titleLabel.lineBreakMode];
-        titleLabel.frame = CGRectMake(kLeftMargin, CGRectGetMaxY(largeImageView.frame) + 5, size.width, size.height);
-        titleLabel.text = self.item.title;
     }
+    
+    CGSize size = [self.itemDetail.title sizeWithFont:kTitleLabelFont
+                              constrainedToSize:CGSizeMake(width - kLeftMargin * 2, 1000)
+                                  lineBreakMode:titleLabel.lineBreakMode];
+    titleLabel.frame = CGRectMake(kLeftMargin, CGRectGetMaxY(largeImageView.frame) + 5, size.width, size.height);
+    titleLabel.text = self.itemDetail.title;
     
     // 价格
     UILabel* priceLabel = (UILabel *)[cell.contentView viewWithTag:1003];
@@ -160,30 +162,33 @@
         priceLabel = createLabel(CGRectZero, NSTextAlignmentLeft, GREEN_COLOR, kPriceLabelFont);
         [cell.contentView addSubview:priceLabel];
         priceLabel.tag = 1003;
-        
-        NSString* text = self.item.lowPriceText;
-        priceLabel.text = text;
-        
-        CGSize size = [text sizeWithFont:kPriceLabelFont
-                                  constrainedToSize:CGSizeMake(width - kLeftMargin * 2, 1000)
-                                      lineBreakMode:priceLabel.lineBreakMode];
-        priceLabel.frame = CGRectMake(kLeftMargin, CGRectGetMaxY(titleLabel.frame) + 5, size.width, size.height);
     }
+    
+    NSString* text = self.itemDetail.lowPriceText;
+    priceLabel.text = text;
+    
+    size = [text sizeWithFont:kPriceLabelFont
+                   constrainedToSize:CGSizeMake(width - kLeftMargin * 2, 1000)
+                       lineBreakMode:priceLabel.lineBreakMode];
+    priceLabel.frame = CGRectMake(kLeftMargin, CGRectGetMaxY(titleLabel.frame) + 5, size.width, size.height);
     
     LPLabel* originPriceLabel = (LPLabel *)[cell.contentView viewWithTag:1004];
     if ( !originPriceLabel ) {
-        originPriceLabel = [[LPLabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(priceLabel.frame) + 5,
+        originPriceLabel = [[[LPLabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(priceLabel.frame) + 5,
                                                                      CGRectGetMinY(priceLabel.frame) + 2,
-                                                                     100, CGRectGetHeight(priceLabel.frame))];
+                                                                     100, CGRectGetHeight(priceLabel.frame))] autorelease];
         originPriceLabel.tag = 1004;
         [cell.contentView addSubview:originPriceLabel];
         
         originPriceLabel.strikeThroughColor = RGB(137,137, 137);
         originPriceLabel.textColor = originPriceLabel.strikeThroughColor;
         originPriceLabel.font = [UIFont systemFontOfSize:14];
-        
-        originPriceLabel.text = self.item.originPriceText;
     }
+    
+    originPriceLabel.frame = CGRectMake(CGRectGetMaxX(priceLabel.frame) + 5,
+                                        CGRectGetMinY(priceLabel.frame) + 2,
+                                        100, CGRectGetHeight(priceLabel.frame));
+    originPriceLabel.text = self.itemDetail.originPriceText;
 }
 
 - (void)addContentForTwoCell:(UITableViewCell *)cell
@@ -191,7 +196,7 @@
     CGFloat dtTop = 5;
     CGFloat width = CGRectGetWidth(mainScreenBounds) - kLeftMargin * 2;
     // 促销
-    if ( self.item.discountScore > 0 ) {
+    if ( self.itemDetail.discountScore > 0 ) {
         UILabel* discountLabel = (UILabel *)[cell.contentView viewWithTag:1005];
         if ( !discountLabel ) {
             discountLabel = createLabel(CGRectMake(kLeftMargin, dtTop, 40, 30),
@@ -210,11 +215,13 @@
             discountInfoLabel = createLabel(frame, NSTextAlignmentLeft, GREEN_COLOR, [UIFont systemFontOfSize:14]);
             discountInfoLabel.tag = 1006;
             [cell.contentView addSubview:discountInfoLabel];
-            discountInfoLabel.text = [NSString stringWithFormat:@"赠送%d积分，抵扣%.2f元", self.item.discountScore, self.item.discountScore/100.0];
         }
+        
+        discountInfoLabel.text = [NSString stringWithFormat:@"赠送%d积分，抵扣%.2f元", self.itemDetail.discountScore, self.itemDetail.discountScore/100.0];
         
         dtTop = CGRectGetMaxY(discountLabel.frame);
     }
+    
     // 规格
     UILabel* unitLabel = (UILabel *)[cell.contentView viewWithTag:1007];
     if ( !unitLabel ) {
@@ -226,6 +233,8 @@
         unitLabel.text = @"规格";
     }
     
+    unitLabel.frame = CGRectMake(kLeftMargin, dtTop, 40, 30);
+    
     UILabel* unitLabel2 = (UILabel *)[cell.contentView viewWithTag:1008];
     if ( !unitLabel2 ) {
         unitLabel2 = createLabel(CGRectMake(CGRectGetMaxX(unitLabel.frame), dtTop, 50, 30),
@@ -233,8 +242,10 @@
         unitLabel2.tag = 1008;
         [cell.contentView addSubview:unitLabel2];
         
-        unitLabel2.text = self.item.unit;
     }
+    
+    unitLabel2.frame = CGRectMake(CGRectGetMaxX(unitLabel.frame), dtTop, 50, 30);
+    unitLabel2.text = self.itemDetail.unit;
     
     dtTop = CGRectGetMaxY(unitLabel.frame);
     
@@ -248,6 +259,8 @@
         
         deliverLabel.text = @"配送";
     }
+    
+    deliverLabel.frame = CGRectMake(kLeftMargin, dtTop, 40, 30);
     
     UILabel* deliverLabel2 = (UILabel *)[cell.contentView viewWithTag:2002];
     if ( !deliverLabel2 ) {
@@ -284,12 +297,14 @@
         [cell.contentView addSubview:saleLabel];
         
         saleLabel.tag = 3001;
-
-        NSMutableAttributedString *string =
-        [[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"已售%d件", self.item.ordersCount]] autorelease];
-        [string addAttribute:NSForegroundColorAttributeName value:GREEN_COLOR range:NSMakeRange(2, string.length - 3)];
-        saleLabel.attributedText = string;
     }
+    
+    saleLabel.frame = CGRectMake(kLeftMargin, dtTop + 10, width - kLeftMargin * 2, 30);
+    
+    NSMutableAttributedString *string =
+    [[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"已售%d件", self.item.ordersCount]] autorelease];
+    [string addAttribute:NSForegroundColorAttributeName value:GREEN_COLOR range:NSMakeRange(2, string.length - 3)];
+    saleLabel.attributedText = string;
 }
 
 - (void)addContentForThreeCell:(UITableViewCell *)cell
@@ -341,11 +356,11 @@
         case 0: {
             CGFloat height = width * 10 / 13;
             
-            CGSize size = [self.item.title sizeWithFont:kTitleLabelFont
+            CGSize size = [self.itemDetail.title sizeWithFont:kTitleLabelFont
                                       constrainedToSize:CGSizeMake(width - kLeftMargin * 2, 1000)
                                           lineBreakMode:NSLineBreakByWordWrapping];
             
-            CGSize size2 = [self.item.lowPriceText sizeWithFont:kPriceLabelFont
+            CGSize size2 = [self.itemDetail.lowPriceText sizeWithFont:kPriceLabelFont
                                               constrainedToSize:CGSizeMake(width - kLeftMargin * 2, 1000)
                                                   lineBreakMode:NSLineBreakByWordWrapping];
             
@@ -357,7 +372,7 @@
                                                 constrainedToSize:CGSizeMake(width - kLeftMargin * 2 - 40, 1000)
                                                     lineBreakMode:NSLineBreakByWordWrapping];
             
-            CGFloat dtHeight = self.item.discountScore > 0 ? 30 : 0;
+            CGFloat dtHeight = self.itemDetail.discountScore > 0 ? 30 : 0;
             
             return 60 + size2.height + 15 + dtHeight;
         }

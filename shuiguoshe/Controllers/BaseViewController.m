@@ -40,7 +40,7 @@
         
         _cartLabel.textColor = RGB(217, 79, 16);
         _cartLabel.backgroundColor = [UIColor clearColor];
-        _cartLabel.text = @"0";//NSStringFromInteger([[Cart currentCart] totalCount]);
+        _cartLabel.text = NSStringFromInteger([[CartService sharedService] totalCount]);
         _cartLabel.font = [UIFont systemFontOfSize:15];
         
         self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:btn] autorelease];
@@ -65,9 +65,9 @@
 
 - (void)didAddToCart
 {
-    int total = _cartLabel.text.integerValue;
+    NSInteger total = _cartLabel.text.integerValue;
     total += 1;
-    [[Cart currentCart] setTotalCount:total];
+    [[CartService sharedService] setTotalCount:total];
     _cartLabel.text = NSStringFromInteger(total);
 }
 

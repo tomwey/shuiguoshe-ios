@@ -14,6 +14,9 @@ extern NSString * const kAddToCartNotification;
 
 + (CartService *)sharedService;
 
+- (void)setTotalCount:(NSUInteger)total;
+- (NSUInteger)totalCount;
+
 //- (void)loadCart:()
 
 @end

@@ -19,8 +19,21 @@
 @property (nonatomic, assign) NSUInteger itemId;
 @property (nonatomic, assign) NSUInteger likesCount;
 
+@property (nonatomic, copy) NSString* title;
+@property (nonatomic, assign) CGFloat lowPrice;
+@property (nonatomic, assign) CGFloat originPrice;
+
+@property (nonatomic, assign) NSUInteger discountScore;
+
+@property (nonatomic, copy) NSString* unit;
+
+@property (nonatomic, assign) NSInteger ordersCount;
+
 - (id)initWithDictionary:(NSDictionary *)jsonResult;
 
 - (CGFloat)totalHeightForImages;
+
+- (NSString *)lowPriceText;
+- (NSString *)originPriceText;
 
 @end

@@ -11,6 +11,9 @@
 NSString * const kAddToCartNotification = @"kAddToCartNotification";
 
 @implementation CartService
+{
+    NSUInteger _total;
+}
 
 + (CartService *)sharedService
 {
@@ -22,6 +25,16 @@ NSString * const kAddToCartNotification = @"kAddToCartNotification";
         }
     });
     return service;
+}
+
+- (void)setTotalCount:(NSUInteger)total
+{
+    _total = total;
+}
+
+- (NSUInteger)totalCount
+{
+    return _total;
 }
 
 @end

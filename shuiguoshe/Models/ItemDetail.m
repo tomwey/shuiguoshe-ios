@@ -13,6 +13,16 @@
 - (id)initWithDictionary:(NSDictionary *)jsonResult
 {
     if ( self = [super init] ) {
+        self.itemId = [[jsonResult objectForKey:@"id"] integerValue];
+        
+        self.title = [jsonResult objectForKey:@"title"];
+        self.lowPrice = [[jsonResult objectForKey:@"low_price"] floatValue];
+        self.originPrice = [[jsonResult objectForKey:@"origin_price"] floatValue];
+        self.ordersCount = [[jsonResult objectForKey:@"orders_count"] integerValue];
+        self.unit = [jsonResult objectForKey:@"units"];
+        
+        self.discountScore = [[jsonResult objectForKey:@"discount_score"] integerValue];
+        
         self.largeImage = [jsonResult objectForKey:@"large_image"];
         self.note = [jsonResult objectForKey:@"note"];
         self.deliverInfo = [jsonResult objectForKey:@"deliver_info"];
@@ -41,8 +51,20 @@
     return height;
 }
 
+- (NSString *)lowPriceText
+{
+    return [NSString stringWithFormat:@"￥%.2f", self.lowPrice];
+}
+
+- (NSString *)originPriceText
+{
+    return [NSString stringWithFormat:@"￥%.2f", self.originPrice];
+}
+
 - (void)dealloc
 {
+    self.title = nil;
+    self.unit = nil;
     self.largeImage = nil;
     self.note = nil;
     self.deliverInfo = nil;

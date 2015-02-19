@@ -17,6 +17,7 @@
 @implementation CartViewController
 {
     UITableView* _tableView;
+    UIToolbar*   _toolbar;
 }
 
 - (BOOL)shouldShowingCart { return NO; }
@@ -42,7 +43,7 @@
     _tableView.dataSource = self;
     _tableView.delegate = self;
     
-    _tableView.rowHeight = 188/2;
+    _tableView.rowHeight = 218/2;
     
     _tableView.tableFooterView = [[[UIView alloc] init] autorelease];
     
@@ -55,25 +56,45 @@
     }
     
     [self initToolbar];
-    
+        
     __block CartViewController* me = self;
     [[DataService sharedService] loadEntityForClass:@"Cart"
                                                 URI:[NSString stringWithFormat:@"/user/cart?token=%@", [[UserService sharedService] token]]
                                          completion:^(id result, BOOL succeed)
     {
         me.currentCart = result;
-        [me->_tableView reloadData];
+        if ( !result ) {
+            me->_toolbar.hidden = YES;
+            me->_tableView.hidden = YES;
+            
+            UILabel* label = createLabel(CGRectMake(0,
+                                                    100,
+                                                    CGRectGetWidth(mainScreenBounds),
+                                                    50),
+                                         NSTextAlignmentCenter,
+                                         [UIColor blackColor],
+                                         [UIFont systemFontOfSize:16]);
+            label.text = @"购物车是空的";
+            [me.view addSubview:label];
+            
+        } else {
+            me->_toolbar.hidden = NO;
+            me->_tableView.hidden = NO;
+            
+            [me->_tableView reloadData];
+        }
+        
     }];
     
 }
 
 - (void)initToolbar
 {
-    UIToolbar* toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(mainScreenBounds) - 49,
+    _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(mainScreenBounds) - 49,
                                                                      CGRectGetWidth(mainScreenBounds),
                                                                      49)];
-    [self.view addSubview:toolbar];
-    [toolbar release];
+    [self.view addSubview:_toolbar];
+    [_toolbar release];
     
     Checkbox* cb = [[[Checkbox alloc] init] autorelease];
     cb.label = @"全选";
@@ -104,7 +125,7 @@
                                                                                 command:aCommand];
     UIBarButtonItem* calcu = [[[UIBarButtonItem alloc] initWithCustomView:cmdBtn] autorelease];
     
-    toolbar.items = @[checkAll, flexItem1, resultItem, flexItem2, calcu];
+    _toolbar.items = @[checkAll, flexItem1, resultItem, flexItem2, calcu];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -162,6 +183,8 @@
         
         Item* anItem = [[[Item alloc] init] autorelease];
         anItem.iid = item.itemId;
+        anItem.title = item.itemTitle;
+        anItem.lowPrice = [NSString stringWithFormat:@"%.2f", item.price];
         aCommand.userData = anItem;
         CommandButton* cmdButton = [[CoordinatorController sharedInstance] createCommandButton:nil
                                                                                        command:aCommand];
@@ -226,6 +249,17 @@
     nc.itemId = item.objectId;
     nc.value = item.quantity;
 }
+
+//- (CGFloat)tableView:(UITableView *)tableView
+//heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    LineItem* item = [self itemForRow:indexPath.row];
+//    CGSize size = [item.itemTitle sizeWithFont:[UIFont boldSystemFontOfSize:14]
+//                             constrainedToSize:CGSizeMake(CGRectGetWidth(titleLabel.bounds),
+//                                                          1000)
+//                                 lineBreakMode:titleLabel.lineBreakMode];
+//    
+//}
 
 - (LineItem *)itemForRow:(NSInteger)row
 {
