@@ -158,14 +158,32 @@
                                                                                 action:nil] autorelease];
     
     // 结算
-    ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePush
-                                                                                                from:self
-                                                                                    toControllerName:@"NewOrderViewController"]];
-    CommandButton* cmdBtn = [[CoordinatorController sharedInstance] createCommandButton:@"btn_calcu.png"
-                                                                                command:aCommand];
+//    ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePush
+//                                                                                                from:self
+//                                                                                    toControllerName:@"NewOrderViewController"]];
+//    CommandButton* cmdBtn = [[CoordinatorController sharedInstance] createCommandButton:@"btn_calcu.png"
+//                                                                                command:aCommand];
+    
+    UIButton* cmdBtn = createButton(@"btn_calcu.png", self, @selector(checkout));
+    
     UIBarButtonItem* calcu = [[[UIBarButtonItem alloc] initWithCustomView:cmdBtn] autorelease];
     
     _toolbar.items = @[checkAll, flexItem1, resultItem, flexItem2, calcu];
+}
+
+- (void)checkout
+{
+    BOOL flag = NO;
+    for (LineItem* item in self.currentCart.items) {
+        flag |= item.visible;
+    }
+    
+    if ( !flag ) {
+        [Toast showText:@"当前购物车没有选中商品"];
+        return;
+    }
+    
+    [self.navigationController pushViewController:[[[NSClassFromString(@"NewOrderViewController") alloc] init] autorelease] animated:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
