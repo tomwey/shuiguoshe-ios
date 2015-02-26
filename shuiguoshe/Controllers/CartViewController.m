@@ -123,8 +123,16 @@
     
     _selectAll.didUpdateStateBlock = ^(Checkbox *cb) {
         if ( cb.checked ) {
+            for ( LineItem* item in me.currentCart.items ) {
+                item.visible = YES;
+            }
+            
             [me updateCartResult];
         } else {
+            for ( LineItem* item in me.currentCart.items ) {
+                item.visible = NO;
+            }
+            
             me->_resultLabel.value = @"0.00";
         }
     };
@@ -334,9 +342,9 @@
 - (void)updateCartResult
 {
     float sum = 0;
-    for ( Checkbox* cb in _checkboxGroup.checkboxes ) {
-        if ( cb.checked && cb.checkboxType != CheckboxTypeSelectAll ) {
-            sum += cb.currentItem.totalPrice;
+    for ( LineItem* item in self.currentCart.items ) {
+        if ( item.visible ) {
+            sum += item.totalPrice;
         }
     }
     
