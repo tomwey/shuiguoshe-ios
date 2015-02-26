@@ -49,11 +49,16 @@
         nav = _navController;
     }
     
+    NSString* clz = aForward.toController;
+    if ( aForward.loginCheck && ![[UserService sharedService] isLogin] ) {
+        clz = @"LoginViewController";
+    }
+    
     switch (aForward.forwardType) {
         case ForwardTypePush:
         {
-            NSAssert(!!aForward.toController, @"需要一个控制器的名字");
-            BaseViewController* to = [[[NSClassFromString(aForward.toController) alloc] init] autorelease];
+            NSAssert(!!clz, @"需要一个控制器的名字");
+            BaseViewController* to = [[[NSClassFromString(clz) alloc] init] autorelease];
             to.userData = aForward.userData;
             [nav pushViewController:to animated:YES];
         }
@@ -66,9 +71,9 @@
             
         case ForwardTypePopTo:
         {
-            NSAssert(!!aForward.toController, @"需要一个控制器的名字");
+            NSAssert(!!clz, @"需要一个控制器的名字");
             for (UIViewController* viewController in _navController.viewControllers) {
-                if ( [NSStringFromClass([viewController class]) isEqualToString:aForward.toController] ) {
+                if ( [NSStringFromClass([viewController class]) isEqualToString:clz] ) {
                     [nav popToViewController:viewController animated:YES];
                     break;
                 }
@@ -85,8 +90,8 @@
             
         case ForwardTypeModal:
         {
-            NSAssert(!!aForward.toController, @"需要设置toController");
-            UIViewController* to = [[[NSClassFromString(aForward.toController) alloc] init] autorelease];
+            NSAssert(!!clz, @"需要设置toController");
+            UIViewController* to = [[[NSClassFromString(clz) alloc] init] autorelease];
             UINavigationController* nav = [[[UINavigationController alloc] initWithRootViewController:to] autorelease];
             [aForward.from presentViewController:nav animated:YES completion:nil];
         }

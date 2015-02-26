@@ -20,7 +20,7 @@
 
 #define GREEN_COLOR RGB(7, 156, 22)
 
-#define kAPIHost @"http://shuiguoshe.com/api/v1"
+#define kAPIHost @"http://10.0.16.11:3000/api/v1"
 
 static inline UIButton* createButton(NSString* imageName, id target, SEL action)
 {
@@ -102,6 +102,7 @@ static inline UIImage* resizeImageForImage(UIImage* srcImage, CGSize newSize)
 #import "InfinitePagingView.h"
 #import "MBProgressHUD.h"
 #import "ModalAlert.h"
+#import "Toast.h"
 
 #import "BannerView.h"
 #import "UserProfileView.h"
@@ -116,6 +117,7 @@ static inline UIImage* resizeImageForImage(UIImage* srcImage, CGSize newSize)
 #import "InputTextField.h"
 #import "Checkbox.h"
 #import "NumberControl.h"
+#import "UpdateValueLabel.h"
 
 #import "BaseViewController.h"
 #import "HomeViewController.h"

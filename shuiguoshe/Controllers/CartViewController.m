@@ -18,6 +18,11 @@
 {
     UITableView* _tableView;
     UIToolbar*   _toolbar;
+    
+    UpdateValueLabel* _resultLabel;
+    
+    Checkbox*      _selectAll;
+    CheckboxGroup* _checkboxGroup;
 }
 
 - (BOOL)shouldShowingCart { return NO; }
@@ -26,6 +31,8 @@
     [super viewDidLoad];
     
     self.title = @"我的购物车";
+    
+    _checkboxGroup = [[CheckboxGroup alloc] init];
     
     [self setLeftBarButtonWithImage:@"btn_close.png"
                             command:[ForwardCommand buildCommandWithForward:
@@ -43,7 +50,7 @@
     _tableView.dataSource = self;
     _tableView.delegate = self;
     
-    _tableView.rowHeight = 218/2;
+    _tableView.rowHeight = 308/2;
     
     _tableView.tableFooterView = [[[UIView alloc] init] autorelease];
     
@@ -78,10 +85,20 @@
             [me.view addSubview:label];
             
         } else {
+            me->_resultLabel.value = [NSString stringWithFormat:@"%.2f",me.currentCart.totalPrice];
+            
             me->_toolbar.hidden = NO;
             me->_tableView.hidden = NO;
             
             [me->_tableView reloadData];
+            
+            NSArray* items = me.currentCart.items;
+            BOOL flag = YES;
+            for (LineItem* item in items) {
+                flag &= item.visible;
+            }
+            
+            _selectAll.checked = flag;
         }
         
     }];
@@ -96,22 +113,37 @@
     [self.view addSubview:_toolbar];
     [_toolbar release];
     
-    Checkbox* cb = [[[Checkbox alloc] init] autorelease];
-    cb.label = @"全选";
-    UIBarButtonItem* checkAll = [[[UIBarButtonItem alloc] initWithCustomView:cb] autorelease];
+    _selectAll = [[[Checkbox alloc] init] autorelease];
+    _selectAll.label = @"全选";
+    _selectAll.checkboxType = CheckboxTypeSelectAll;
+    _selectAll.checkboxGroup = _checkboxGroup;
+    
+    
+    __block CartViewController* me = self;
+    
+    _selectAll.didUpdateStateBlock = ^(Checkbox *cb) {
+        if ( cb.checked ) {
+            [me updateCartResult];
+        } else {
+            me->_resultLabel.value = @"0.00";
+        }
+    };
+    
+    UIBarButtonItem* checkAll = [[[UIBarButtonItem alloc] initWithCustomView:_selectAll] autorelease];
     
     UIBarButtonItem* flexItem1 = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                                target:nil
                                                                                 action:nil] autorelease];
     
     // 总计
-    UILabel* resultLabel = createLabel(CGRectMake(0, 0, 200, 49),
-                                       NSTextAlignmentCenter,
-                                       [UIColor blackColor],
-                                       [UIFont systemFontOfSize:16]);
-    resultLabel.text = @"总计：12.00";
+    _resultLabel = [[UpdateValueLabel alloc] initWithFrame:CGRectMake(0, 0, 200, 49)];
+    _resultLabel.backgroundColor = [UIColor clearColor];
+    _resultLabel.textAlignment = NSTextAlignmentCenter;
+    _resultLabel.textColor = [UIColor blackColor];
+    _resultLabel.prefix = @"总计：";
+    _resultLabel.font = [UIFont systemFontOfSize:14];
     
-    UIBarButtonItem* resultItem = [[[UIBarButtonItem alloc] initWithCustomView:resultLabel] autorelease];
+    UIBarButtonItem* resultItem = [[[UIBarButtonItem alloc] initWithCustomView:_resultLabel] autorelease];
     
     UIBarButtonItem* flexItem2 = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                                 target:nil
@@ -154,6 +186,8 @@
 
 - (void)addContentForCell:(UITableViewCell *)cell atRow:(NSInteger)row
 {
+    LineItem *item = [self itemForRow:row];
+    
     Checkbox* cb = (Checkbox *)[cell.contentView viewWithTag:1001];
     if ( !cb ) {
         cb = [[[Checkbox alloc] init] autorelease];
@@ -161,19 +195,22 @@
         [cell.contentView addSubview:cb];
         
         cb.center = CGPointMake(5 + CGRectGetWidth(cb.bounds)/2, _tableView.rowHeight / 2);
+        
+        cb.checkboxGroup = _checkboxGroup;
     }
+    
+    cb.currentItem = item;
+    cb.checked = item.visible;
     
     CGFloat top = 10;
     UIImageView* iconView = (UIImageView *)[cell.contentView viewWithTag:1002];
-    
-    LineItem *item = [self itemForRow:row];
     
     if ( !iconView ) {
         iconView = [[[UIImageView alloc] init] autorelease];
         [cell.contentView addSubview:iconView];
         iconView.tag = 1002;
         
-        CGFloat height = _tableView.rowHeight - top * 2;
+        CGFloat height = 112 - top * 2;
         iconView.frame = CGRectMake(CGRectGetMaxX(cb.frame) + 5, top, height * 6 / 5, height);
         iconView.userInteractionEnabled = YES;
         
@@ -199,23 +236,15 @@
     if ( !titleLabel ) {
         titleLabel = createLabel(CGRectMake(CGRectGetMaxX(iconView.frame) + 8,
                                             CGRectGetMinY(iconView.frame),
-                                            CGRectGetWidth(mainScreenBounds) - CGRectGetMaxX(iconView.frame) - 10,
-                                            37),
+                                            CGRectGetWidth(mainScreenBounds) - CGRectGetMaxX(iconView.frame) - 20,37),
                                  NSTextAlignmentLeft,
                                  [UIColor blackColor],
                                  [UIFont boldSystemFontOfSize:14]);
         titleLabel.tag = 1003;
-        titleLabel.numberOfLines = 0;
+        titleLabel.numberOfLines = 2;
+        titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         [cell.contentView addSubview:titleLabel];
     }
-    
-    CGSize size = [item.itemTitle sizeWithFont:titleLabel.font
-                             constrainedToSize:CGSizeMake(CGRectGetWidth(titleLabel.bounds),
-                                                          1000)
-                                 lineBreakMode:titleLabel.lineBreakMode];
-    CGRect frame = titleLabel.frame;
-    frame.size.height = size.height;
-    titleLabel.frame = frame;
     
     titleLabel.text = item.itemTitle;
     
@@ -248,18 +277,71 @@
     
     nc.itemId = item.objectId;
     nc.value = item.quantity;
+    
+    // 分隔线
+    UIView* lineView = [cell.contentView viewWithTag:1006];
+    if ( lineView == nil ) {
+        lineView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMinX(iconView.frame),
+                                                            CGRectGetMaxY(nc.frame) + 10,
+                                                            CGRectGetWidth(mainScreenBounds) - CGRectGetMinX(iconView.frame),
+                                                            1)];
+        [cell.contentView addSubview:lineView];
+        [lineView release];
+        lineView.tag = 1006;
+        lineView.backgroundColor = RGB(224, 224, 224);
+    }
+    
+    // 小计
+    UpdateValueLabel* label = (UpdateValueLabel *)[cell.contentView viewWithTag:1007];
+    if ( !label ) {
+        label = [[UpdateValueLabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(lineView.frame),
+                                                          CGRectGetMaxY(lineView.frame) + 5,
+                                                          CGRectGetWidth(lineView.frame),
+                                                          30)];
+        [cell.contentView addSubview:label];
+        [label release];
+        label.tag = 1007;
+        label.font = [UIFont systemFontOfSize:14];
+        label.textColor = GREEN_COLOR;
+        
+        label.prefix = @"小计：";
+    }
+    
+    label.value = [NSString stringWithFormat:@"%.2f",item.totalPrice];
+    
+    // 更新信息
+    __block CartViewController* me = self;
+    
+    nc.finishUpdatingBlock = ^(NSInteger currentValue) {
+        
+        CGFloat total = item.price * currentValue;
+        label.value = [NSString stringWithFormat:@"%.2f",total];
+        
+        cb.checked = YES;
+        cb.currentItem.visible = YES;
+        
+        cb.currentItem.totalPrice = total;
+        
+        [me updateCartResult];
+    };
+    
+    cb.didUpdateStateBlock = ^(Checkbox* aCb) {
+        cb.currentItem.visible = aCb.checked;
+        [me updateCartResult];
+    };
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView
-//heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    LineItem* item = [self itemForRow:indexPath.row];
-//    CGSize size = [item.itemTitle sizeWithFont:[UIFont boldSystemFontOfSize:14]
-//                             constrainedToSize:CGSizeMake(CGRectGetWidth(titleLabel.bounds),
-//                                                          1000)
-//                                 lineBreakMode:titleLabel.lineBreakMode];
-//    
-//}
+- (void)updateCartResult
+{
+    float sum = 0;
+    for ( Checkbox* cb in _checkboxGroup.checkboxes ) {
+        if ( cb.checked && cb.checkboxType != CheckboxTypeSelectAll ) {
+            sum += cb.currentItem.totalPrice;
+        }
+    }
+    
+    _resultLabel.value = [NSString stringWithFormat:@"%.2f", sum];
+}
 
 - (LineItem *)itemForRow:(NSInteger)row
 {
@@ -269,7 +351,10 @@
 
 - (void)dealloc
 {
+    [_checkboxGroup release];
     self.currentCart = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [super dealloc];
 }

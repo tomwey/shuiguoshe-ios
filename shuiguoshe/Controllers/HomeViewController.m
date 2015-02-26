@@ -21,6 +21,7 @@
     // 设置导航条左边按钮
     ForwardCommand* aCommand = [[[ForwardCommand alloc] init] autorelease];
     aCommand.forward = [Forward buildForwardWithType:ForwardTypeModal from:self toControllerName:@"UserViewController"];
+    aCommand.forward.loginCheck = YES;
     [self setLeftBarButtonWithImage:@"btn_user.png" command:aCommand];
     
     // 设置导航条标题视图

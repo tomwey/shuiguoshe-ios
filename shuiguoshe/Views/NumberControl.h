@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^FinishUpdatingBlock)(NSInteger);
+
 @interface NumberControl : UIView
 
 // 控件的当前值，默认为1
@@ -23,5 +25,7 @@
 @property (nonatomic, assign) NSInteger step;
 
 @property (nonatomic, assign) NSInteger itemId;
+
+@property (nonatomic, copy) FinishUpdatingBlock finishUpdatingBlock;
 
 @end

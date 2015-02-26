@@ -38,7 +38,7 @@
         
         decr = [UIButton buttonWithType:UIButtonTypeCustom];
         [decr setTitle:@"—" forState:UIControlStateNormal];
-        [decr setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [decr setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         decr.exclusiveTouch = YES;
         [self addSubview:decr];
         [decr addTarget:self action:@selector(decrease:) forControlEvents:UIControlEventTouchUpInside];
@@ -55,7 +55,7 @@
         
         incr = [UIButton buttonWithType:UIButtonTypeCustom];
         [incr setTitle:@"+" forState:UIControlStateNormal];
-        [incr setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [incr setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         
         [self addSubview:incr];
         [incr addTarget:self action:@selector(increase:) forControlEvents:UIControlEventTouchUpInside];
@@ -98,13 +98,16 @@
     
     _updating = YES;
     
+    __block NumberControl* me = self;
     [[DataService sharedService] post:@"/cart/update_item"
                                params:@{ @"token": [[UserService sharedService] token],
                                          @"id" : NSStringFromInteger(self.itemId) ,
                                          @"quantity": NSStringFromInteger(self.value)  }
                            completion:^(id result, BOOL succeed) {
-                               NSLog(@"result:%@", result);
                                _updating = NO;
+                               if ( succeed && me.finishUpdatingBlock ) {
+                                   me.finishUpdatingBlock(me.value);
+                               }
                            }];
 }
 
@@ -120,6 +123,12 @@
     self.value += self.step;
     
     [self updateQuantity];
+}
+
+- (void)dealloc
+{
+    self.finishUpdatingBlock = nil;
+    [super dealloc];
 }
 
 @end

@@ -24,6 +24,8 @@
         
         self.price = [[jsonObj objectForKey:@"price"] floatValue];
         self.totalPrice = [[jsonObj objectForKey:@"total_price"] floatValue];
+        
+        self.visible = [[jsonObj objectForKey:@"visible"] boolValue];
     }
     return self;
 }

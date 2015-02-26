@@ -30,7 +30,9 @@
     
     if ( [self shouldShowingCart] ) {
         ForwardCommand* aCommand = [[[ForwardCommand alloc] init] autorelease];
-        aCommand.forward = [Forward buildForwardWithType:ForwardTypeModal from:self toControllerName:@"CartViewController"];
+        Forward* aForward = [Forward buildForwardWithType:ForwardTypeModal from:self toControllerName:@"CartViewController"];
+        aForward.loginCheck = YES;
+        aCommand.forward = aForward;
         CommandButton* btn = [[CoordinatorController sharedInstance] createCommandButton:@"btn_cart.png" command:aCommand];
         
         _cartLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(btn.bounds) - 20,

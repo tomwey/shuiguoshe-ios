@@ -26,6 +26,8 @@ typedef NS_ENUM(NSInteger, ForwardType) {
 
 @property (nonatomic, copy) NSString* toController;
 
+@property (nonatomic, assign) BOOL loginCheck;
+
 @property (nonatomic, retain) id userData;
 
 + (id)buildForwardWithType:(ForwardType)type from:(UIViewController *)from toController:(UIViewController *)to;

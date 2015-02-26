@@ -14,18 +14,8 @@
 
 - (void)execute:(void (^)(id))result
 {
-    if ( [self checkLogin] && ![[UserService sharedService] isLogin] ) {
-        self.forward.toController = @"LoginViewController";
-    }
-    
     self.forward.userData = self.userData;
     [[CoordinatorController sharedInstance] forwardTo:self.forward];
-}
-
-- (BOOL)checkLogin
-{
-    NSArray* controllers = @[@"UserViewController", @"CartViewController"];
-    return [controllers containsObject:self.forward.toController];
 }
 
 + (ForwardCommand *)buildCommandWithForward:(Forward *)aForward

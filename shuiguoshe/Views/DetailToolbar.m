@@ -151,12 +151,13 @@
                                
                                if ( succeed ) {
                                    if ( [[result objectForKey:@"code"] integerValue] == 0 ) {
+                                       [Toast showText:@"成功添加到购物车"];
                                        [[NSNotificationCenter defaultCenter] postNotificationName:kAddToCartNotification object:nil];
                                    } else {
-                                       
+                                       [Toast showText:@"添加到购物车失败"];
                                    }
                                } else {
-                                   
+                                   [Toast showText:@"添加到购物车失败"];
                                }
     }];
 }

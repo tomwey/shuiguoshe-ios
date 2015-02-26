@@ -20,6 +20,8 @@
 @property (nonatomic, assign) float price;
 @property (nonatomic, assign) float totalPrice;
 
+@property (nonatomic, assign) BOOL visible;
+
 - (id)initWithDictionary:(NSDictionary *)jsonObj;
 
 @end

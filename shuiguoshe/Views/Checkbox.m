@@ -9,6 +9,10 @@
 #import "Checkbox.h"
 #import "Defines.h"
 
+NSString * const kCheckboxDidUpdateStateNotification = @"kCheckboxDidUpdateStateNotification";
+
+#define kUpdateSelectAllStateNotification @"kUpdateSelectAllStateNotification"
+
 @implementation Checkbox
 {
     UIImageView* _contentView;
@@ -35,6 +39,13 @@
         btn.frame = self.bounds;
         
         self.checked = YES;
+        
+        self.checkboxType = CheckboxTypeSingle;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(updateSelectAll:)
+                                                     name:kUpdateSelectAllStateNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -48,6 +59,8 @@
     } else {
         _contentView.image = [UIImage imageNamed:@"btn_check.png"];
     }
+    
+//    [[NSNotificationCenter defaultCenter] postNotificationName:kCheckboxDidUpdateStateNotification object:self];
 }
 
 - (void)setLabel:(NSString *)label
@@ -78,12 +91,104 @@
 
 - (void)btnClicked
 {
-    self.checked = !self.checked;
+    int state = self.checked ? 0 : 1;
+    
+    NSString* idString = nil;
+    if ( self.checkboxType == CheckboxTypeSelectAll ) {
+        NSMutableArray* ids = [NSMutableArray array];
+        for ( Checkbox* cb in self.checkboxGroup.checkboxes ) {
+            if ( cb != self ) {
+                [ids addObject:NSStringFromInteger(cb.currentItem.objectId)];
+            }
+        }
+        
+        idString = [ids componentsJoinedByString:@","];
+    } else {
+        idString = NSStringFromInteger(self.currentItem.objectId);
+    }
+    
+    [[DataService sharedService] post:@"/cart/update_states" params:@{ @"token": [[UserService sharedService] token],
+                                                                       @"ids": idString,
+                                                                       @"state": NSStringFromInteger(state) }
+                           completion:^(id result, BOOL succeed) {
+                               if ( succeed ) {
+                                   self.checked = !self.checked;
+                                   if ( self.checkboxType == CheckboxTypeSelectAll ) { // 全选按钮
+                                       for ( Checkbox* cb in self.checkboxGroup.checkboxes ) {
+                                           if ( cb != self ) {
+                                               cb.checked = self.checked;
+                                           }
+                                       }
+                                   } else { // 单个按钮
+                                       BOOL flag = YES;
+                                       for ( Checkbox* cb in self.checkboxGroup.checkboxes ) {
+                                           if ( cb.checkboxType == CheckboxTypeSingle ) {
+                                               flag &= cb.checked;
+                                           }
+                                       }
+                                       
+                                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateSelectAllStateNotification
+                                                                                           object:nil
+                                                                                         userInfo:@{ @"state": NSStringFromInteger(flag) }];
+                                   }
+                                   
+                                   if ( self.didUpdateStateBlock ) {
+                                       self.didUpdateStateBlock(self);
+                                   }
+                                   
+                               } else {
+                                   [Toast showText:@"更新状态失败"];
+                               }
+                           }];
+    
+}
+
+- (void)updateSelectAll:(NSNotification *)noti
+{
+    if ( self.checkboxType == CheckboxTypeSelectAll ) {
+        self.checked = [[[noti userInfo] objectForKey:@"state"] boolValue];
+    }
+}
+
+- (void)setCheckboxGroup:(CheckboxGroup *)checkboxGroup
+{
+    _checkboxGroup = checkboxGroup;
+    [_checkboxGroup addCheckbox:self];
 }
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.currentItem = nil;
     [_label release];
+    self.didUpdateStateBlock = nil;
+    
+    [super dealloc];
+}
+
+@end
+
+@implementation CheckboxGroup
+{
+    NSMutableArray* _checkboxes;
+}
+
+@synthesize checkboxes = _checkboxes;
+
+- (void)addCheckbox:(Checkbox *)aCheckbox
+{
+    if ( !_checkboxes ) {
+        _checkboxes = [[NSMutableArray alloc] init];
+    }
+    
+    if ( ![_checkboxes containsObject:aCheckbox] ) {
+        [_checkboxes addObject:aCheckbox];
+    }
+}
+
+- (void)dealloc
+{
+    [_checkboxes release];
     [super dealloc];
 }
 
