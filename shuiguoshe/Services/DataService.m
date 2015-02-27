@@ -89,6 +89,7 @@
                 if ( [[responseObject objectForKey:@"code"] intValue] == 0 ) {
                     completion(responseObject, YES);
                 } else {
+                    NSLog(@"error message: %@", [responseObject objectForKey:@"message"]);
                     completion(@{ @"code": [responseObject objectForKey:@"code"], @"message": [responseObject objectForKey:@"message"] }, NO);
                 }
                 

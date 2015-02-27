@@ -63,46 +63,51 @@
     }
     
     [self initToolbar];
-        
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
     __block CartViewController* me = self;
     [[DataService sharedService] loadEntityForClass:@"Cart"
                                                 URI:[NSString stringWithFormat:@"/user/cart?token=%@", [[UserService sharedService] token]]
                                          completion:^(id result, BOOL succeed)
-    {
-        me.currentCart = result;
-        if ( !result ) {
-            me->_toolbar.hidden = YES;
-            me->_tableView.hidden = YES;
-            
-            UILabel* label = createLabel(CGRectMake(0,
-                                                    100,
-                                                    CGRectGetWidth(mainScreenBounds),
-                                                    50),
-                                         NSTextAlignmentCenter,
-                                         [UIColor blackColor],
-                                         [UIFont systemFontOfSize:16]);
-            label.text = @"购物车是空的";
-            [me.view addSubview:label];
-            
-        } else {
-            me->_resultLabel.value = [NSString stringWithFormat:@"%.2f",me.currentCart.totalPrice];
-            
-            me->_toolbar.hidden = NO;
-            me->_tableView.hidden = NO;
-            
-            [me->_tableView reloadData];
-            
-            NSArray* items = me.currentCart.items;
-            BOOL flag = YES;
-            for (LineItem* item in items) {
-                flag &= item.visible;
-            }
-            
-            _selectAll.checked = flag;
-        }
-        
-    }];
-    
+     {
+         me.currentCart = result;
+         if ( !result ) {
+             me->_toolbar.hidden = YES;
+             me->_tableView.hidden = YES;
+             
+             UILabel* label = createLabel(CGRectMake(0,
+                                                     100,
+                                                     CGRectGetWidth(mainScreenBounds),
+                                                     50),
+                                          NSTextAlignmentCenter,
+                                          [UIColor blackColor],
+                                          [UIFont systemFontOfSize:16]);
+             label.text = @"购物车是空的";
+             [me.view addSubview:label];
+             
+         } else {
+             me->_resultLabel.value = [NSString stringWithFormat:@"%.2f",me.currentCart.totalPrice];
+             
+             me->_toolbar.hidden = NO;
+             me->_tableView.hidden = NO;
+             
+             [me->_tableView reloadData];
+             
+             NSArray* items = me.currentCart.items;
+             BOOL flag = YES;
+             for (LineItem* item in items) {
+                 flag &= item.visible;
+             }
+             
+             _selectAll.checked = flag;
+         }
+         
+     }];
 }
 
 - (void)initToolbar

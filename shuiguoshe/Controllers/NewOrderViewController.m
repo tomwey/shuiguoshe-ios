@@ -95,11 +95,21 @@
 //    [self.view addGestureRecognizer:tap];
 //    [tap release];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didUpdateDeliverInfo:)
+                                                 name:@"kUpdateDeliverInfoSuccessNotification"
+                                               object:nil];
 }
 
 - (BOOL)shouldShowingCart
 {
     return NO;
+}
+
+- (void)didUpdateDeliverInfo:(NSNotification *)noti
+{
+    self.orderInfo.deliverInfo = noti.object;
+    [_tableView reloadData];
 }
 
 - (void)commit
@@ -113,7 +123,7 @@
     int total = ( self.orderInfo.totalPrice * 100 - self.orderInfo.userScore );
     CGFloat totalPrice = total / 100.0;
     
-    [[DataService sharedService] post:@"/orders" params:@{ @"token": [[UserService sharedService] token],
+    [[DataService sharedService] post:@"/user/orders" params:@{ @"token": [[UserService sharedService] token],
                                                            @"score": NSStringFromInteger(self.orderInfo.userScore),
                                                            @"order_info": @{
                                                                     @"deliver_info_id": NSStringFromInteger(self.orderInfo.deliverInfo.infoId),
@@ -123,6 +133,12 @@
                                                                     
                                                                    } }
                            completion:^(id result, BOOL succeed) {
+                               if ( [[result objectForKey:@"code"] integerValue] == 0 ) {
+                                   
+                               } else {
+                                   [Toast showText:[result objectForKey:@"message"]];
+                               }
+                               
                                
                            }];
 }
@@ -533,6 +549,16 @@ static int rows[] = { 1, 1, 1, 1, 1 };
 {
     if ( indexPath.section == 0 && indexPath.row == 0 ) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+        Forward* aForward = [Forward buildForwardWithType:ForwardTypePush
+                                                     from:self
+                                         toControllerName:@"DeliverInfoListViewController"];
+        
+        aForward.userData = self.orderInfo.deliverInfo;
+        
+        ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:aForward];
+        
+        [aCommand execute];
     }
 }
 

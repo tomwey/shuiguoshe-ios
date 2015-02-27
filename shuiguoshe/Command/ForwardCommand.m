@@ -14,7 +14,10 @@
 
 - (void)execute:(void (^)(id))result
 {
-    self.forward.userData = self.userData;
+    if (  self.userData ) {
+        self.forward.userData = self.userData;
+    }
+    
     [[CoordinatorController sharedInstance] forwardTo:self.forward];
 }
 

@@ -36,14 +36,12 @@
         
         self.bounds = _bgView.bounds;
         
-        decr = [UIButton buttonWithType:UIButtonTypeCustom];
-        [decr setTitle:@"—" forState:UIControlStateNormal];
-        [decr setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        decr.exclusiveTouch = YES;
+        decr = createButton(@"btn_decr.png", self, @selector(decrease:));
         [self addSubview:decr];
-        [decr addTarget:self action:@selector(decrease:) forControlEvents:UIControlEventTouchUpInside];
         
-        decr.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds) * 0.3,CGRectGetHeight(self.bounds));
+        CGRect frame = decr.frame;
+        frame.origin = CGPointMake(5, CGRectGetHeight(self.bounds) / 2 - CGRectGetHeight(frame) / 2);
+        decr.frame = frame;
         
         _valueLabel = createLabel(CGRectMake(CGRectGetMaxX(decr.frame), 0,
                                                      CGRectGetWidth(self.bounds) * 0.4,
@@ -53,15 +51,14 @@
                                           [UIFont systemFontOfSize:12]);
         [self addSubview:_valueLabel];
         
-        incr = [UIButton buttonWithType:UIButtonTypeCustom];
-        [incr setTitle:@"+" forState:UIControlStateNormal];
-        [incr setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        incr = createButton(@"btn_incr.png", self, @selector(increase:));
         
         [self addSubview:incr];
-        [incr addTarget:self action:@selector(increase:) forControlEvents:UIControlEventTouchUpInside];
         
-        incr.frame = CGRectMake(CGRectGetWidth(self.bounds) * 0.7, 0, CGRectGetWidth(self.bounds) * 0.3,CGRectGetHeight(self.bounds));
-        incr.exclusiveTouch = YES;
+        frame = incr.frame;
+        frame.origin = CGPointMake(CGRectGetWidth(self.bounds) - CGRectGetMinX(decr.frame) - CGRectGetWidth(frame), CGRectGetMinY(decr.frame));
+        incr.frame = frame;
+        
         self.value = 1;
         
     }
@@ -75,18 +72,14 @@
     
     if ( _value == self.minimumValue ) {
         decr.enabled = NO;
-        [decr setTitleColor:RGB(213, 213, 213) forState:UIControlStateNormal];
     } else {
         decr.enabled = YES;
-        [decr setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     }
     
     if ( _value == self.maximumValue ) {
         incr.enabled = NO;
-        [incr setTitleColor:RGB(213, 213, 213) forState:UIControlStateNormal];
     } else {
         incr.enabled = YES;
-        [incr setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     }
 }
 
