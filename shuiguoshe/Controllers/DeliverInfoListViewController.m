@@ -25,6 +25,11 @@
     
     self.title = @"收货地址";
     
+    [self setRightBarButtonWithImage:@"btn_incr.png"
+                             command:[ForwardCommand buildCommandWithForward:
+                                      [Forward buildForwardWithType:ForwardTypeModal from:self
+                                                   toControllerName:@"DeliverInfoFormViewController"]]];
+    
     CGRect frame = self.view.bounds;
     
     UITableView* tableView = [[UITableView alloc] initWithFrame:frame
