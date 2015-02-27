@@ -33,6 +33,10 @@ typedef void (^CheckboxDidUpdateStateBlock)(Checkbox *);
 
 @property (nonatomic, copy) CheckboxDidUpdateStateBlock didUpdateStateBlock;
 
+@property (nonatomic, retain) UIFont* labelFont;
+
+@property (nonatomic, assign, readonly) UILabel* textLabel;
+
 @end
 
 @interface CheckboxGroup : NSObject

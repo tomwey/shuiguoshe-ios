@@ -134,7 +134,9 @@
     [cmdBtn sizeToFit];
     cmdBtn.command = aCommand;
     
-    [cmdBtn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    if ( aCommand ) {
+        [cmdBtn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    }
     
     return cmdBtn;
 }

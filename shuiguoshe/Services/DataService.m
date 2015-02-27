@@ -149,8 +149,6 @@
 //        return;
 //    }
     
-//    [self startRequest];
-    
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {

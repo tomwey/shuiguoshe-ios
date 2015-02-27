@@ -18,6 +18,8 @@ NSString * const kCheckboxDidUpdateStateNotification = @"kCheckboxDidUpdateState
     UIImageView* _contentView;
 }
 
+@synthesize textLabel = _textLabel;
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if ( self = [super initWithFrame:frame] ) {
@@ -71,7 +73,7 @@ NSString * const kCheckboxDidUpdateStateNotification = @"kCheckboxDidUpdateState
     if ( label ) {
         UILabel* realLabel = (UILabel *)[self viewWithTag:1024];
         if ( !realLabel ) {
-            realLabel = createLabel(CGRectZero, NSTextAlignmentLeft, [UIColor blackColor], [UIFont systemFontOfSize:16]);
+            realLabel = createLabel(CGRectZero, NSTextAlignmentLeft, [UIColor blackColor], self.labelFont);
             [self addSubview:realLabel];
             realLabel.tag = 1024;
             
@@ -86,7 +88,17 @@ NSString * const kCheckboxDidUpdateStateNotification = @"kCheckboxDidUpdateState
         CGRect frame = self.frame;
         frame.size.width += CGRectGetWidth(realLabel.frame);
         self.frame = frame;
+        
+        _textLabel = realLabel;
     }
+}
+
+- (UIFont *)labelFont
+{
+    if ( !_labelFont ) {
+        _labelFont = [[UIFont systemFontOfSize:16] retain];
+    }
+    return _labelFont;
 }
 
 - (void)btnClicked
@@ -162,6 +174,7 @@ NSString * const kCheckboxDidUpdateStateNotification = @"kCheckboxDidUpdateState
     self.currentItem = nil;
     [_label release];
     self.didUpdateStateBlock = nil;
+    self.labelFont = nil;
     
     [super dealloc];
 }

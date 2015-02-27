@@ -236,8 +236,7 @@
         [cell.contentView addSubview:iconView];
         iconView.tag = 1002;
         
-        CGFloat height = 112 - top * 2;
-        iconView.frame = CGRectMake(CGRectGetMaxX(cb.frame) + 5, top, height * 6 / 5, height);
+        iconView.frame = CGRectMake(CGRectGetMaxX(cb.frame) + 5, top, 108, 90);
         iconView.userInteractionEnabled = YES;
         
         ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePush
@@ -262,10 +261,10 @@
     if ( !titleLabel ) {
         titleLabel = createLabel(CGRectMake(CGRectGetMaxX(iconView.frame) + 8,
                                             CGRectGetMinY(iconView.frame),
-                                            CGRectGetWidth(mainScreenBounds) - CGRectGetMaxX(iconView.frame) - 20,37),
+                                            CGRectGetWidth(mainScreenBounds) - CGRectGetMaxX(iconView.frame) - 20,40),
                                  NSTextAlignmentLeft,
                                  [UIColor blackColor],
-                                 [UIFont boldSystemFontOfSize:14]);
+                                 [UIFont systemFontOfSize:14]);
         titleLabel.tag = 1003;
         titleLabel.numberOfLines = 2;
         titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -273,12 +272,13 @@
     }
     
     titleLabel.text = item.itemTitle;
+    [titleLabel sizeToFit];
     
     // 单价
     UILabel* priceLabel = (UILabel *)[cell.contentView viewWithTag:1004];
     if ( !priceLabel ) {
         priceLabel = createLabel(CGRectMake(CGRectGetMinX(titleLabel.frame),
-                                            CGRectGetMaxY(titleLabel.frame),
+                                            CGRectGetMinY(titleLabel.frame) + 32,
                                             CGRectGetWidth(titleLabel.frame),
                                             30),
                                  NSTextAlignmentLeft,
@@ -308,7 +308,7 @@
     UIView* lineView = [cell.contentView viewWithTag:1006];
     if ( lineView == nil ) {
         lineView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMinX(iconView.frame),
-                                                            CGRectGetMaxY(nc.frame) + 10,
+                                                            CGRectGetMaxY(iconView.frame) + 10,
                                                             CGRectGetWidth(mainScreenBounds) - CGRectGetMinX(iconView.frame),
                                                             1)];
         [cell.contentView addSubview:lineView];

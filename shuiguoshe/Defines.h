@@ -70,6 +70,11 @@ static inline UIImage* resizeImageForImage(UIImage* srcImage, CGSize newSize)
     return destImage;
 };
 
+static inline UIWindow* AppWindow()
+{
+    return [[[UIApplication sharedApplication] windows] objectAtIndex:0];
+};
+
 #import "AFNetworking.h"
 
 #import "Banner.h"
@@ -84,6 +89,8 @@ static inline UIImage* resizeImageForImage(UIImage* srcImage, CGSize newSize)
 #import "FormItem.h"
 #import "Cart.h"
 #import "LineItem.h"
+#import "DeliverInfo.h"
+#import "NewOrderInfo.h"
 
 #import "GTMBase64.h"
 
