@@ -98,7 +98,7 @@
     
     Forward *aForward = [Forward buildForwardWithType:ForwardTypePush
                                                  from:self toControllerName:@"OrderListViewController"];
-    aForward.userData = @"1";
+    aForward.userData = @"-1";
     
     UIButton* viewBtn = [[CoordinatorController sharedInstance] createTextButton:@"查看订单"
                                                                             font:[UIFont systemFontOfSize:14]

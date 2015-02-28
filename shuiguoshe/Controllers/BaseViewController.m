@@ -65,6 +65,13 @@
     [leftSwipe release];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = NO;
+}
+
 - (void)didAddToCart
 {
     NSInteger total = _cartLabel.text.integerValue;

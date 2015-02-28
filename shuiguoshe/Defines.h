@@ -92,6 +92,8 @@ static inline UIWindow* AppWindow()
 #import "DeliverInfo.h"
 #import "NewOrderInfo.h"
 #import "Order.h"
+#import "OrderInfo.h"
+#import "OrderCollection.h"
 
 #import "GTMBase64.h"
 
@@ -126,6 +128,7 @@ static inline UIWindow* AppWindow()
 #import "Checkbox.h"
 #import "NumberControl.h"
 #import "UpdateValueLabel.h"
+#import "OrderCellView.h"
 
 #import "BaseViewController.h"
 #import "HomeViewController.h"

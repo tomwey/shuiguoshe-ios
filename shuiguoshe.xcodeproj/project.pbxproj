@@ -87,6 +87,15 @@
 		979D64111AA145190010F78E /* OrderResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64101AA145190010F78E /* OrderResultViewController.m */; };
 		979D64141AA148AD0010F78E /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64131AA148AD0010F78E /* Order.m */; };
 		979D64171AA1558D0010F78E /* OrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64161AA1558D0010F78E /* OrderListViewController.m */; };
+		979D641A1AA160130010F78E /* UpdatePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64191AA160130010F78E /* UpdatePasswordViewController.m */; };
+		979D641D1AA160410010F78E /* NewMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D641C1AA160410010F78E /* NewMessageViewController.m */; };
+		979D64201AA160500010F78E /* LikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D641F1AA160500010F78E /* LikeListViewController.m */; };
+		979D64231AA160630010F78E /* ScoreListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64221AA160630010F78E /* ScoreListViewController.m */; };
+		979D64261AA164F50010F78E /* OrderInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64251AA164F50010F78E /* OrderInfo.m */; };
+		979D64291AA16BA60010F78E /* OrderCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64281AA16BA60010F78E /* OrderCollection.m */; };
+		979D642C1AA17EE40010F78E /* OrderCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D642B1AA17EE40010F78E /* OrderCellView.m */; };
+		979D642E1AA196D20010F78E /* btn_cancel@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 979D642D1AA196D20010F78E /* btn_cancel@3x.png */; };
+		979D64301AA196E50010F78E /* btn_cancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 979D642F1AA196E50010F78E /* btn_cancel@2x.png */; };
 		97B77E881AA00D7700C12733 /* NewOrderInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B77E871AA00D7700C12733 /* NewOrderInfo.m */; };
 		97B77E8B1AA00E6900C12733 /* DeliverInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B77E8A1AA00E6900C12733 /* DeliverInfo.m */; };
 		97B77E901AA04E4800C12733 /* DeliverInfoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B77E8F1AA04E4800C12733 /* DeliverInfoListViewController.m */; };
@@ -269,6 +278,22 @@
 		979D64131AA148AD0010F78E /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
 		979D64151AA1558D0010F78E /* OrderListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListViewController.h; sourceTree = "<group>"; };
 		979D64161AA1558D0010F78E /* OrderListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderListViewController.m; sourceTree = "<group>"; };
+		979D64181AA160130010F78E /* UpdatePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdatePasswordViewController.h; sourceTree = "<group>"; };
+		979D64191AA160130010F78E /* UpdatePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdatePasswordViewController.m; sourceTree = "<group>"; };
+		979D641B1AA160410010F78E /* NewMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMessageViewController.h; sourceTree = "<group>"; };
+		979D641C1AA160410010F78E /* NewMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMessageViewController.m; sourceTree = "<group>"; };
+		979D641E1AA160500010F78E /* LikeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeListViewController.h; sourceTree = "<group>"; };
+		979D641F1AA160500010F78E /* LikeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikeListViewController.m; sourceTree = "<group>"; };
+		979D64211AA160630010F78E /* ScoreListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreListViewController.h; sourceTree = "<group>"; };
+		979D64221AA160630010F78E /* ScoreListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreListViewController.m; sourceTree = "<group>"; };
+		979D64241AA164F50010F78E /* OrderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderInfo.h; sourceTree = "<group>"; };
+		979D64251AA164F50010F78E /* OrderInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderInfo.m; sourceTree = "<group>"; };
+		979D64271AA16BA60010F78E /* OrderCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderCollection.h; sourceTree = "<group>"; };
+		979D64281AA16BA60010F78E /* OrderCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderCollection.m; sourceTree = "<group>"; };
+		979D642A1AA17EE40010F78E /* OrderCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderCellView.h; sourceTree = "<group>"; };
+		979D642B1AA17EE40010F78E /* OrderCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderCellView.m; sourceTree = "<group>"; };
+		979D642D1AA196D20010F78E /* btn_cancel@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_cancel@3x.png"; sourceTree = "<group>"; };
+		979D642F1AA196E50010F78E /* btn_cancel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_cancel@2x.png"; sourceTree = "<group>"; };
 		97B77E861AA00D7700C12733 /* NewOrderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewOrderInfo.h; sourceTree = "<group>"; };
 		97B77E871AA00D7700C12733 /* NewOrderInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewOrderInfo.m; sourceTree = "<group>"; };
 		97B77E891AA00E6900C12733 /* DeliverInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliverInfo.h; sourceTree = "<group>"; };
@@ -398,6 +423,8 @@
 		973820FA1A884E7D00B54EEC /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				979D642F1AA196E50010F78E /* btn_cancel@2x.png */,
+				979D642D1AA196D20010F78E /* btn_cancel@3x.png */,
 				97B77E951AA05FEA00C12733 /* btn_decr@2x.png */,
 				97B77E961AA05FEA00C12733 /* btn_incr@2x.png */,
 				97B77E911AA05FC600C12733 /* btn_decr@3x.png */,
@@ -497,6 +524,14 @@
 				976EF30F1A8C6ED500A94B15 /* RegisterViewController.m */,
 				976EF3111A8C6EFD00A94B15 /* ForgetPasswordViewController.h */,
 				976EF3121A8C6EFD00A94B15 /* ForgetPasswordViewController.m */,
+				979D64181AA160130010F78E /* UpdatePasswordViewController.h */,
+				979D64191AA160130010F78E /* UpdatePasswordViewController.m */,
+				979D641B1AA160410010F78E /* NewMessageViewController.h */,
+				979D641C1AA160410010F78E /* NewMessageViewController.m */,
+				979D641E1AA160500010F78E /* LikeListViewController.h */,
+				979D641F1AA160500010F78E /* LikeListViewController.m */,
+				979D64211AA160630010F78E /* ScoreListViewController.h */,
+				979D64221AA160630010F78E /* ScoreListViewController.m */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -555,6 +590,10 @@
 				97B77E8A1AA00E6900C12733 /* DeliverInfo.m */,
 				979D64121AA148AD0010F78E /* Order.h */,
 				979D64131AA148AD0010F78E /* Order.m */,
+				979D64241AA164F50010F78E /* OrderInfo.h */,
+				979D64251AA164F50010F78E /* OrderInfo.m */,
+				979D64271AA16BA60010F78E /* OrderCollection.h */,
+				979D64281AA16BA60010F78E /* OrderCollection.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -707,6 +746,8 @@
 				9747F9F71A8EF03B008099D4 /* NumberControl.m */,
 				9717CFF01A9EFA6A00B1C473 /* UpdateValueLabel.h */,
 				9717CFF11A9EFA6A00B1C473 /* UpdateValueLabel.m */,
+				979D642A1AA17EE40010F78E /* OrderCellView.h */,
+				979D642B1AA17EE40010F78E /* OrderCellView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -854,6 +895,7 @@
 				976EF30B1A8C6A6E00A94B15 /* btn_login@2x.png in Resources */,
 				97D1E3A71A8B3BEE00A8B3B6 /* btn_add_to_cart@3x.png in Resources */,
 				977887371A8DA1F1003B5A5D /* btn_submit@3x.png in Resources */,
+				979D642E1AA196D20010F78E /* btn_cancel@3x.png in Resources */,
 				9752019E1A89EEE70070FE1F /* up_arrow@2x.png in Resources */,
 				975201851A89E3280070FE1F /* btn_cart@3x.png in Resources */,
 				9752016A1A899FEF0070FE1F /* user_bg@2x.png in Resources */,
@@ -891,6 +933,7 @@
 				97B77E931AA05FC600C12733 /* btn_decr@3x.png in Resources */,
 				977887361A8DA1F1003B5A5D /* btn_submit@2x.png in Resources */,
 				977887401A8DD353003B5A5D /* btn_like@2x.png in Resources */,
+				979D64301AA196E50010F78E /* btn_cancel@2x.png in Resources */,
 				9778873A1A8DD2FF003B5A5D /* toolbar_bg@2x.png in Resources */,
 				977887421A8DD353003B5A5D /* btn_liked@2x.png in Resources */,
 			);
@@ -911,6 +954,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				975201701A89A0AF0070FE1F /* User.m in Sources */,
+				979D64261AA164F50010F78E /* OrderInfo.m in Sources */,
 				99C274D81A4EEE1900898741 /* AFSecurityPolicy.m in Sources */,
 				99A7BD7B1A519D840092EA89 /* SaleView.m in Sources */,
 				97B77E881AA00D7700C12733 /* NewOrderInfo.m in Sources */,
@@ -921,6 +965,7 @@
 				99C274D71A4EEE1900898741 /* AFNetworkReachabilityManager.m in Sources */,
 				99C274881A4EE2CF00898741 /* BaseViewController.m in Sources */,
 				99928FEF1AA0BB52003EB739 /* DeliverInfoFormViewController.m in Sources */,
+				979D641A1AA160130010F78E /* UpdatePasswordViewController.m in Sources */,
 				99C274EF1A4EF00D00898741 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				97D1E3991A8AE92E00A8B3B6 /* ItemDetail.m in Sources */,
 				976EF3091A8C44C200A94B15 /* CommandButton.m in Sources */,
@@ -928,9 +973,11 @@
 				976EF3061A8C3FD000A94B15 /* CoordinatorController.m in Sources */,
 				99C274F31A4EF00D00898741 /* UIImageView+AFNetworking.m in Sources */,
 				9921EAB91A8A4627006B57D1 /* LPLabel.m in Sources */,
+				979D64201AA160500010F78E /* LikeListViewController.m in Sources */,
 				99C274D91A4EEE1900898741 /* AFURLConnectionOperation.m in Sources */,
 				97D1E3A01A8B24A500A8B3B6 /* Photo.m in Sources */,
 				975201A11A89F5930070FE1F /* PhoneNumberView.m in Sources */,
+				979D64291AA16BA60010F78E /* OrderCollection.m in Sources */,
 				975201781A89C24E0070FE1F /* OrderStateView.m in Sources */,
 				99C274F01A4EF00D00898741 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				99C274F61A4EF00D00898741 /* UIWebView+AFNetworking.m in Sources */,
@@ -951,6 +998,7 @@
 				99C274DA1A4EEE1900898741 /* AFURLRequestSerialization.m in Sources */,
 				99C274BF1A4EECD000898741 /* BannerView.m in Sources */,
 				99C274DC1A4EEE1900898741 /* AFURLSessionManager.m in Sources */,
+				979D64231AA160630010F78E /* ScoreListViewController.m in Sources */,
 				99A7BD7F1A519DD10092EA89 /* Sale.m in Sources */,
 				9717CFF21A9EFA6A00B1C473 /* UpdateValueLabel.m in Sources */,
 				976EF2FD1A8C394000A94B15 /* Command.m in Sources */,
@@ -960,6 +1008,7 @@
 				99C274D51A4EEE1900898741 /* AFHTTPRequestOperationManager.m in Sources */,
 				99A7BD821A519DDB0092EA89 /* Banner.m in Sources */,
 				975201961A89EDCE0070FE1F /* LogoTitleView.m in Sources */,
+				979D641D1AA160410010F78E /* NewMessageViewController.m in Sources */,
 				9778874A1A8DF531003B5A5D /* Cart.m in Sources */,
 				9747F9E71A8EDC78008099D4 /* LineItem.m in Sources */,
 				99C274F41A4EF00D00898741 /* UIProgressView+AFNetworking.m in Sources */,
@@ -978,6 +1027,7 @@
 				979D64111AA145190010F78E /* OrderResultViewController.m in Sources */,
 				99C2747F1A4EE15300898741 /* HomeViewController.m in Sources */,
 				979D64171AA1558D0010F78E /* OrderListViewController.m in Sources */,
+				979D642C1AA17EE40010F78E /* OrderCellView.m in Sources */,
 				975201641A8992570070FE1F /* CustomButton.m in Sources */,
 				975201821A89E1FA0070FE1F /* SectionView.m in Sources */,
 				97B77E901AA04E4800C12733 /* DeliverInfoListViewController.m in Sources */,

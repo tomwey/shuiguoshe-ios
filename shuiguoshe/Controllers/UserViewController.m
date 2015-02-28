@@ -56,18 +56,6 @@
     [_tableView addSubview:backBtn];
     backBtn.center = CGPointMake(20 + CGRectGetWidth(backBtn.bounds) / 2, 42 - _tableView.contentInset.top);
     
-    [[DataService sharedService] loadEntityForClass:@"User"
-                                                URI:[NSString stringWithFormat:@"/user/me?token=%@", [[UserService sharedService] token]]
-                                         completion:^(id result, BOOL succeed) {
-                                             if ( succeed ) {
-                                                 self.currentUser = result;
-                                                 _tableView.hidden = NO;
-                                                 [_tableView reloadData];
-                                             } else {
-                                                 _tableView.hidden = YES;
-                                             }
-                                             
-                                         }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -151,6 +139,16 @@ static int rows[] = { 2, 3, 3 };
             osv.frame = CGRectMake(width * i, CGRectGetMaxY(upv.frame) + 5, width, 100);
             
             [osv setOrderState:[[self loadOrderStates:self.currentUser] objectAtIndex:i]];
+            
+            __block UserViewController* me = self;
+            osv.didSelectBlock = ^(OrderState *state) {
+                Forward *aForward = [Forward buildForwardWithType:ForwardTypePush
+                                                             from:me
+                                                 toControllerName:@"OrderListViewController"];
+                aForward.userData = NSStringFromInteger(state.stateType);
+                ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:aForward];
+                [aCommand execute];
+            };
         }
 
     } else {
@@ -194,6 +192,7 @@ static NSString* label2s[] = { @"收货地址设置", @"修改密码", @"退出�
     return 44;
 }
 
+static NSString* controllers[] = {@"ScoreListViewController", @"LikeListViewController", @"NewMessageViewController"};
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -201,12 +200,23 @@ static NSString* label2s[] = { @"收货地址设置", @"修改密码", @"退出�
     switch (indexPath.section) {
         case 0:
         {
-            
+            if ( indexPath.row == 1 ) {
+                Forward *aForward = [Forward buildForwardWithType:ForwardTypePush
+                                                             from:self
+                                                 toControllerName:@"OrderListViewController"];
+                aForward.userData = @"-1";
+                ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:aForward];
+                [aCommand execute];
+            }
         }
             break;
         case 1:
         {
-            
+            Forward *aForward = [Forward buildForwardWithType:ForwardTypePush
+                                                         from:self
+                                             toControllerName:controllers[indexPath.row]];
+            ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:aForward];
+            [aCommand execute];
         }
             break;
         case 2:
@@ -248,6 +258,19 @@ static NSString* label2s[] = { @"收货地址设置", @"修改密码", @"退出�
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = YES;
+    
+    [[DataService sharedService] loadEntityForClass:@"User"
+                                                URI:[NSString stringWithFormat:@"/user/me?token=%@", [[UserService sharedService] token]]
+                                         completion:^(id result, BOOL succeed) {
+                                             if ( succeed ) {
+                                                 self.currentUser = result;
+                                                 _tableView.hidden = NO;
+                                                 [_tableView reloadData];
+                                             } else {
+                                                 _tableView.hidden = YES;
+                                             }
+                                             
+                                         }];
 }
 
 - (void)didReceiveMemoryWarning {
