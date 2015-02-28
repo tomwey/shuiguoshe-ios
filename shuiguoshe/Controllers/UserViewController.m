@@ -7,12 +7,18 @@
 //
 
 #import "UserViewController.h"
+#import "User.h"
 
 @interface UserViewController () <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, retain) User *currentUser;
 
 @end
 
 @implementation UserViewController
+{
+    UITableView* _tableView;
+}
 
 - (BOOL)shouldShowingCart
 {
@@ -26,31 +32,42 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
 
-    UITableView* tableView = [[UITableView alloc] initWithFrame:self.view.bounds
-                                                          style:UITableViewStyleGrouped];
-    [self.view addSubview:tableView];
-    [tableView release];
+    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    [self.view addSubview:_tableView];
+    [_tableView release];
     
-    tableView.dataSource = self;
-    tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
     
-    if ( [tableView respondsToSelector:@selector(setSeparatorInset:)] ) {
-        tableView.separatorInset = UIEdgeInsetsZero;
+    if ( [_tableView respondsToSelector:@selector(setSeparatorInset:)] ) {
+        _tableView.separatorInset = UIEdgeInsetsZero;
     }
     
-    if ( [tableView respondsToSelector:@selector(setLayoutMargins:)] ) {
-        tableView.layoutMargins = UIEdgeInsetsZero;
+    if ( [_tableView respondsToSelector:@selector(setLayoutMargins:)] ) {
+        _tableView.layoutMargins = UIEdgeInsetsZero;
     }
     
     if ( [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 ) {
-        tableView.contentInset = UIEdgeInsetsMake(-36, 0, 0, 0);
+        _tableView.contentInset = UIEdgeInsetsMake(-36, 0, 0, 0);
     }
 
     // 关闭按钮
     UIButton* backBtn = createButton(@"btn_close", self, @selector(back));
-    [tableView addSubview:backBtn];
-    backBtn.center = CGPointMake(20 + CGRectGetWidth(backBtn.bounds) / 2, 42 - tableView.contentInset.top);
+    [_tableView addSubview:backBtn];
+    backBtn.center = CGPointMake(20 + CGRectGetWidth(backBtn.bounds) / 2, 42 - _tableView.contentInset.top);
     
+    [[DataService sharedService] loadEntityForClass:@"User"
+                                                URI:[NSString stringWithFormat:@"/user/me?token=%@", [[UserService sharedService] token]]
+                                         completion:^(id result, BOOL succeed) {
+                                             if ( succeed ) {
+                                                 self.currentUser = result;
+                                                 _tableView.hidden = NO;
+                                                 [_tableView reloadData];
+                                             } else {
+                                                 _tableView.hidden = YES;
+                                             }
+                                             
+                                         }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -112,8 +129,7 @@ static int rows[] = { 2, 3, 3 };
             upv.imagePickerContainer = self;
         }
         
-        User* u = [[UserService sharedService] loadUser];
-        [upv setUser:u];
+        [upv setUser:self.currentUser];
         
         // 订单
         CGFloat width = CGRectGetWidth(mainScreenBounds) / 3;
@@ -134,7 +150,7 @@ static int rows[] = { 2, 3, 3 };
             
             osv.frame = CGRectMake(width * i, CGRectGetMaxY(upv.frame) + 5, width, 100);
             
-            [osv setOrderState:[[self loadOrderStates:u] objectAtIndex:i]];
+            [osv setOrderState:[[self loadOrderStates:self.currentUser] objectAtIndex:i]];
         }
 
     } else {
@@ -146,9 +162,9 @@ static int rows[] = { 2, 3, 3 };
 {
     OrderState* os1 = [OrderState stateWithName:@"带配送" quantity:u.deliveringCount stateType:OrderStateTypeDelivering];
     
-    OrderState* os2 = [OrderState stateWithName:@"已完成" quantity:u.deliveringCount stateType:OrderStateTypeDone];
+    OrderState* os2 = [OrderState stateWithName:@"已完成" quantity:u.completedCount stateType:OrderStateTypeDone];
     
-    OrderState* os3 = [OrderState stateWithName:@"已取消" quantity:u.deliveringCount stateType:OrderStateTypeCanceled];
+    OrderState* os3 = [OrderState stateWithName:@"已取消" quantity:u.canceledCount stateType:OrderStateTypeCanceled];
     
     return @[os1, os2, os3];
 }

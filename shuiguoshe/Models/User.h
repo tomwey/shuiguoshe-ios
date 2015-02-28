@@ -10,6 +10,8 @@
 
 @interface User : NSObject
 
+@property (nonatomic, assign) NSInteger oid;
+
 @property (nonatomic, copy) NSString* name;
 @property (nonatomic, copy) NSString* password;
 
@@ -23,6 +25,8 @@
 @property (nonatomic, assign) NSUInteger completedCount;
 @property (nonatomic, assign) NSUInteger canceledCount;
 
+
+- (id)initWithDictionary:(NSDictionary *)jsonObj;
 
 - (NSArray *)errors;
 

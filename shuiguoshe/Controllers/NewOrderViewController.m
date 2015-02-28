@@ -134,7 +134,13 @@
                                                                    } }
                            completion:^(id result, BOOL succeed) {
                                if ( [[result objectForKey:@"code"] integerValue] == 0 ) {
+                                   Order* anOrder = [[[Order alloc] initWithDictionary:[result objectForKey:@"data"]] autorelease];
+                                   Forward* aForward = [Forward buildForwardWithType:ForwardTypePush
+                                                                                from:self
+                                                                    toControllerName:@"OrderResultViewController"];
+                                   aForward.userData = anOrder;
                                    
+                                   [[ForwardCommand buildCommandWithForward:aForward] execute];
                                } else {
                                    [Toast showText:[result objectForKey:@"message"]];
                                }
@@ -433,19 +439,6 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                 _discountLabel = discountLabel;
                 
                 _discountPrice = self.orderInfo.userScore;
-                
-                //            Checkbox* cb = (Checkbox *)[cell.contentView viewWithTag:2004];
-                //            if ( !cb ) {
-                //                cb = [[[Checkbox alloc] init] autorelease];
-                //                cb.tag = 2004;
-                //                [cell.contentView addSubview:cb];
-                //                cb.labelFont = [UIFont systemFontOfSize:12];
-                //            }
-                //
-                //            cb.label = [NSString stringWithFormat:@"您当前可用积分为%d, 可以抵扣%.2f元", self.orderInfo.userScore, self.orderInfo.userScore / 100.0];
-                //            CGRect frame = cb.frame;
-                //            frame.origin = CGPointMake(5, CGRectGetMaxY(discountLabel.frame) - 10);
-                //            cb.frame = frame;
                 
                 UILabel* dLabel2 = (UILabel *)[cell.contentView viewWithTag:2004];
                 if ( !dLabel2 ) {

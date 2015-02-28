@@ -75,9 +75,17 @@
 
 - (void)swipe
 {
-    ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePop
-                                                                                                from:self
-                                                                                        toController:nil]];
+    ForwardCommand* aCommand = nil;
+    if ( [@"OrderResultViewController" isEqualToString:NSStringFromClass([self class])] ) {
+        aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePopTo
+                                                                                    from:self
+                                                                            toControllerName:@"CartViewController"]];
+    } else {
+        aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePop
+                                                                                    from:self
+                                                                            toController:nil]];
+    }
+
     [aCommand execute];
 }
 

@@ -72,7 +72,7 @@
         case ForwardTypePopTo:
         {
             NSAssert(!!clz, @"需要一个控制器的名字");
-            for (UIViewController* viewController in _navController.viewControllers) {
+            for (UIViewController* viewController in nav.viewControllers) {
                 if ( [NSStringFromClass([viewController class]) isEqualToString:clz] ) {
                     [nav popToViewController:viewController animated:YES];
                     break;

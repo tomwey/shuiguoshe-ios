@@ -176,7 +176,14 @@
                                          URI:@"/user/update_avatar.json"
                                       params:@{ @"token": [self token] }
                                   completion:^(id result, BOOL succeed) {
-                                      NSLog(@"result:%@", result);
+//                                      NSLog(@"result:%@", result);
+                                      if ( completion ) {
+                                          if ( succeed ) {
+                                              completion(YES);
+                                          } else {
+                                              completion(NO);
+                                          }
+                                      }
                                   }];
 }
 

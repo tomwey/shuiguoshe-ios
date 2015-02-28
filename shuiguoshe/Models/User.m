@@ -25,6 +25,22 @@
     [super dealloc];
 }
 
+- (id)initWithDictionary:(NSDictionary *)jsonObj
+{
+    if ( self = [super init] ) {
+        self.oid = [[jsonObj objectForKey:@"id"] integerValue];
+        self.name = [jsonObj objectForKey:@"mobile"];
+        self.avatarUrl = [jsonObj objectForKey:@"avatar_url"];
+        self.score = [[jsonObj objectForKey:@"score"] integerValue];
+        
+        self.deliveringCount = [[jsonObj objectForKey:@"delivering_orders_count"] integerValue];
+        self.completedCount = [[jsonObj objectForKey:@"completed_orders_count"] integerValue];
+        self.canceledCount = [[jsonObj objectForKey:@"canceled_orders_count"] integerValue];
+    }
+    
+    return self;
+}
+
 - (NSArray *)errors
 {
     return _errors;

@@ -125,7 +125,10 @@
 
 - (void)choosePhotoFromAlbum
 {
-    
+    if ( [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum] ) {
+        self.imagePickerController.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+        [self.imagePickerContainer presentViewController:self.imagePickerController animated:YES completion:nil];
+    }
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info

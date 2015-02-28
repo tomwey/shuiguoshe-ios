@@ -84,6 +84,9 @@
 		977887461A8DD3A6003B5A5D /* btn_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 977887441A8DD3A6003B5A5D /* btn_share@2x.png */; };
 		977887471A8DD3A6003B5A5D /* btn_share@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 977887451A8DD3A6003B5A5D /* btn_share@3x.png */; };
 		9778874A1A8DF531003B5A5D /* Cart.m in Sources */ = {isa = PBXBuildFile; fileRef = 977887491A8DF531003B5A5D /* Cart.m */; };
+		979D64111AA145190010F78E /* OrderResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64101AA145190010F78E /* OrderResultViewController.m */; };
+		979D64141AA148AD0010F78E /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64131AA148AD0010F78E /* Order.m */; };
+		979D64171AA1558D0010F78E /* OrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64161AA1558D0010F78E /* OrderListViewController.m */; };
 		97B77E881AA00D7700C12733 /* NewOrderInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B77E871AA00D7700C12733 /* NewOrderInfo.m */; };
 		97B77E8B1AA00E6900C12733 /* DeliverInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B77E8A1AA00E6900C12733 /* DeliverInfo.m */; };
 		97B77E901AA04E4800C12733 /* DeliverInfoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B77E8F1AA04E4800C12733 /* DeliverInfoListViewController.m */; };
@@ -260,6 +263,12 @@
 		977887451A8DD3A6003B5A5D /* btn_share@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_share@3x.png"; sourceTree = "<group>"; };
 		977887481A8DF531003B5A5D /* Cart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cart.h; sourceTree = "<group>"; };
 		977887491A8DF531003B5A5D /* Cart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cart.m; sourceTree = "<group>"; };
+		979D640F1AA145190010F78E /* OrderResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderResultViewController.h; sourceTree = "<group>"; };
+		979D64101AA145190010F78E /* OrderResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderResultViewController.m; sourceTree = "<group>"; };
+		979D64121AA148AD0010F78E /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
+		979D64131AA148AD0010F78E /* Order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Order.m; sourceTree = "<group>"; };
+		979D64151AA1558D0010F78E /* OrderListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderListViewController.h; sourceTree = "<group>"; };
+		979D64161AA1558D0010F78E /* OrderListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderListViewController.m; sourceTree = "<group>"; };
 		97B77E861AA00D7700C12733 /* NewOrderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewOrderInfo.h; sourceTree = "<group>"; };
 		97B77E871AA00D7700C12733 /* NewOrderInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewOrderInfo.m; sourceTree = "<group>"; };
 		97B77E891AA00E6900C12733 /* DeliverInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliverInfo.h; sourceTree = "<group>"; };
@@ -544,6 +553,8 @@
 				97B77E871AA00D7700C12733 /* NewOrderInfo.m */,
 				97B77E891AA00E6900C12733 /* DeliverInfo.h */,
 				97B77E8A1AA00E6900C12733 /* DeliverInfo.m */,
+				979D64121AA148AD0010F78E /* Order.h */,
+				979D64131AA148AD0010F78E /* Order.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -651,6 +662,10 @@
 				97B77E8F1AA04E4800C12733 /* DeliverInfoListViewController.m */,
 				99928FED1AA0BB52003EB739 /* DeliverInfoFormViewController.h */,
 				99928FEE1AA0BB52003EB739 /* DeliverInfoFormViewController.m */,
+				979D640F1AA145190010F78E /* OrderResultViewController.h */,
+				979D64101AA145190010F78E /* OrderResultViewController.m */,
+				979D64151AA1558D0010F78E /* OrderListViewController.h */,
+				979D64161AA1558D0010F78E /* OrderListViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -948,6 +963,7 @@
 				9778874A1A8DF531003B5A5D /* Cart.m in Sources */,
 				9747F9E71A8EDC78008099D4 /* LineItem.m in Sources */,
 				99C274F41A4EF00D00898741 /* UIProgressView+AFNetworking.m in Sources */,
+				979D64141AA148AD0010F78E /* Order.m in Sources */,
 				976EF3101A8C6ED500A94B15 /* RegisterViewController.m in Sources */,
 				975201731A89A6460070FE1F /* UserService.m in Sources */,
 				99C274851A4EE1F200898741 /* ItemsViewController.m in Sources */,
@@ -959,7 +975,9 @@
 				99C274821A4EE16B00898741 /* UserViewController.m in Sources */,
 				9747F9EA1A8EDEDA008099D4 /* CartService.m in Sources */,
 				99C274F51A4EF00D00898741 /* UIRefreshControl+AFNetworking.m in Sources */,
+				979D64111AA145190010F78E /* OrderResultViewController.m in Sources */,
 				99C2747F1A4EE15300898741 /* HomeViewController.m in Sources */,
+				979D64171AA1558D0010F78E /* OrderListViewController.m in Sources */,
 				975201641A8992570070FE1F /* CustomButton.m in Sources */,
 				975201821A89E1FA0070FE1F /* SectionView.m in Sources */,
 				97B77E901AA04E4800C12733 /* DeliverInfoListViewController.m in Sources */,
