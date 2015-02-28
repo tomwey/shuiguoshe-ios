@@ -144,7 +144,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     OrderInfo* info = [_dataSource objectAtIndex:indexPath.row];
-    return 120 + [info.items count] * 65 - 5;
+    return 140 + [info.items count] * 65 - 5;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

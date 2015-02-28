@@ -96,6 +96,8 @@
 		979D642C1AA17EE40010F78E /* OrderCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D642B1AA17EE40010F78E /* OrderCellView.m */; };
 		979D642E1AA196D20010F78E /* btn_cancel@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 979D642D1AA196D20010F78E /* btn_cancel@3x.png */; };
 		979D64301AA196E50010F78E /* btn_cancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 979D642F1AA196E50010F78E /* btn_cancel@2x.png */; };
+		979D64331AA1AB180010F78E /* ScoreTrace.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64321AA1AB180010F78E /* ScoreTrace.m */; };
+		979D64361AA1B2200010F78E /* Like.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64351AA1B2200010F78E /* Like.m */; };
 		97B77E881AA00D7700C12733 /* NewOrderInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B77E871AA00D7700C12733 /* NewOrderInfo.m */; };
 		97B77E8B1AA00E6900C12733 /* DeliverInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B77E8A1AA00E6900C12733 /* DeliverInfo.m */; };
 		97B77E901AA04E4800C12733 /* DeliverInfoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B77E8F1AA04E4800C12733 /* DeliverInfoListViewController.m */; };
@@ -294,6 +296,10 @@
 		979D642B1AA17EE40010F78E /* OrderCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderCellView.m; sourceTree = "<group>"; };
 		979D642D1AA196D20010F78E /* btn_cancel@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_cancel@3x.png"; sourceTree = "<group>"; };
 		979D642F1AA196E50010F78E /* btn_cancel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_cancel@2x.png"; sourceTree = "<group>"; };
+		979D64311AA1AB180010F78E /* ScoreTrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreTrace.h; sourceTree = "<group>"; };
+		979D64321AA1AB180010F78E /* ScoreTrace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreTrace.m; sourceTree = "<group>"; };
+		979D64341AA1B2200010F78E /* Like.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Like.h; sourceTree = "<group>"; };
+		979D64351AA1B2200010F78E /* Like.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Like.m; sourceTree = "<group>"; };
 		97B77E861AA00D7700C12733 /* NewOrderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewOrderInfo.h; sourceTree = "<group>"; };
 		97B77E871AA00D7700C12733 /* NewOrderInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewOrderInfo.m; sourceTree = "<group>"; };
 		97B77E891AA00E6900C12733 /* DeliverInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliverInfo.h; sourceTree = "<group>"; };
@@ -594,6 +600,10 @@
 				979D64251AA164F50010F78E /* OrderInfo.m */,
 				979D64271AA16BA60010F78E /* OrderCollection.h */,
 				979D64281AA16BA60010F78E /* OrderCollection.m */,
+				979D64311AA1AB180010F78E /* ScoreTrace.h */,
+				979D64321AA1AB180010F78E /* ScoreTrace.m */,
+				979D64341AA1B2200010F78E /* Like.h */,
+				979D64351AA1B2200010F78E /* Like.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -969,6 +979,7 @@
 				99C274EF1A4EF00D00898741 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				97D1E3991A8AE92E00A8B3B6 /* ItemDetail.m in Sources */,
 				976EF3091A8C44C200A94B15 /* CommandButton.m in Sources */,
+				979D64361AA1B2200010F78E /* Like.m in Sources */,
 				976EF32B1A8CA28800A94B15 /* ModalAlert.m in Sources */,
 				976EF3061A8C3FD000A94B15 /* CoordinatorController.m in Sources */,
 				99C274F31A4EF00D00898741 /* UIImageView+AFNetworking.m in Sources */,
@@ -997,6 +1008,7 @@
 				97D1E3A31A8B3A2600A8B3B6 /* DetailToolbar.m in Sources */,
 				99C274DA1A4EEE1900898741 /* AFURLRequestSerialization.m in Sources */,
 				99C274BF1A4EECD000898741 /* BannerView.m in Sources */,
+				979D64331AA1AB180010F78E /* ScoreTrace.m in Sources */,
 				99C274DC1A4EEE1900898741 /* AFURLSessionManager.m in Sources */,
 				979D64231AA160630010F78E /* ScoreListViewController.m in Sources */,
 				99A7BD7F1A519DD10092EA89 /* Sale.m in Sources */,

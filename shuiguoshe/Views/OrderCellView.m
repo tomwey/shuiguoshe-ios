@@ -21,6 +21,8 @@
     UILabel* _orderNo;
     UILabel* _resultLabel;
     
+    UILabel* _orderTimeLabel;
+    
     int _orderId;
 }
 
@@ -39,7 +41,7 @@
         [self addSubview:_bottomLine];
         [_bottomLine release];
         
-        _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(mainScreenBounds),40)];
+        _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(mainScreenBounds),60)];
         [self addSubview:_headerView];
         [_headerView release];
         
@@ -52,7 +54,7 @@
         [_bodyView release];
         
         CGFloat leftMargin = 15;
-        _orderNo = createLabel(CGRectMake(leftMargin, 2, 240, 36),
+        _orderNo = createLabel(CGRectMake(leftMargin, 10, 240, 25),
                                        NSTextAlignmentLeft,
                                        [UIColor blackColor],
                                        [UIFont systemFontOfSize:12]);
@@ -74,6 +76,12 @@
                                                                     CGRectGetWidth(mainScreenBounds) - 15, 1)] autorelease];
         lineView.backgroundColor = _bottomLine.backgroundColor;
         [_footerView addSubview:lineView];
+        
+        _orderTimeLabel = createLabel(CGRectMake(leftMargin, 30, 240, 25),
+                               NSTextAlignmentLeft,
+                               [UIColor blackColor],
+                               [UIFont systemFontOfSize:12]);
+        [_headerView addSubview:_orderTimeLabel];
     }
     return self;
 }
@@ -81,6 +89,8 @@
 - (void)setOrderInfo:(OrderInfo *)info
 {
     _orderNo.text = [NSString stringWithFormat:@"订单号：%@", info.no];
+    _orderTimeLabel.text = [NSString stringWithFormat:@"下单时间：%@", info.orderedAt];
+    
     for (int i=0; i<[info.items count]; i++) {
         OrderItemView* itemView = (OrderItemView *)[_bodyView viewWithTag:100 + i];
         if ( !itemView ) {
@@ -216,7 +226,6 @@
         UIButton* btn = createButton(nil, self, @selector(btnClicked));
         btn.frame = self.bounds;
         [self addSubview:btn];
-        
         
     }
     return self;

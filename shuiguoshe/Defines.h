@@ -94,6 +94,8 @@ static inline UIWindow* AppWindow()
 #import "Order.h"
 #import "OrderInfo.h"
 #import "OrderCollection.h"
+#import "ScoreTrace.h"
+#import "Like.h"
 
 #import "GTMBase64.h"
 
