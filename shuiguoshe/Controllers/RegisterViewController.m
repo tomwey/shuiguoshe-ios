@@ -22,6 +22,10 @@
     UIButton*    _regBtn;
     
     CGPoint      _tableOffset;
+    
+    UITextField* _mobileField;
+    UITextField* _passwordField;
+    UITextField* _codeField;
 }
 
 - (void)viewDidLoad {
@@ -74,28 +78,42 @@
 
 - (void)doReg
 {
-    [self hideKeyboard];
     
-    if ( ![_currentUser checkValue] ) {
-        NSArray* errors = [_currentUser errors];
-        
-        NSMutableString* error = [NSMutableString string];
-        for (id dict in errors) {
-            [error appendString:[[dict allValues] lastObject]];
-            [error appendString:@"\n"];
-        }
-        [error deleteCharactersInRange:NSMakeRange(error.length - 2, 1)];
-        
-        [self.view makeToast:error duration:1.0 position:CSToastPositionBottom];
+    // 手机号检查
+    if ( _mobileField.text.length == 0 ) {
+        [Toast showText:@"手机号不能为空"];
         return;
     }
+    
+    NSString *phoneRegex = @"\\A1[3|4|5|8][0-9]\\d{8}\\z";
+    NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
+    BOOL matches = [test evaluateWithObject:_mobileField.text];
+    
+    if ( !matches ) {
+        [Toast showText:@"手机号不正确"];
+        return;
+    }
+    
+    // 密码检查
+    if ( _passwordField.text.length < 6 ) {
+        [Toast showText:@"密码至少为6位"];
+        return;
+    }
+    
+    // 验证码检查
+    if ( _codeField.text.length == 0 ) {
+        [Toast showText:@"验证码不能为空"];
+        return;
+    }
+    
+    [self hideKeyboard];
     
     __block RegisterViewController* me = self;
     [[UserService sharedService] signup:_currentUser completion:^(BOOL succeed, NSString* errorMsg) {
         if ( succeed ) {
             [me dismissViewControllerAnimated:YES completion:nil];
         } else {
-            [me.view makeToast:errorMsg];
+            [Toast showText:errorMsg];
         }
         
     }];
@@ -166,27 +184,39 @@
         tf.secureTextEntry = YES;
     }
     
+    if ( [tf.name isEqualToString:@"name"] ) {
+        _mobileField = tf;
+    }
+    
+    if ( [tf.name isEqualToString:@"password"] ) {
+        _passwordField = tf;
+    }
+    
+    if ( [tf.name isEqualToString:@"code"] ) {
+        _codeField = tf;
+    }
+    
     return cell;
 }
 
 - (void)fetchCode:(UIButton *)sender
 {
-    [self hideKeyboard];
-    
-    if ( ![_currentUser checkMobile] ) {
-        NSArray* errors = [_currentUser errors];
-        
-        NSMutableString* error = [NSMutableString string];
-        for (id dict in errors) {
-            [error appendString:[[dict allValues] lastObject]];
-            [error appendString:@"\n"];
-        }
-        [error deleteCharactersInRange:NSMakeRange(error.length - 2, 1)];
-        
-        [self.view makeToast:error duration:1.0 position:CSToastPositionCenter];
-        
+    // 手机号检查
+    if ( _mobileField.text.length == 0 ) {
+        [Toast showText:@"手机号不能为空"];
         return;
     }
+    
+    NSString *phoneRegex = @"\\A1[3|4|5|8][0-9]\\d{8}\\z";
+    NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
+    BOOL matches = [test evaluateWithObject:_mobileField.text];
+    
+    if ( !matches ) {
+        [Toast showText:@"手机号不正确"];
+        return;
+    }
+    
+    [self hideKeyboard];
     
     sender.enabled = NO;
     
@@ -194,9 +224,9 @@
     [[UserService sharedService] fetchCode:_currentUser completion:^(BOOL succeed, NSString *errorMsg) {
         sender.enabled = YES;
         if ( !succeed ) {
-            [self.view makeToast:errorMsg];
+            [Toast showText:errorMsg];
         } else {
-            [self.view makeToast:@"短信验证码已发出"];
+            [Toast showText:@"短信验证码已发出"];
         }
     }];
 }

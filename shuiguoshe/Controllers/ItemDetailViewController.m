@@ -16,7 +16,7 @@
 @interface ItemDetailViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, retain) ItemDetail* itemDetail;
-@property (nonatomic, retain) Item*       item;
+//@property (nonatomic, retain) Item*       item;
 
 @end
 
@@ -28,7 +28,7 @@
     
     self.title = @"商品详情";
     
-    self.item = self.userData;
+//    self.item = self.userData;
     
     CGRect frame = self.view.bounds;
     frame.size.height -= 49;
@@ -74,11 +74,12 @@
     toolbar.frame = frame;
     
     [[DataService sharedService] loadEntityForClass:@"ItemDetail"
-                                                URI:[NSString stringWithFormat:@"/items/%d", self.item.iid]
+                                                URI:[NSString stringWithFormat:@"/items/%d",
+                                                     [self.userData iid]]
                                          completion:^(id result, BOOL succeed) {
                                              me.itemDetail = result;
                                              
-                                             me.itemDetail.itemId = me.item.iid;
+//                                             me.itemDetail.itemId = me.item.iid;
                                              toolbar.itemDetail = me.itemDetail;
                                              
                                              [tableView reloadData];
@@ -302,7 +303,7 @@
     saleLabel.frame = CGRectMake(kLeftMargin, dtTop + 10, width - kLeftMargin * 2, 30);
     
     NSMutableAttributedString *string =
-    [[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"已售%d件", self.item.ordersCount]] autorelease];
+    [[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"已售%d件", self.itemDetail.ordersCount]] autorelease];
     [string addAttribute:NSForegroundColorAttributeName value:GREEN_COLOR range:NSMakeRange(2, string.length - 3)];
     saleLabel.attributedText = string;
 }

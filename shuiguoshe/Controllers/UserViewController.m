@@ -233,7 +233,7 @@ static NSString* controllers[] = {@"ScoreListViewController", @"LikeListViewCont
                                                if ( succeed ) {
                                                    [self dismissViewControllerAnimated:YES completion:nil];
                                                } else {
-                                                   [self.view makeToast:errorMsg];
+                                                   [Toast showText:errorMsg];
                                                }
                                            }];
                                        }

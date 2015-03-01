@@ -123,7 +123,6 @@ static inline UIWindow* AppWindow()
 #import "CartService.h"
 
 #import "UIImageView+AFNetworking.h"
-#import "UIView+Toast.h"
 #import "InfinitePagingView.h"
 #import "MBProgressHUD.h"
 #import "ModalAlert.h"

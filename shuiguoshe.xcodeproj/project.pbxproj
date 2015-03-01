@@ -63,7 +63,6 @@
 		976EF30D1A8C6A8C00A94B15 /* btn_login@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 976EF30C1A8C6A8C00A94B15 /* btn_login@3x.png */; };
 		976EF3101A8C6ED500A94B15 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF30F1A8C6ED500A94B15 /* RegisterViewController.m */; };
 		976EF3131A8C6EFD00A94B15 /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF3121A8C6EFD00A94B15 /* ForgetPasswordViewController.m */; };
-		976EF3171A8C7A7F00A94B15 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF3161A8C7A7F00A94B15 /* UIView+Toast.m */; };
 		976EF31A1A8C7E1600A94B15 /* FormItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF3191A8C7E1600A94B15 /* FormItem.m */; };
 		976EF31D1A8C7FFF00A94B15 /* UITextField+Attributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF31C1A8C7FFF00A94B15 /* UITextField+Attributes.m */; };
 		976EF3201A8C811F00A94B15 /* InputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 976EF31F1A8C811F00A94B15 /* InputTextField.m */; };
@@ -247,8 +246,6 @@
 		976EF30F1A8C6ED500A94B15 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		976EF3111A8C6EFD00A94B15 /* ForgetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordViewController.h; sourceTree = "<group>"; };
 		976EF3121A8C6EFD00A94B15 /* ForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordViewController.m; sourceTree = "<group>"; };
-		976EF3151A8C7A7F00A94B15 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
-		976EF3161A8C7A7F00A94B15 /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		976EF3181A8C7E1600A94B15 /* FormItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormItem.h; sourceTree = "<group>"; };
 		976EF3191A8C7E1600A94B15 /* FormItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormItem.m; sourceTree = "<group>"; };
 		976EF31B1A8C7FFF00A94B15 /* UITextField+Attributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+Attributes.h"; sourceTree = "<group>"; };
@@ -561,8 +558,6 @@
 		97D1E39A1A8AFAF700A8B3B6 /* Additions */ = {
 			isa = PBXGroup;
 			children = (
-				976EF3151A8C7A7F00A94B15 /* UIView+Toast.h */,
-				976EF3161A8C7A7F00A94B15 /* UIView+Toast.m */,
 				976EF31B1A8C7FFF00A94B15 /* UITextField+Attributes.h */,
 				976EF31C1A8C7FFF00A94B15 /* UITextField+Attributes.m */,
 			);
@@ -1009,7 +1004,6 @@
 				99C274D41A4EEE1900898741 /* AFHTTPRequestOperation.m in Sources */,
 				976EF3131A8C6EFD00A94B15 /* ForgetPasswordViewController.m in Sources */,
 				9747FA031A8F04DC008099D4 /* NewOrderViewController.m in Sources */,
-				976EF3171A8C7A7F00A94B15 /* UIView+Toast.m in Sources */,
 				99C274D61A4EEE1900898741 /* AFHTTPSessionManager.m in Sources */,
 				99C274F11A4EF00D00898741 /* UIAlertView+AFNetworking.m in Sources */,
 				976EF3001A8C3C6600A94B15 /* ForwardCommand.m in Sources */,

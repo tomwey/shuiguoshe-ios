@@ -87,7 +87,7 @@
         [_errors addObject:@{ @"name": @"手机号不能为空" }];
     } else {
         
-        NSString *phoneRegex = @"\\A1[3|4|5|8][0-9]\\d{4,8}\\z";
+        NSString *phoneRegex = @"\\A1[3|4|5|8][0-9]\\d{8}\\z";
         NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
         BOOL matches = [test evaluateWithObject:self.name];
         if ( !matches ) {

@@ -18,6 +18,9 @@
     NSArray*     _dataSource;
     UITableView* _tableView;
     User*        _currentUser;
+    
+    UITextField* _mobileField;
+    UITextField* _passwordField;
 }
 
 - (void)viewDidLoad {
@@ -112,28 +115,36 @@
 
 - (void)doLogin
 {
-    [self hideKeyboard];
     
-    if ( ![_currentUser checkValue] ) {
-        NSArray* errors = [_currentUser errors];
-        
-        NSMutableString* error = [NSMutableString string];
-        for (id dict in errors) {
-            [error appendString:[[dict allValues] lastObject]];
-            [error appendString:@"\n"];
-        }
-        [error deleteCharactersInRange:NSMakeRange(error.length - 2, 1)];
-        
-        [self.view makeToast:error duration:1.0 position:CSToastPositionBottom];
+    // 手机号检查
+    if ( _mobileField.text.length == 0 ) {
+        [Toast showText:@"手机号不能为空"];
         return;
     }
     
+    NSString *phoneRegex = @"\\A1[3|4|5|8][0-9]\\d{8}\\z";
+    NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
+    BOOL matches = [test evaluateWithObject:_mobileField.text];
+    
+    if ( !matches ) {
+        [Toast showText:@"手机号不正确"];
+        return;
+    }
+    
+    // 密码检查
+    if ( _passwordField.text.length < 6 ) {
+        [Toast showText:@"密码至少为6位"];
+        return;
+    }
+    
+    [self hideKeyboard];
+        
     __block LoginViewController* me = self;
     [[UserService sharedService] login:_currentUser completion:^(BOOL succeed, NSString* errorMsg) {
         if ( succeed ) {
             [me dismissViewControllerAnimated:YES completion:nil];
         } else {
-            [me.view makeToast:errorMsg];
+            [Toast showText:errorMsg];
         }
         
     }];
@@ -180,6 +191,12 @@
     
     tf.placeholder = uf.placeholder;
     tf.name = uf.name;
+    
+    if ( [tf.name isEqualToString:@"name"] ) {
+        _mobileField = tf;
+    } else if ( [tf.name isEqualToString:@"password"] ) {
+        _passwordField = tf;
+    }
     
     if ( indexPath.row == 0 ) {
         tf.keyboardType = UIKeyboardTypeNumberPad;
