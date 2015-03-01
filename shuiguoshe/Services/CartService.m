@@ -7,8 +7,9 @@
 //
 
 #import "CartService.h"
+#import "Defines.h"
 
-NSString * const kAddToCartNotification = @"kAddToCartNotification";
+NSString * const kCartTotalDidChangeNotification = @"kCartTotalDidChangeNotification";
 
 @implementation CartService
 {
@@ -27,14 +28,52 @@ NSString * const kAddToCartNotification = @"kAddToCartNotification";
     return service;
 }
 
-- (void)setTotalCount:(NSUInteger)total
+- (id)init
 {
-    _total = total;
+    if ( self = [super init] ) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(cartTotalDidChange:)
+                                                     name:kCartTotalDidChangeNotification
+                                                   object:nil];
+    }
+    return self;
+}
+
+- (void)initTotal:(NSInteger)total
+{
+    [[NSUserDefaults standardUserDefaults] setInteger:total forKey:@"cart.total"];
+    
+    [self updateTotal:total];
+}
+
+- (void)updateTotal:(NSInteger)total
+{
+    if ( total > 9 ) {
+        self.cartTotalLabel.text = @"9+";
+    } else {
+        self.cartTotalLabel.text = NSStringFromInteger(total);
+    }
+}
+
+- (void)cartTotalDidChange:(NSNotification *)noti
+{
+    NSInteger dt = [noti.object integerValue];
+    NSInteger total = [self totalCount];
+    total += dt;
+    [[NSUserDefaults standardUserDefaults] setInteger:total forKey:@"cart.total"];
+    
+    [self updateTotal:total];
+}
+
+- (void)setCartTotalLabel:(UILabel *)cartTotalLabel
+{
+    _cartTotalLabel = cartTotalLabel;
+    [self updateTotal:[self totalCount]];
 }
 
 - (NSUInteger)totalCount
 {
-    return _total;
+    return [[NSUserDefaults standardUserDefaults] integerForKey:@"cart.total"];
 }
 
 @end

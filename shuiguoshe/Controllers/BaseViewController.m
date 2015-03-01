@@ -42,15 +42,15 @@
         
         _cartLabel.textColor = RGB(217, 79, 16);
         _cartLabel.backgroundColor = [UIColor clearColor];
-        _cartLabel.text = NSStringFromInteger([[CartService sharedService] totalCount]);
+//        if ( [[CartService sharedService] totalCount] > 9 ) {
+//            _cartLabel.text = @"9+";
+//        } else {
+//            _cartLabel.text = NSStringFromInteger([[CartService sharedService] totalCount]);
+//        }
+        [CartService sharedService].cartTotalLabel = _cartLabel;
         _cartLabel.font = [UIFont systemFontOfSize:15];
         
         self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:btn] autorelease];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(didAddToCart)
-                                                     name:kAddToCartNotification
-                                                   object:nil];
     }
     
     [self setLeftBarButtonWithImage:@"btn_back.png"
@@ -70,14 +70,8 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = NO;
-}
-
-- (void)didAddToCart
-{
-    NSInteger total = _cartLabel.text.integerValue;
-    total += 1;
-    [[CartService sharedService] setTotalCount:total];
-    _cartLabel.text = NSStringFromInteger(total);
+    
+    [CartService sharedService].cartTotalLabel = _cartLabel;
 }
 
 - (void)swipe

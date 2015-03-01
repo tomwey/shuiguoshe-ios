@@ -33,6 +33,18 @@ static inline UIButton* createButton(NSString* imageName, id target, SEL action)
     return btn;
 };
 
+static inline UIButton* createButton2(NSString* imageName, NSString* title, id target, SEL action)
+{
+    UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    [btn sizeToFit];
+    [btn setTitle:title forState:UIControlStateNormal];
+    btn.exclusiveTouch = YES;
+    [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    
+    return btn;
+};
+
 static inline UIBarButtonItem* createLeftBarButton(NSString* imageName, id target, SEL action)
 {
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];

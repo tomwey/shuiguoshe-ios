@@ -50,6 +50,9 @@
                                           [UIColor blackColor],
                                           [UIFont systemFontOfSize:12]);
         [self addSubview:_valueLabel];
+//        _valueLabel.backgroundColor = [UIColor redColor];
+        _valueLabel.center = CGPointMake(CGRectGetMidX(self.bounds),
+                                         CGRectGetMidY(self.bounds));
         
         incr = createButton(@"btn_incr.png", self, @selector(increase:));
         
@@ -107,14 +110,14 @@
 - (void)decrease:(UIButton *)sender
 {
     self.value -= self.step;
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCartTotalDidChangeNotification object:@(-1)];
     [self updateQuantity];
 }
 
 - (void)increase:(UIButton *)sender
 {
     self.value += self.step;
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCartTotalDidChangeNotification object:@(1)];
     [self updateQuantity];
 }
 

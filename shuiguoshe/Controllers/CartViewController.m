@@ -107,6 +107,8 @@
              _selectAll.checked = flag;
          }
          
+         [[CartService sharedService] initTotal:self.currentCart.totalQuantity];
+         
      }];
 }
 

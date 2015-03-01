@@ -6,17 +6,18 @@
 //  Copyright (c) 2015年 shuiguoshe. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-extern NSString * const kAddToCartNotification;
+extern NSString * const kCartTotalDidChangeNotification;
 
 @interface CartService : NSObject
 
+@property (nonatomic, assign) UILabel* cartTotalLabel;
+
 + (CartService *)sharedService;
 
-- (void)setTotalCount:(NSUInteger)total;
-- (NSUInteger)totalCount;
+- (void)initTotal:(NSInteger)total;
 
-//- (void)loadCart:()
+- (NSUInteger)totalCount;
 
 @end
