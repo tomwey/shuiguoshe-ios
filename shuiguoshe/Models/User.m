@@ -36,6 +36,8 @@
         self.deliveringCount = [[jsonObj objectForKey:@"delivering_orders_count"] integerValue];
         self.completedCount = [[jsonObj objectForKey:@"completed_orders_count"] integerValue];
         self.canceledCount = [[jsonObj objectForKey:@"canceled_orders_count"] integerValue];
+        
+        self.currentDeliverInfoId = [[jsonObj objectForKey:@"current_deliver_info_id"] integerValue];
     }
     
     return self;

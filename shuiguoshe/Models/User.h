@@ -25,6 +25,8 @@
 @property (nonatomic, assign) NSUInteger completedCount;
 @property (nonatomic, assign) NSUInteger canceledCount;
 
+@property (nonatomic, assign) NSInteger currentDeliverInfoId;
+
 
 - (id)initWithDictionary:(NSDictionary *)jsonObj;
 

@@ -114,6 +114,8 @@
 		9921EABB1A8A5121006B57D1 /* btn_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9921EABA1A8A5121006B57D1 /* btn_back@3x.png */; };
 		9921EABD1A8A515E006B57D1 /* btn_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9921EABC1A8A515E006B57D1 /* btn_back@2x.png */; };
 		9921EAC01A8A528C006B57D1 /* ItemDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9921EABF1A8A528C006B57D1 /* ItemDetailViewController.m */; };
+		998800AB1AA2D9610050582F /* Apartment.m in Sources */ = {isa = PBXBuildFile; fileRef = 998800AA1AA2D9610050582F /* Apartment.m */; };
+		998800AE1AA2DEA50050582F /* ApartmentListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 998800AD1AA2DEA50050582F /* ApartmentListViewController.m */; };
 		99928FEF1AA0BB52003EB739 /* DeliverInfoFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 99928FEE1AA0BB52003EB739 /* DeliverInfoFormViewController.m */; };
 		99A7BD7B1A519D840092EA89 /* SaleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7BD7A1A519D840092EA89 /* SaleView.m */; };
 		99A7BD7F1A519DD10092EA89 /* Sale.m in Sources */ = {isa = PBXBuildFile; fileRef = 99A7BD7E1A519DD10092EA89 /* Sale.m */; };
@@ -324,6 +326,10 @@
 		9921EABC1A8A515E006B57D1 /* btn_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_back@2x.png"; sourceTree = "<group>"; };
 		9921EABE1A8A528C006B57D1 /* ItemDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemDetailViewController.h; sourceTree = "<group>"; };
 		9921EABF1A8A528C006B57D1 /* ItemDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemDetailViewController.m; sourceTree = "<group>"; };
+		998800A91AA2D9610050582F /* Apartment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apartment.h; sourceTree = "<group>"; };
+		998800AA1AA2D9610050582F /* Apartment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Apartment.m; sourceTree = "<group>"; };
+		998800AC1AA2DEA50050582F /* ApartmentListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApartmentListViewController.h; sourceTree = "<group>"; };
+		998800AD1AA2DEA50050582F /* ApartmentListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApartmentListViewController.m; sourceTree = "<group>"; };
 		99928FED1AA0BB52003EB739 /* DeliverInfoFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliverInfoFormViewController.h; sourceTree = "<group>"; };
 		99928FEE1AA0BB52003EB739 /* DeliverInfoFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeliverInfoFormViewController.m; sourceTree = "<group>"; };
 		99A7BD791A519D840092EA89 /* SaleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaleView.h; sourceTree = "<group>"; };
@@ -604,6 +610,8 @@
 				979D64321AA1AB180010F78E /* ScoreTrace.m */,
 				979D64341AA1B2200010F78E /* Like.h */,
 				979D64351AA1B2200010F78E /* Like.m */,
+				998800A91AA2D9610050582F /* Apartment.h */,
+				998800AA1AA2D9610050582F /* Apartment.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -715,6 +723,8 @@
 				979D64101AA145190010F78E /* OrderResultViewController.m */,
 				979D64151AA1558D0010F78E /* OrderListViewController.h */,
 				979D64161AA1558D0010F78E /* OrderListViewController.m */,
+				998800AC1AA2DEA50050582F /* ApartmentListViewController.h */,
+				998800AD1AA2DEA50050582F /* ApartmentListViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1013,6 +1023,7 @@
 				979D64231AA160630010F78E /* ScoreListViewController.m in Sources */,
 				99A7BD7F1A519DD10092EA89 /* Sale.m in Sources */,
 				9717CFF21A9EFA6A00B1C473 /* UpdateValueLabel.m in Sources */,
+				998800AB1AA2D9610050582F /* Apartment.m in Sources */,
 				976EF2FD1A8C394000A94B15 /* Command.m in Sources */,
 				976EF31D1A8C7FFF00A94B15 /* UITextField+Attributes.m in Sources */,
 				99C2744E1A4EDF3300898741 /* AppDelegate.m in Sources */,
@@ -1031,6 +1042,7 @@
 				99C274F21A4EF00D00898741 /* UIButton+AFNetworking.m in Sources */,
 				99C274DB1A4EEE1900898741 /* AFURLResponseSerialization.m in Sources */,
 				99C2747D1A4EE15300898741 /* ApartmentsViewController.m in Sources */,
+				998800AE1AA2DEA50050582F /* ApartmentListViewController.m in Sources */,
 				976EF3281A8C993700A94B15 /* GTMBase64.m in Sources */,
 				976EF3201A8C811F00A94B15 /* InputTextField.m in Sources */,
 				99C274821A4EE16B00898741 /* UserViewController.m in Sources */,

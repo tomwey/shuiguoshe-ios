@@ -25,6 +25,10 @@
     UILabel*     _resultLabel;
     
     NSInteger    _discountPrice;
+    
+    UILabel*     _newLabel;
+    UILabel*     _mobileLabel;
+    UILabel*     _addressLabel;
 }
 
 - (void)viewDidLoad {
@@ -99,6 +103,11 @@
                                              selector:@selector(didUpdateDeliverInfo:)
                                                  name:@"kUpdateDeliverInfoSuccessNotification"
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didUpdateDeliverInfo:)
+                                                 name:@"kDeliverInfoDidRemoveAll"
+                                               object:nil];
 }
 
 - (BOOL)shouldShowingCart
@@ -109,6 +118,16 @@
 - (void)didUpdateDeliverInfo:(NSNotification *)noti
 {
     self.orderInfo.deliverInfo = noti.object;
+    if ( noti.object == nil ) {
+        _newLabel.hidden = NO;
+        _newLabel.text = @"新建收获信息";
+        
+        _mobileLabel.hidden = _addressLabel.hidden = YES;
+    } else {
+        _newLabel.hidden = YES;
+        
+        _mobileLabel.hidden = _addressLabel.hidden = NO;
+    }
     [_tableView reloadData];
 }
 
@@ -198,6 +217,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                     [cell.contentView addSubview:newLabel];
                     newLabel.text = @"新建收货信息";
                 }
+                _newLabel = newLabel;
                 
             } else {
                 
@@ -212,6 +232,8 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                     mobileLabel.tag = 1001;
                     [cell.contentView addSubview:mobileLabel];
                 }
+                
+                _mobileLabel = mobileLabel;
                 
                 mobileLabel.text = [NSString stringWithFormat:@"收货人: %@",
                                     [self.orderInfo.deliverInfo.mobile stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"]];
@@ -229,6 +251,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                     addressLabel.numberOfLines = 0;
                 }
                 addressLabel.text = self.orderInfo.deliverInfo.address;
+                _addressLabel = addressLabel;
                 
                 CGSize size = [addressLabel.text sizeWithFont:addressLabel.font
                                             constrainedToSize:CGSizeMake(CGRectGetWidth(addressLabel.frame), 1000)

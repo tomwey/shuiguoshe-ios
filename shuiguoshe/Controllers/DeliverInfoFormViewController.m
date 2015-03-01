@@ -16,7 +16,8 @@
 @implementation DeliverInfoFormViewController
 {
     UITextField* _mobileField;
-    UIButton*    _addressBtn;
+    UILabel*     _addressLabel;
+    int          _apartmentId;
 }
 
 - (BOOL)shouldShowingCart { return NO; }
@@ -25,12 +26,14 @@
 {
     [super viewDidLoad];
     
+    _apartmentId = 0;
+    
     self.title = @"新建收货信息";
     
-    [self setLeftBarButtonWithImage:@"btn_close.png"
-                            command:[ForwardCommand buildCommandWithForward:
-                                     [Forward buildForwardWithType:ForwardTypeDismiss
-                                                              from:self toControllerName:nil]]];
+//    [self setLeftBarButtonWithImage:@"btn_close.png"
+//                            command:[ForwardCommand buildCommandWithForward:
+//                                     [Forward buildForwardWithType:ForwardTypeDismiss
+//                                                              from:self toControllerName:nil]]];
     UILabel* mobile = createLabel(CGRectMake(15, 70, 80,
                                              37),
                                   NSTextAlignmentLeft,
@@ -49,19 +52,21 @@
     
     _mobileField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(mobile.frame) + 5, CGRectGetMinY(mobile.frame), 200, 37)];
     _mobileField.placeholder = @"输入11位手机号";
+    _mobileField.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:_mobileField];
+    _mobileField.keyboardType = UIKeyboardTypeNumberPad;
     
-    _addressBtn = createButton(nil, self, @selector(showPicker));
-    [_addressBtn setTitle:@"请选择所在的小区" forState:UIControlStateNormal];
-    _addressBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    [_addressBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_addressBtn sizeToFit];
+    CGRect frame = address.frame;
+    frame.origin.x = CGRectGetMaxX(frame) + 5;
+    frame.size.width = CGRectGetWidth(mainScreenBounds) - frame.origin.x - 10;
+    _addressLabel = createLabel(frame,
+                                NSTextAlignmentLeft,
+                                RGB(207, 207, 207),
+                                [UIFont systemFontOfSize:14]);
+    _addressLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    [self.view addSubview:_addressLabel];
     
-    CGRect frame = _addressBtn.frame;
-    frame.origin = CGPointMake(CGRectGetMaxX(mobile.frame) + 5, CGRectGetMinY(address.frame));
-    _addressBtn.frame = frame;
-    
-    [self.view addSubview:_addressBtn];
+    _addressLabel.text = @"请选择所在小区";
     
     UIButton* save = createButton(nil, self, @selector(save));
     [save setTitle:@"保存" forState:UIControlStateNormal];
@@ -69,16 +74,71 @@
     [save sizeToFit];
     
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:save] autorelease];
+    
+    ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:
+                                [Forward buildForwardWithType:ForwardTypeModal
+                                                         from:self
+                                             toControllerName:@"ApartmentListViewController"]];
+    UIButton* btn = [[CoordinatorController sharedInstance] createCommandButton:nil
+                                                                        command:aCommand];
+    btn.frame = _addressLabel.frame;
+    [self.view addSubview:btn];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelect:)
+                                                 name:@"kApartmentDidSelctNotification"
+                                               object:nil];
+}
+
+- (void)didSelect:(NSNotification *)noti
+{
+    Apartment* a = noti.object;
+    _addressLabel.text = [NSString stringWithFormat:@"%@（%@）",a.name, a.address];
+    _addressLabel.textColor = [UIColor blackColor];
+    
+    _apartmentId = a.oid;
 }
 
 - (void)save
 {
     
+    [_mobileField resignFirstResponder];
+    
+    NSString* mobile = [_mobileField.text stringByTrimmingCharactersInSet:
+                        [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    if ( [mobile length] == 0 ) {
+        [Toast showText:@"手机号必须为非空"];
+        return;
+    }
+    
+    NSString *phoneRegex = @"\\A1[3|4|5|8][0-9]\\d{8}\\z";
+    NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
+    BOOL matches = [test evaluateWithObject:mobile];
+    if ( !matches ) {
+        [Toast showText:@"不正确的手机号"];
+        return;
+    }
+    
+    if ( _apartmentId == 0 ) {
+        [Toast showText:@"必须选择收货地址"];
+        return;
+    }
+    
+    [[DataService sharedService] post:@"/deliver_infos"
+                               params:@{ @"token": [[UserService sharedService] token],
+                                         @"item": @{ @"mobile": mobile,
+                                                     @"apartment_id": NSStringFromInteger(_apartmentId)} } completion:^(id result, BOOL succeed) {
+                                                         if ( succeed ) {
+                                                             [self.navigationController popViewControllerAnimated:YES];
+                                                         } else {
+                                                             [Toast showText:@"保存失败"];
+                                                         }
+                                                     }];
 }
 
-- (void)showPicker
+- (void)dealloc
 {
-    
+    [super dealloc];
 }
 
 @end

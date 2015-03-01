@@ -173,7 +173,7 @@ static NSString* label1s[] = { @"我的积分", @"我的收藏", @"有话要说"
     cell.textLabel.text = label1s[indexPath.row];
 }
 
-static NSString* label2s[] = { @"收货地址设置", @"修改密码", @"退出登录" };
+static NSString* label2s[] = { @"收货地址管理", @"修改密码", @"退出登录" };
 - (void)addContentForSectionThree:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath
 {
     cell.textLabel.text = label2s[indexPath.row];
@@ -239,6 +239,18 @@ static NSString* controllers[] = {@"ScoreListViewController", @"LikeListViewCont
                                        }
                                    }];
                 
+            } else if ( indexPath.row == 0 ) {
+                ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePush from:self toControllerName:@"DeliverInfoListViewController"]];
+                
+                DeliverInfo* info = [[[DeliverInfo alloc] init] autorelease];
+                info.infoId = self.currentUser.currentDeliverInfoId;
+                
+                aCommand.userData = info;
+                
+                [aCommand execute];
+            } else if ( indexPath.row == 1 ) {
+                ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePush from:self toControllerName:@"UpdatePasswordViewController"]];
+                [aCommand execute];
             }
         }
             break;

@@ -16,6 +16,7 @@
 @implementation DeliverInfoListViewController
 {
     NSMutableArray* _dataSource;
+    UITableView*    _tableView;
 }
 
 - (BOOL) shouldShowingCart { return NO; }
@@ -27,31 +28,39 @@
     
     [self setRightBarButtonWithImage:@"btn_incr.png"
                              command:[ForwardCommand buildCommandWithForward:
-                                      [Forward buildForwardWithType:ForwardTypeModal from:self
+                                      [Forward buildForwardWithType:ForwardTypePush from:self
                                                    toControllerName:@"DeliverInfoFormViewController"]]];
     
     CGRect frame = self.view.bounds;
     
-    UITableView* tableView = [[UITableView alloc] initWithFrame:frame
+    _tableView = [[UITableView alloc] initWithFrame:frame
                                                           style:UITableViewStylePlain];
-    [self.view addSubview:tableView];
-    [tableView release];
+    [self.view addSubview:_tableView];
+    [_tableView release];
     
-    tableView.dataSource = self;
-    tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
     
     _dataSource = [[NSMutableArray alloc] init];
+    
+    UIView* footer = [[[UIView alloc] init] autorelease];
+    _tableView.tableFooterView = footer;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [_dataSource removeAllObjects];
     
     [[DataService sharedService] loadEntityForClass:@"DeliverInfo"
                                                 URI:[NSString stringWithFormat:@"/deliver_infos?token=%@", [[UserService sharedService] token]]
                                          completion:^(id result, BOOL succeed)
-    {
-        [_dataSource addObjectsFromArray:result];
-        [tableView reloadData];
-    }];
+     {
+         [_dataSource addObjectsFromArray:result];
+         [_tableView reloadData];
+     }];
     
-    UIView* footer = [[[UIView alloc] init] autorelease];
-    tableView.tableFooterView = footer;
 }
 
 - (void)dealloc
@@ -85,7 +94,24 @@
         [cell.contentView addSubview:mobile];
     }
     
+    
     DeliverInfo* di = [_dataSource objectAtIndex:indexPath.row];
+    
+    UIButton* btn = (UIButton *)[cell.contentView viewWithTag:1000 + indexPath.row];
+    if ( !btn ) {
+        btn = createButton(nil, self, @selector(delete:));
+        btn.tag = 1000 + indexPath.row;
+        [cell.contentView addSubview:btn];
+        btn.backgroundColor = RGB(201, 62, 59);
+        [btn setTitle:@"删除" forState:UIControlStateNormal];
+        btn.frame = CGRectMake(CGRectGetWidth(mainScreenBounds) - 15 - 60 - 30,
+                               CGRectGetMinY(mobile.frame),
+                               50, 34);
+        btn.layer.cornerRadius = 3;
+        btn.titleLabel.font = [UIFont systemFontOfSize:13];
+        btn.clipsToBounds = YES;
+    }
+    
     mobile.text = [di.mobile stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
     
     // 地址
@@ -147,6 +173,29 @@
                            }];
     
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)delete:(UIButton *)sender
+{
+    [ModalAlert ask:@"确定要删除吗？"
+                 message:nil
+             result:^(BOOL yesOrNo) {
+         if ( yesOrNo ) {
+             int index = sender.tag - 1000;
+             DeliverInfo* info = [_dataSource objectAtIndex:index];
+             [[DataService sharedService] post:[NSString stringWithFormat:@"/deliver_infos/%d",info.infoId]
+                                        params:@{ @"token" : [[UserService sharedService] token] }
+                                    completion:^(id result, BOOL succeed) {
+                                        [_dataSource removeObjectAtIndex:index];
+                                        [_tableView reloadData];
+                                        if ( [_dataSource count] == 0 ||
+                                            [self.userData infoId] == info.infoId) {
+                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"kDeliverInfoDidRemoveAll" object:nil];
+                                        }
+                                    }];
+         }
+    }];
+        
 }
 
 - (void)didReceiveMemoryWarning {
