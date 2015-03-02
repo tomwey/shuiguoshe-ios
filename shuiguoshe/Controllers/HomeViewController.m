@@ -129,9 +129,12 @@
 {
     BannerView* banner = (BannerView *)[cell.contentView viewWithTag:1001];
     if ( !banner ) {
-        banner = [[[BannerView alloc] initWithFrame:CGRectMake(0, 0, 320, 120)] autorelease];
+        banner = [[[BannerView alloc] init] autorelease];
         [cell.contentView addSubview:banner];
         banner.tag = 1001;
+        
+        CGRect frame = banner.bounds;
+        banner.frame = frame;
     }
     
     _bannerView = banner;
@@ -189,7 +192,9 @@
     int numberOfCol = 2;
     CGFloat padding = 20;
     CGFloat width = ( CGRectGetWidth(mainScreenBounds) - numberOfCol * padding - padding / 2 ) / numberOfCol;
-                                        
+    
+    CGFloat factor = [self factorForDevice];
+    
     for (int i=0; i<[s.data count]; i++) {
         ItemView* itemView = (ItemView *)[cell.contentView viewWithTag:3000+i];
         if ( !itemView ) {
@@ -204,14 +209,41 @@
         int n = i / numberOfCol;
         
         itemView.frame = CGRectMake(padding + (width + padding/2) * m,
-                                    30 + 20 + ( 230 + padding ) * n, width, 230);
+                                    30 + 20 + ( 230 + factor + padding ) * n,
+                                    width, 230 + factor);
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     Section* s = [self.dataSource objectAtIndex:indexPath.row];
-    return s.height;
+    if ( [s.identifier isEqualToString:@"banners"] ) {
+        return s.height * ( CGRectGetWidth(mainScreenBounds) / 320.0 );
+    }
+    
+    if ( [s.identifier isEqualToString:@"catalogs"] ) {
+        return s.height;
+    }
+    
+    if ( [s.identifier isEqualToString:@"hot_items"] ) {
+        return s.height + ( ( [s.data count] + 1 ) / 2 ) * [self factorForDevice];
+    }
+    
+    return s.height * ( CGRectGetWidth(mainScreenBounds) / 320.0 );
+}
+
+- (CGFloat)factorForDevice
+{
+    CGFloat factor = 0;
+    if ( CGRectGetHeight(mainScreenBounds) > 568 ) {
+        factor = 24;
+    }
+    
+    if ( CGRectGetHeight(mainScreenBounds) > 667 ) {
+        factor = 38;
+    }
+    
+    return factor;
 }
 
 @end

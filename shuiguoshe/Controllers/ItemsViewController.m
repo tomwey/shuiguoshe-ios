@@ -45,7 +45,7 @@
     tableView.dataSource = self;
     tableView.delegate   = self;
     
-    tableView.rowHeight = 240;
+    tableView.rowHeight = 240 + [self factorForDevice];
     
     tableView.contentInset = UIEdgeInsetsMake(0, 0, 10, 0);
     
@@ -113,8 +113,22 @@
         itemView.item = [_dataSource objectAtIndex:index];
         
         itemView.frame = CGRectMake(padding + (width + padding/2) * i,
-                                    10, width, 230);
+                                    10, width, 230 + [self factorForDevice]);
     }
+}
+
+- (CGFloat)factorForDevice
+{
+    CGFloat factor = 0;
+    if ( CGRectGetHeight(mainScreenBounds) > 568 ) {
+        factor = 24;
+    }
+    
+    if ( CGRectGetHeight(mainScreenBounds) > 667 ) {
+        factor = 38;
+    }
+    
+    return factor;
 }
 
 @end

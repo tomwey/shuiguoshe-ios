@@ -29,12 +29,15 @@
         [_backgroundView release];
         [_backgroundView sizeToFit];
         
-        self.frame = _backgroundView.bounds;
+        CGFloat factor = CGRectGetWidth(mainScreenBounds) / 320;
+        
+        self.frame = CGRectMake(0, 0, CGRectGetWidth(mainScreenBounds),
+                                CGRectGetHeight(_backgroundView.bounds) * factor);
+        _backgroundView.frame = self.bounds;
         
         _avatarView = [[[UIImageView alloc] init] autorelease];
         [self addSubview:_avatarView];
         
-        CGFloat factor = CGRectGetWidth(mainScreenBounds) / 320;
         _avatarView.bounds = CGRectMake(0, 0, 89 * factor, 89 * factor);
         _avatarView.layer.cornerRadius = CGRectGetWidth(_avatarView.bounds) * 0.5;
         _avatarView.layer.borderWidth = 5;

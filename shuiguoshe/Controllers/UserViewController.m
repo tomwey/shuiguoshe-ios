@@ -186,7 +186,7 @@ static NSString* label2s[] = { @"收货地址管理", @"修改密码", @"退出�
     }
     
     if ( indexPath.row == 0 ) {
-        return 251 + 110;
+        return 251 * CGRectGetWidth(mainScreenBounds) / 320.0 + 110;
     }
     
     return 44;
