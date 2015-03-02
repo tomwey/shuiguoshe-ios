@@ -18,6 +18,7 @@
 - (void)forwardTo:(Forward *)aForward;
 
 - (UINavigationController *)navController;
+- (UIViewController *)homeViewController;
 
 - (CommandButton *)createCommandButton:(NSString*)imageName command:(Command *)aCommand;
 

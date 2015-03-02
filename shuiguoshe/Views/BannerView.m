@@ -92,6 +92,43 @@ NSString * const kBannerViewDidHideNotification = @"kBannerViewDidHideNotificati
     return self;
 }
 
+- (void)btnClicked:(UIGestureRecognizer*)sender
+{
+    CustomImageView* imageView = (CustomImageView *)[sender view];
+    Banner* banner = imageView.banner;
+    
+    if ( banner.link.length > 0 ) {
+        NSString* uri = [[banner.link componentsSeparatedByString:@"/"] lastObject];
+        
+        NSString *regex = @"item-\\d+";
+        NSPredicate *test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+        BOOL matches = [test evaluateWithObject:uri];
+        
+        if ( matches ) {
+            // 推广产品的广告
+            NSString* pid = [[uri componentsSeparatedByString:@"-"] lastObject];
+            Item* item = [[[Item alloc] init] autorelease];
+            item.iid = [pid integerValue];
+            
+            ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:
+                                        [Forward buildForwardWithType:ForwardTypePush
+                                                                 from:[[CoordinatorController sharedInstance] homeViewController]
+                                                     toControllerName:@"ItemDetailViewController"]];
+            aCommand.userData = item;
+            [aCommand execute];
+        } else {
+            // 普通广告
+            ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:
+                                        [Forward buildForwardWithType:ForwardTypePush
+                                                                 from:[[CoordinatorController sharedInstance] homeViewController]
+                                                     toControllerName:@"AdDetailViewController"]];
+            aCommand.userData = banner;
+            
+            [aCommand execute];
+        }
+    }
+}
+
 - (void)dealloc
 {
     [_timer invalidate];
@@ -195,6 +232,16 @@ NSString * const kBannerViewDidHideNotification = @"kBannerViewDidHideNotificati
         [imageView release];
         imageView.tag = 100 + index;
         imageView.banner = banner;
+        
+//        UIButton* btn = createButton(nil, self, @selector(btnClicked:));
+//        [imageView addSubview:btn];
+//        btn.frame = imageView.bounds;
+        
+        imageView.userInteractionEnabled = YES;
+        
+        UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnClicked:)];
+        [imageView addGestureRecognizer:tap];
+        [tap release];
     }
     [imageView setImageWithURL:[NSURL URLWithString:banner.imageUrl]];
 }

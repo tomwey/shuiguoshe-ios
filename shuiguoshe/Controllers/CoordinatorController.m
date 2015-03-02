@@ -42,6 +42,11 @@
     return _navController;
 }
 
+- (UIViewController *)homeViewController
+{
+    return _homeController;
+}
+
 - (void)forwardTo:(Forward *)aForward
 {
     UINavigationController* nav = aForward.from.navigationController;
