@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		970F4A251AA3F2A400BC0F4D /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 970F4A241AA3F2A400BC0F4D /* Section.m */; };
 		9717CFEF1A9ECB2500B1C473 /* Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9717CFEE1A9ECB2500B1C473 /* Toast.m */; };
 		9717CFF21A9EFA6A00B1C473 /* UpdateValueLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9717CFF11A9EFA6A00B1C473 /* UpdateValueLabel.m */; };
 		973820FC1A884F2500B54EEC /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 973820FB1A884F2500B54EEC /* placeholder.png */; };
@@ -163,6 +164,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		970F4A231AA3F2A400BC0F4D /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Section.h; sourceTree = "<group>"; };
+		970F4A241AA3F2A400BC0F4D /* Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Section.m; sourceTree = "<group>"; };
 		9717CFED1A9ECB2500B1C473 /* Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Toast.h; sourceTree = "<group>"; };
 		9717CFEE1A9ECB2500B1C473 /* Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Toast.m; sourceTree = "<group>"; };
 		9717CFF01A9EFA6A00B1C473 /* UpdateValueLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateValueLabel.h; sourceTree = "<group>"; };
@@ -607,6 +610,8 @@
 				979D64351AA1B2200010F78E /* Like.m */,
 				998800A91AA2D9610050582F /* Apartment.h */,
 				998800AA1AA2D9610050582F /* Apartment.m */,
+				970F4A231AA3F2A400BC0F4D /* Section.h */,
+				970F4A241AA3F2A400BC0F4D /* Section.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1051,6 +1056,7 @@
 				97B77E901AA04E4800C12733 /* DeliverInfoListViewController.m in Sources */,
 				9752017F1A89DD6A0070FE1F /* MBProgressHUD.m in Sources */,
 				9752017B1A89C2C10070FE1F /* OrderState.m in Sources */,
+				970F4A251AA3F2A400BC0F4D /* Section.m in Sources */,
 				9921EAC01A8A528C006B57D1 /* ItemDetailViewController.m in Sources */,
 				9747F9F81A8EF03B008099D4 /* NumberControl.m in Sources */,
 				99C2744B1A4EDF3300898741 /* main.m in Sources */,

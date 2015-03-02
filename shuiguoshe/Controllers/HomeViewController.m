@@ -11,6 +11,8 @@
 
 @interface HomeViewController () <UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic, copy) NSArray* dataSource;
+
 @end
 
 @implementation HomeViewController
@@ -49,11 +51,22 @@
     tableView.dataSource = self;
     tableView.delegate   = self;
     
+    [[DataService sharedService] loadEntityForClass:@"Section"
+                                                URI:@"/sections"
+                                         completion:^(id result, BOOL succeed) {
+                                             if ( succeed ) {
+                                                 self.dataSource = result;
+                                                 tableView.hidden = NO;
+                                                 [tableView reloadData];
+                                             } else {
+                                                 tableView.hidden = YES;
+                                             }
+                                         }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return [self.dataSource count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -65,25 +78,39 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    switch (indexPath.row) {
-        case 0:
-            [self addBanner:cell];
-            break;
-        case 1:
-            [self addCatalog:cell];
-            break;
-        case 2:
-            [self addItems:cell];
-            break;
+    Section* s = [self.dataSource objectAtIndex:indexPath.row];
+    
+    if ( s.name.length > 0 ) {
+        SectionView* sv = (SectionView *)[cell.contentView viewWithTag:1002];
+        if ( !sv ) {
+            sv = [[[SectionView alloc] init] autorelease];
+            [cell.contentView addSubview:sv];
+            sv.tag = 1002;
             
-        default:
-            break;
+            CGRect frame = sv.frame;
+            frame.origin = CGPointMake(20, 20);
+            sv.frame = frame;
+        }
+        
+        [sv setSectionName:s.name];
+    }
+    
+    if ( [s.identifier isEqualToString:@"banners"] ) {
+        [self addBanner:cell atIndex:indexPath.row];
+    }
+    
+    if ( [s.identifier isEqualToString:@"catalogs"] ) {
+        [self addCatalog:cell atIndex:indexPath.row];
+    }
+    
+    if ( [s.identifier isEqualToString:@"hot_items"] ) {
+        [self addItems:cell atIndex:indexPath.row];
     }
     
     return cell;
 }
 
-- (void)addBanner:(UITableViewCell *)cell
+- (void)addBanner:(UITableViewCell *)cell atIndex:(NSInteger)index
 {
     BannerView* banner = (BannerView *)[cell.contentView viewWithTag:1001];
     if ( !banner ) {
@@ -94,110 +121,77 @@
     
 }
 
-- (void)addCatalog:(UITableViewCell *)cell
+- (void)addCatalog:(UITableViewCell *)cell atIndex:(NSInteger)index
 {
-    SectionView* sv = (SectionView *)[cell.contentView viewWithTag:1002];
-    if ( !sv ) {
-        sv = [[[SectionView alloc] init] autorelease];
-        [cell.contentView addSubview:sv];
-        sv.tag = 1002;
-        
-        CGRect frame = sv.frame;
-        frame.origin = CGPointMake(20, 20);
-        sv.frame = frame;
-        
-        [sv setSectionName:@"分类选购"];
-    }
-    
     // 分类
-    [[DataService sharedService] loadEntityForClass:@"Catalog"
-                                                URI:@"/catalogs"
-                                         completion:^(id result, BOOL succeed) {
-        
-        int numberOfCol = 2;
-        CGFloat padding = 20;
-        CGFloat width = ( CGRectGetWidth(mainScreenBounds) - ( numberOfCol + 1 ) * padding ) / numberOfCol;
-        CGFloat height = 0.318 * width;
-        
-        for (int i=0; i<[result count]; i++) {
-            
-            Catalog* cata = [result objectAtIndex:i];
-            NSUInteger tag = 2000 + cata.cid;
-            CommandButton* btn = (CommandButton *)[cell.contentView viewWithTag:tag];
-            if ( !btn ) {
-                btn = [[CoordinatorController sharedInstance] createCommandButton:nil command:nil];
-                btn.tag = tag;
-                [cell.contentView addSubview:btn];
-            }
-            
-            [btn setTitle:cata.name forState:UIControlStateNormal];
-            btn.backgroundColor = RGB(232,233,232);
-            
-            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            
-            int m = i % numberOfCol;
-            int n = i / numberOfCol;
-            btn.frame = CGRectMake(padding + ( padding + width ) * m,
-                                   CGRectGetMaxY(sv.frame) + 20 + ( padding + height ) * n,
-                                   width, height);
-            
-            ForwardCommand* fc = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePush
-                                                                                                  from:self
-                                                                                      toControllerName:@"ItemsViewController"]];
-            btn.command = fc;
-            fc.userData = cata;
-            
-        }
-    }];
-}
-
-- (void)addItems:(UITableViewCell *)cell
-{
-    SectionView* sv = (SectionView *)[cell.contentView viewWithTag:1003];
-    if ( !sv ) {
-        sv = [[[SectionView alloc] init] autorelease];
-        [cell.contentView addSubview:sv];
-        sv.tag = 1003;
-        
-        CGRect frame = sv.frame;
-        frame.origin = CGPointMake(20, 20);
-        sv.frame = frame;
-        
-        [sv setSectionName:@"热门订购"];
-    }
+    Section* s = [self.dataSource objectAtIndex:index];
     
-    // 热门订购
-    [[DataService sharedService] loadEntityForClass:@"Item"
-                                                URI:@"/items/hot"
-                                         completion:^(id result, BOOL succeed) {
+    int numberOfCol = 2;
+    CGFloat padding = 20;
+    CGFloat width = ( CGRectGetWidth(mainScreenBounds) - ( numberOfCol + 1 ) * padding ) / numberOfCol;
+    CGFloat height = 48;
+    
+    for (int i=0; i<[s.data count]; i++) {
         
-        int numberOfCol = 2;
-        CGFloat padding = 20;
-        CGFloat width = ( CGRectGetWidth(mainScreenBounds) - numberOfCol * padding - padding / 2 ) / numberOfCol;
-                                            
-        for (int i=0; i<[result count]; i++) {
-            ItemView* itemView = (ItemView *)[cell.contentView viewWithTag:3000+i];
-            if ( !itemView ) {
-                itemView = [[[ItemView alloc] init] autorelease];
-                itemView.tag = 3000 + i;
-                [cell.contentView addSubview:itemView];
-            }
-            
-            itemView.item = [result objectAtIndex:i];
-            
-            int m = i % numberOfCol;
-            int n = i / numberOfCol;
-            
-            itemView.frame = CGRectMake(padding + (width + padding/2) * m,
-                                        CGRectGetMaxY(sv.frame) + 20 + ( 230 + padding ) * n, width, 230);
+        Catalog* cata = [s.data objectAtIndex:i];
+        NSUInteger tag = 2000 + cata.cid;
+        CommandButton* btn = (CommandButton *)[cell.contentView viewWithTag:tag];
+        if ( !btn ) {
+            btn = [[CoordinatorController sharedInstance] createCommandButton:nil command:nil];
+            btn.tag = tag;
+            [cell.contentView addSubview:btn];
         }
-    }];
+        
+        [btn setTitle:cata.name forState:UIControlStateNormal];
+        btn.backgroundColor = RGB(232,233,232);
+        
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        
+        int m = i % numberOfCol;
+        int n = i / numberOfCol;
+        btn.frame = CGRectMake(padding + ( padding + width ) * m,
+                               30 + 20 + ( padding + height ) * n,
+                               width, height);
+        
+        ForwardCommand* fc = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePush
+                                                                                              from:self
+                                                                                  toControllerName:@"ItemsViewController"]];
+        btn.command = fc;
+        fc.userData = cata;
+        
+    }
 }
 
-static CGFloat heights[] = { 120, 160, 800 };
+- (void)addItems:(UITableViewCell *)cell atIndex:(NSInteger)index
+{
+    Section* s = [self.dataSource objectAtIndex:index];
+        
+    int numberOfCol = 2;
+    CGFloat padding = 20;
+    CGFloat width = ( CGRectGetWidth(mainScreenBounds) - numberOfCol * padding - padding / 2 ) / numberOfCol;
+                                        
+    for (int i=0; i<[s.data count]; i++) {
+        ItemView* itemView = (ItemView *)[cell.contentView viewWithTag:3000+i];
+        if ( !itemView ) {
+            itemView = [[[ItemView alloc] init] autorelease];
+            itemView.tag = 3000 + i;
+            [cell.contentView addSubview:itemView];
+        }
+        
+        itemView.item = [s.data objectAtIndex:i];
+        
+        int m = i % numberOfCol;
+        int n = i / numberOfCol;
+        
+        itemView.frame = CGRectMake(padding + (width + padding/2) * m,
+                                    30 + 20 + ( 230 + padding ) * n, width, 230);
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return heights[indexPath.row];
+    Section* s = [self.dataSource objectAtIndex:indexPath.row];
+    return s.height;
 }
 
 @end
