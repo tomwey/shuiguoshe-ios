@@ -24,7 +24,10 @@
 //#define kAPIHost @"http://192.168.1.131:3000/api/v1"
 
 // 公司
-#define kAPIHost @"http://10.0.16.11:3000/api/v1"
+//#define kAPIHost @"http://10.0.16.11:3000/api/v1"
+
+// 产品
+#define kAPIHost @"http://shuiguoshe.com/api/v1"
 
 static inline UIButton* createButton(NSString* imageName, id target, SEL action)
 {

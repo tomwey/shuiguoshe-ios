@@ -279,7 +279,8 @@ static NSString* controllers[] = {@"ScoreListViewController", @"LikeListViewCont
                                                  _tableView.hidden = NO;
                                                  [_tableView reloadData];
                                              } else {
-                                                 _tableView.hidden = YES;
+//                                                 [Toast showText:@"登录失败"];
+//                                                 _tableView.hidden = YES;
                                              }
                                              
                                          }];

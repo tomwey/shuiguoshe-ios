@@ -69,8 +69,8 @@ NSString * const kBannerViewDidHideNotification = @"kBannerViewDidHideNotificati
         [self bringSubviewToFront:_pager];
         _pager.hidesForSinglePage = YES;
         
-        _pager.pageIndicatorTintColor = [UIColor blackColor];
-        _pager.currentPageIndicatorTintColor = [UIColor redColor];//RGB(99, 185, 76);
+//        _pager.pageIndicatorTintColor = [UIColor blackColor];
+//        _pager.currentPageIndicatorTintColor = [UIColor redColor];//RGB(99, 185, 76);
         
         _timer = [NSTimer scheduledTimerWithTimeInterval:3.0
                                                  target:self

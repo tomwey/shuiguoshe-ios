@@ -8,10 +8,26 @@
 	<string>水果社</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>29x29.png</string>
+		<string>29x29@2x.png</string>
+		<string>29x29@3x.png</string>
+		<string>40x40.png</string>
+		<string>40x40@2x.png</string>
+		<string>40x40@3x.png</string>
+		<string>57x57.png</string>
+		<string>57x57@2x.png</string>
+		<string>60x60.png</string>
+		<string>60x60@2x.png</string>
+		<string>60x60@3x.png</string>
+	</array>
 	<key>CFBundleIdentifier</key>
-	<string>com.kekestudio.shuiguoshe.$(PRODUCT_NAME:rfc1034identifier)</string>
+	<string>com.kekestudio.$(PRODUCT_NAME:rfc1034identifier)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>CFBundleName</key>
 	<string>水果社</string>
 	<key>CFBundlePackageType</key>
@@ -23,6 +39,8 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

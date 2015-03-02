@@ -28,7 +28,12 @@
 {
     if ( self = [super init] ) {
         
-        [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
+        if ( [[UINavigationBar appearance] respondsToSelector:@selector(setBarTintColor:)] ) {
+            [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
+        } else {
+            [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+        }
+        
         [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
         
         _homeController = [[[HomeViewController alloc] init] autorelease];
