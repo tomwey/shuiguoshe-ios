@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString * const kBannerViewDidShowNotification;
+extern NSString * const kBannerViewDidHideNotification;
+
 @interface BannerView : UIView
 
 - (void)setDataSource:(NSArray *)data;
+
+- (void)startLoop;
+- (void)stopLoop;
 
 @end

@@ -16,6 +16,9 @@
 @end
 
 @implementation HomeViewController
+{
+    BannerView* _bannerView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -62,6 +65,18 @@
                                                  tableView.hidden = YES;
                                              }
                                          }];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [_bannerView startLoop];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [_bannerView stopLoop];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -118,6 +133,8 @@
         [cell.contentView addSubview:banner];
         banner.tag = 1001;
     }
+    
+    _bannerView = banner;
     
     Section* s = [self.dataSource objectAtIndex:index];
     [banner setDataSource:s.data];
