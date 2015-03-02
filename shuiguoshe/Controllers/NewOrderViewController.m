@@ -77,11 +77,9 @@
     toolbar.items = @[textItem, flexItem, commitItem];
     
     __block NewOrderViewController* me = self;
-    [MBProgressHUD showHUDAddedTo:AppWindow() animated:YES];
     [[DataService sharedService] loadEntityForClass:@"NewOrderInfo"
                                                 URI:[NSString stringWithFormat:@"/cart/items?token=%@", [[UserService sharedService] token]]
                                          completion:^(id result, BOOL succeed) {
-                                             [MBProgressHUD hideHUDForView:AppWindow() animated:YES];
                                              if ( succeed ) {
                                                  me.orderInfo = result;
                                                  me->_tableView.hidden = NO;
@@ -93,11 +91,6 @@
                                                  me->_tableView.hidden = YES;
                                              }
                                          }];
-    
-//    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self
-//                                                                          action:@selector(hideKeyboard)];
-//    [self.view addGestureRecognizer:tap];
-//    [tap release];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didUpdateDeliverInfo:)

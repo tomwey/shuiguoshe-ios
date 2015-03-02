@@ -24,6 +24,7 @@
 @property (nonatomic, assign) CGFloat originPrice;
 
 @property (nonatomic, assign) NSUInteger discountScore;
+@property (nonatomic, copy) NSString* discountedAt;
 
 @property (nonatomic, copy) NSString* unit;
 

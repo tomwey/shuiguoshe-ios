@@ -21,6 +21,10 @@
 @end
 
 @implementation ItemDetailViewController
+{
+    DetailToolbar* _toolbar;
+    UITableView*   _tableView;
+}
 
 - (void)viewDidLoad
 {
@@ -33,32 +37,22 @@
     CGRect frame = self.view.bounds;
     frame.size.height -= 49;
     
-    UITableView* tableView = [[UITableView alloc] initWithFrame:frame
+    _tableView = [[UITableView alloc] initWithFrame:frame
                                                           style:UITableViewStylePlain];
     
-    [self.view addSubview:tableView];
-    [tableView release];
+    [self.view addSubview:_tableView];
+    [_tableView release];
     
-    tableView.dataSource = self;
-    tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
     
-//    if ( [tableView respondsToSelector:@selector(setSeparatorInset:)] ) {
-//        tableView.separatorInset = UIEdgeInsetsZero;
-//    }
-//    
-//    if ( [tableView respondsToSelector:@selector(setLayoutMargins:)] ) {
-//        tableView.layoutMargins = UIEdgeInsetsZero;
-//    }
-    
-//    tableView.separatorColor = [UIColor clearColor];
-    
-    tableView.tableFooterView = [[[UIView alloc] init] autorelease];
+    _tableView.tableFooterView = [[[UIView alloc] init] autorelease];
     
     __block ItemDetailViewController* me = self;
-    DetailToolbar* toolbar = [[[DetailToolbar alloc] init] autorelease];
-    [self.view addSubview:toolbar];
+    _toolbar = [[[DetailToolbar alloc] init] autorelease];
+    [self.view addSubview:_toolbar];
     
-    toolbar.checkUserLoginBlock = ^{
+    _toolbar.checkUserLoginBlock = ^{
         if ( [[UserService sharedService] isLogin] == NO ) {
             ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypeModal
                                                                                                         from:me
@@ -69,22 +63,40 @@
         return YES;
     };
     
-    frame = toolbar.frame;
+    frame = _toolbar.frame;
     frame.origin = CGPointMake(0, CGRectGetHeight(mainScreenBounds) - CGRectGetHeight(frame));
-    toolbar.frame = frame;
+    _toolbar.frame = frame;
     
+    [self loadItemDetail];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didBecomeActive)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
+}
+
+- (void)loadItemDetail
+{
+    __block ItemDetailViewController* me = self;
     [[DataService sharedService] loadEntityForClass:@"ItemDetail"
                                                 URI:[NSString stringWithFormat:@"/items/%d",
                                                      [self.userData iid]]
                                          completion:^(id result, BOOL succeed) {
                                              me.itemDetail = result;
                                              
-//                                             me.itemDetail.itemId = me.item.iid;
-                                             toolbar.itemDetail = me.itemDetail;
+                                             //                                             me.itemDetail.itemId = me.item.iid;
+                                             _toolbar.itemDetail = me.itemDetail;
                                              
-                                             [tableView reloadData];
+                                             [_tableView reloadData];
                                          }];
-    
+}
+
+- (void)didBecomeActive
+{
+    if ( self.itemDetail.discountedAt.length != 0 &&
+        ![self.itemDetail.discountedAt isEqualToString:@"0"]) {
+        [self loadItemDetail];
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -190,6 +202,26 @@
                                         CGRectGetMinY(priceLabel.frame) + 2,
                                         100, CGRectGetHeight(priceLabel.frame));
     originPriceLabel.text = self.itemDetail.originPriceText;
+    
+    if ( self.itemDetail.discountedAt.length != 0 &&
+        ![@"0" isEqualToString:self.itemDetail.discountedAt]) {
+        TimerLabel* label = (TimerLabel *)[cell.contentView viewWithTag:168];
+        if ( !label ) {
+            label = [[[TimerLabel alloc] init] autorelease];
+            [cell.contentView addSubview:label];
+            label.tag = 168;
+            CGRect frame = label.frame;
+            frame.origin = CGPointMake(15, CGRectGetMaxY(originPriceLabel.frame));
+            label.frame = frame;
+        }
+        
+        if ( self.itemDetail.discountedAt.length > 1 ) {
+            label.leftSeconds = [self.itemDetail.discountedAt longLongValue];
+        }
+        
+    } else {
+        [cell.contentView viewWithTag:168].hidden = YES;
+    }
 }
 
 - (void)addContentForTwoCell:(UITableViewCell *)cell
@@ -365,7 +397,12 @@
                                               constrainedToSize:CGSizeMake(width - kLeftMargin * 2, 1000)
                                                   lineBreakMode:NSLineBreakByWordWrapping];
             
-            return height + size.height + size2.height + 20;
+            CGFloat dt = 0;
+            if ( self.itemDetail.discountedAt.length != 0 &&
+                ![self.itemDetail.discountedAt isEqualToString:@"0"]) {
+                dt = 30;
+            }
+            return height + size.height + size2.height + 20 + dt;
         }
             
         case 1: {

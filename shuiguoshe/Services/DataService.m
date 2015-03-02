@@ -150,12 +150,13 @@
 //        return;
 //    }
     
+    [self startRequest];
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              
              dispatch_async(dispatch_get_main_queue(), ^{
-//                 [self finishRequest];
+                 [self finishRequest];
              
                  int code = [[responseObject objectForKey:@"code"] intValue];
                  
@@ -174,7 +175,7 @@
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Load Entity Error: %@", error);
-//             [self finishRequest];
+             [self finishRequest];
              if ( completion ) {
                  completion(nil, NO);
              }

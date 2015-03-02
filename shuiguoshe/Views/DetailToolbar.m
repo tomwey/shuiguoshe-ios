@@ -19,6 +19,7 @@
 {
     UIImageView* _bgView;
     UIImageView* _likeView;
+    UIButton* addToCart;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -33,7 +34,7 @@
         
         _bgView.frame = self.bounds;
         
-        UIButton* addToCart = createButton(@"btn_add_to_cart.png", self, @selector(addToCart:));
+        addToCart = createButton(@"btn_add_to_cart.png", self, @selector(addToCart:));
         [self addSubview:addToCart];
         
         addToCart.center = CGPointMake(CGRectGetWidth(self.bounds) - CGRectGetWidth(mainScreenBounds) * 28 / 320 - CGRectGetWidth(addToCart.bounds) / 2,
@@ -56,13 +57,24 @@
         
         UITapGestureRecognizer* tap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleLike)] autorelease];
         [_likeView addGestureRecognizer:tap];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(timerDidEnd)
+                                                     name:@"kTimerDidEndNotification"
+                                                   object:nil];
     }
     
     return self;
 }
 
+- (void)timerDidEnd
+{
+    addToCart.enabled = NO;
+}
+
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.itemDetail = nil;
     self.checkUserLoginBlock = nil;
     

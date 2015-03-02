@@ -148,6 +148,7 @@ static inline UIWindow* AppWindow()
 #import "NumberControl.h"
 #import "UpdateValueLabel.h"
 #import "OrderCellView.h"
+#import "TimerLabel.h"
 
 #import "BaseViewController.h"
 #import "HomeViewController.h"

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		970F4A251AA3F2A400BC0F4D /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 970F4A241AA3F2A400BC0F4D /* Section.m */; };
+		970F4A281AA42AD000BC0F4D /* TimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 970F4A271AA42AD000BC0F4D /* TimerLabel.m */; };
 		9717CFEF1A9ECB2500B1C473 /* Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9717CFEE1A9ECB2500B1C473 /* Toast.m */; };
 		9717CFF21A9EFA6A00B1C473 /* UpdateValueLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9717CFF11A9EFA6A00B1C473 /* UpdateValueLabel.m */; };
 		973820FC1A884F2500B54EEC /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 973820FB1A884F2500B54EEC /* placeholder.png */; };
@@ -166,6 +167,8 @@
 /* Begin PBXFileReference section */
 		970F4A231AA3F2A400BC0F4D /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Section.h; sourceTree = "<group>"; };
 		970F4A241AA3F2A400BC0F4D /* Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Section.m; sourceTree = "<group>"; };
+		970F4A261AA42AD000BC0F4D /* TimerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimerLabel.h; sourceTree = "<group>"; };
+		970F4A271AA42AD000BC0F4D /* TimerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimerLabel.m; sourceTree = "<group>"; };
 		9717CFED1A9ECB2500B1C473 /* Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Toast.h; sourceTree = "<group>"; };
 		9717CFEE1A9ECB2500B1C473 /* Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Toast.m; sourceTree = "<group>"; };
 		9717CFF01A9EFA6A00B1C473 /* UpdateValueLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateValueLabel.h; sourceTree = "<group>"; };
@@ -768,6 +771,8 @@
 				9717CFF11A9EFA6A00B1C473 /* UpdateValueLabel.m */,
 				979D642A1AA17EE40010F78E /* OrderCellView.h */,
 				979D642B1AA17EE40010F78E /* OrderCellView.m */,
+				970F4A261AA42AD000BC0F4D /* TimerLabel.h */,
+				970F4A271AA42AD000BC0F4D /* TimerLabel.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1015,6 +1020,7 @@
 				9747F9ED1A8EE49F008099D4 /* Checkbox.m in Sources */,
 				976EF3031A8C3E2B00A94B15 /* Forward.m in Sources */,
 				97D1E3A31A8B3A2600A8B3B6 /* DetailToolbar.m in Sources */,
+				970F4A281AA42AD000BC0F4D /* TimerLabel.m in Sources */,
 				99C274DA1A4EEE1900898741 /* AFURLRequestSerialization.m in Sources */,
 				99C274BF1A4EECD000898741 /* BannerView.m in Sources */,
 				979D64331AA1AB180010F78E /* ScoreTrace.m in Sources */,

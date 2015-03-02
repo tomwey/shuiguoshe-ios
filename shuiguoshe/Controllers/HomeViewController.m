@@ -119,6 +119,9 @@
         banner.tag = 1001;
     }
     
+    Section* s = [self.dataSource objectAtIndex:index];
+    [banner setDataSource:s.data];
+    
 }
 
 - (void)addCatalog:(UITableViewCell *)cell atIndex:(NSInteger)index

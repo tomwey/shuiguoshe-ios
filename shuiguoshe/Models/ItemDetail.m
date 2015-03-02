@@ -22,6 +22,7 @@
         self.unit = [jsonResult objectForKey:@"units"];
         
         self.discountScore = [[jsonResult objectForKey:@"discount_score"] integerValue];
+        self.discountedAt = [jsonResult objectForKey:@"discounted_at"];
         
         self.largeImage = [jsonResult objectForKey:@"large_image"];
         self.note = [jsonResult objectForKey:@"note"];
@@ -69,6 +70,7 @@
     self.note = nil;
     self.deliverInfo = nil;
     self.photos = nil;
+    self.discountedAt = nil;
     
     [super dealloc];
 }

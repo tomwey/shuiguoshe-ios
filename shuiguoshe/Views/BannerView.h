@@ -10,4 +10,6 @@
 
 @interface BannerView : UIView
 
+- (void)setDataSource:(NSArray *)data;
+
 @end
