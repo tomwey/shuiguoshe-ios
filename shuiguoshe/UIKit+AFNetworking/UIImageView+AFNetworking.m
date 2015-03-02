@@ -127,6 +127,22 @@
 {
     [self cancelImageRequestOperation];
 
+    UIImageView* spiner = (UIImageView *)[self viewWithTag:10241];
+    if ( !spiner ) {
+        spiner = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"default_logo.png"]];
+        
+        CGFloat width = CGRectGetWidth(self.bounds);
+        CGFloat height = CGRectGetHeight(self.bounds);
+        CGFloat dtWidth = MIN(width, height);
+        
+        spiner.frame = CGRectMake(0, 0, 40, 40);
+        spiner.center = CGPointMake(CGRectGetMidX(self.bounds),
+                                    CGRectGetMidY(self.bounds));
+        spiner.tag = 10241;
+        [self addSubview:spiner];
+//        [spiner release];
+    }
+    
     UIImage *cachedImage = [[[self class] sharedImageCache] cachedImageForRequest:urlRequest];
     if (cachedImage) {
         if (success) {
@@ -134,17 +150,23 @@
         } else {
             self.image = cachedImage;
         }
-
+        
+        spiner.hidden = YES;
+        
         self.af_imageRequestOperation = nil;
     } else {
         if (placeholderImage) {
             self.image = placeholderImage;
         }
         
+        spiner.hidden = NO;
+        [self bringSubviewToFront:spiner];
+        
         __weak __typeof(self)weakSelf = self;
         self.af_imageRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
         self.af_imageRequestOperation.responseSerializer = self.imageResponseSerializer;
         [self.af_imageRequestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            spiner.hidden = YES;
             __strong __typeof(weakSelf)strongSelf = weakSelf;
             if ([[urlRequest URL] isEqual:[strongSelf.af_imageRequestOperation.request URL]]) {
                 if (success) {

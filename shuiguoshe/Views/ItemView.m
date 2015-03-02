@@ -104,7 +104,13 @@
         [_item release];
         _item = [item retain];
         
-        [_avatarView setImageWithURL:[NSURL URLWithString:item.thumbImageUrl] placeholderImage:nil];
+        CGRect bounds = self.bounds;
+        
+        CGFloat dt = 6;
+        CGFloat width = CGRectGetWidth(bounds) - dt;
+        _avatarView.frame = CGRectMake(dt/2, dt/2, width, width * 5 / 6);
+        
+        [_avatarView setImageWithURL:[NSURL URLWithString:item.thumbImageUrl] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
         _titleLabel.text = item.title;
         _unitLabel.text = item.unit;
         _priceLabel.text = item.lowPriceText;

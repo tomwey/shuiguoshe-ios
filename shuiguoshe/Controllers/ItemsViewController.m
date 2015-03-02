@@ -110,10 +110,9 @@
             [cell.contentView addSubview:itemView];
         }
         
-        itemView.item = [_dataSource objectAtIndex:index];
-        
         itemView.frame = CGRectMake(padding + (width + padding/2) * i,
                                     10, width, 230 + [self factorForDevice]);
+        itemView.item = [_dataSource objectAtIndex:index];
     }
 }
 

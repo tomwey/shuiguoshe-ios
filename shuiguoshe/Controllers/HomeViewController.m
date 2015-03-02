@@ -203,14 +203,14 @@
             [cell.contentView addSubview:itemView];
         }
         
-        itemView.item = [s.data objectAtIndex:i];
-        
         int m = i % numberOfCol;
         int n = i / numberOfCol;
         
         itemView.frame = CGRectMake(padding + (width + padding/2) * m,
                                     30 + 20 + ( 230 + factor + padding ) * n,
                                     width, 230 + factor);
+        
+        itemView.item = [s.data objectAtIndex:i];
     }
 }
 

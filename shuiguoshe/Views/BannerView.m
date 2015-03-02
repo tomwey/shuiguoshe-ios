@@ -243,7 +243,7 @@ NSString * const kBannerViewDidHideNotification = @"kBannerViewDidHideNotificati
         [imageView addGestureRecognizer:tap];
         [tap release];
     }
-    [imageView setImageWithURL:[NSURL URLWithString:banner.imageUrl]];
+    [imageView setImageWithURL:[NSURL URLWithString:banner.imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
