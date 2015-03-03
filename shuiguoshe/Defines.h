@@ -29,6 +29,10 @@
 // 产品
 #define kAPIHost @"http://shuiguoshe.com/api/v1"
 
+// 微信分享
+#define kWechatAppID @"wx4accd427c1693a84"
+#define kWechatAppSecret @"d78c7620e1590330159ff4f3255ee7b5"
+
 static inline UIButton* createButton(NSString* imageName, id target, SEL action)
 {
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -158,7 +158,7 @@ static int rows[] = { 2, 3, 3 };
 
 - (NSArray *)loadOrderStates:(User *)u
 {
-    OrderState* os1 = [OrderState stateWithName:@"带配送" quantity:u.deliveringCount stateType:OrderStateTypeDelivering];
+    OrderState* os1 = [OrderState stateWithName:@"待配送" quantity:u.deliveringCount stateType:OrderStateTypeDelivering];
     
     OrderState* os2 = [OrderState stateWithName:@"已完成" quantity:u.completedCount stateType:OrderStateTypeDone];
     

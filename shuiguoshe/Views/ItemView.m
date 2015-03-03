@@ -114,6 +114,7 @@
         _titleLabel.text = item.title;
         _unitLabel.text = item.unit;
         _priceLabel.text = item.lowPriceText;
+        
         _originPriceLabel.text = item.originPriceText;
         
         CGSize size2 = [_priceLabel.text sizeWithFont:_priceLabel.font
@@ -159,6 +160,7 @@
     
     frame = _priceLabel.frame;
     frame.origin.x = CGRectGetMaxX(frame) + 3;
+    frame.size.width += 50;
     _originPriceLabel.frame = frame;
     
     frame = _saleCountLabel.bounds;
