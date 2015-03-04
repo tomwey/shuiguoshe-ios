@@ -7,6 +7,7 @@
 //
 
 #import "Share2WeiXinCommand.h"
+#import "Defines.h"
 
 @implementation Share2WeiXinCommand
 
@@ -20,11 +21,19 @@
 
 - (void)execute:(void (^)(id))result
 {
-    if ( self.shareType == ShareWeiXinTypeFriend ) {
-        NSLog(@"分享到微信好友");
-    } else {
-        NSLog(@"分享到微信朋友圈");
+    ItemDetail* item = self.userData;
+    UIImage* image = [[UIImageView sharedImageCache] cachedImageForRequest:[NSURLRequest requestWithURL:
+                                                                            [NSURL URLWithString:item.largeImage]]];
+    if ( !image ) {
+        [Toast showText:@"图片还在加载中，不能分享"];
+        return;
     }
+    
+    [[KKShareWeiXin sharedManager] sendNews:item.title
+                                description:[NSString stringWithFormat:@"%@", [item lowPriceText]]
+                                 thumbImage:image
+                                 webpageUrl:[NSString stringWithFormat:@"http://shuiguoshe.com/item-%d", item.itemId]
+                                WXSceneType:(int)self.shareType];
 }
 
 @end

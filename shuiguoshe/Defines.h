@@ -33,6 +33,9 @@
 #define kWechatAppID @"wx4accd427c1693a84"
 #define kWechatAppSecret @"d78c7620e1590330159ff4f3255ee7b5"
 
+// QQ分享
+#define kQQOpenAppId @"222222"
+
 static inline UIButton* createButton(NSString* imageName, id target, SEL action)
 {
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -100,6 +103,12 @@ static inline UIWindow* AppWindow()
 
 #import "AFNetworking.h"
 
+#import "WXApi.h"
+
+#import "KKShareWeiXin.h"
+#import "KKShareQQZone.h"
+#import "QQShareManager.h"
+
 #import "Banner.h"
 #import "Sale.h"
 #import "Item.h"
@@ -157,6 +166,7 @@ static inline UIWindow* AppWindow()
 #import "OrderCellView.h"
 #import "TimerLabel.h"
 #import "ShareView.h"
+#import "QQShareView.h"
 
 #import "BaseViewController.h"
 #import "HomeViewController.h"

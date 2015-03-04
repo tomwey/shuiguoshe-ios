@@ -9,8 +9,8 @@
 #import "Command.h"
 
 typedef NS_ENUM(NSInteger, ShareWeiXinType) {
-    ShareWeiXinTypeFriend,
-    ShareWeiXinTypeAllFriends,
+    ShareWeiXinTypeFriend = 11,
+    ShareWeiXinTypeAllFriends = 12,
 };
 
 @interface Share2WeiXinCommand : Command
