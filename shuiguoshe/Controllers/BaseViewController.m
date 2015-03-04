@@ -16,6 +16,7 @@
 @implementation BaseViewController
 {
     UILabel* _cartLabel;
+    UILabel* _titleLabel;
 }
 
 - (BOOL)shouldShowingCart
@@ -27,6 +28,13 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    if ( [[[UIDevice currentDevice] systemVersion] floatValue] < 7.0 ) {
+        UILabel* titleLabel = createLabel(CGRectMake(0, 0, 150, 37), NSTextAlignmentCenter, [UIColor blackColor],
+                                          [UIFont boldSystemFontOfSize:18]);
+        self.navigationItem.titleView = titleLabel;
+        _titleLabel = titleLabel;
+    }
     
     if ( [self shouldShowingCart] ) {
         ForwardCommand* aCommand = [[[ForwardCommand alloc] init] autorelease];
@@ -63,6 +71,15 @@
     [self.view addGestureRecognizer:leftSwipe];
     leftSwipe.direction = UISwipeGestureRecognizerDirectionRight;
     [leftSwipe release];
+}
+
+- (void)setTitle:(NSString *)title
+{
+    if ( [[[UIDevice currentDevice] systemVersion] floatValue] < 7.0 ) {
+        _titleLabel.text = title;
+    } else {
+        [super setTitle:title];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

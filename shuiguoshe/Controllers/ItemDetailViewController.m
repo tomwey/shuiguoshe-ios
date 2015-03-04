@@ -35,7 +35,7 @@
 //    self.item = self.userData;
     
     CGRect frame = self.view.bounds;
-    frame.size.height -= 49;
+    frame.size.height -= (49 + NavigationBarHeight());
     
     _tableView = [[UITableView alloc] initWithFrame:frame
                                                           style:UITableViewStylePlain];
@@ -64,7 +64,7 @@
     };
     
     frame = _toolbar.frame;
-    frame.origin = CGPointMake(0, CGRectGetHeight(mainScreenBounds) - CGRectGetHeight(frame));
+    frame.origin = CGPointMake(0, CGRectGetHeight(mainScreenBounds) - CGRectGetHeight(frame) - NavigationBarAndStatusBarHeight());
     _toolbar.frame = frame;
     
     [self loadItemDetail];

@@ -37,12 +37,14 @@
     self.title = @"确认订单";
     
     CGRect bounds = self.view.bounds;
-    bounds.size.height -= 49;
+    bounds.size.height -= 49 + NavigationBarHeight();
     
     _tableView = [[UITableView alloc] initWithFrame:bounds style:UITableViewStyleGrouped];
     
     [self.view addSubview:_tableView];
     [_tableView release];
+    
+    _tableView.backgroundView = nil;
     
     _tableView.dataSource = self;
     _tableView.delegate = self;
@@ -60,10 +62,14 @@
     [commitBtn addTarget:self action:@selector(commit) forControlEvents:UIControlEventTouchUpInside];
     commitBtn.enabled = NO;
     
-    UIToolbar* toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(mainScreenBounds) - 49,
+    UIToolbar* toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(mainScreenBounds) - 49 - NavigationBarAndStatusBarHeight(),
                                                                      CGRectGetWidth(mainScreenBounds), 49)];
     [self.view addSubview:toolbar];
     [toolbar release];
+    
+    if ( [[[UIDevice currentDevice] systemVersion] floatValue] < 7.0 ) {
+        [toolbar setTintColor:[UIColor whiteColor]];
+    }
     
     _resultLabel = createLabel(CGRectMake(0, 0, 240, 37), NSTextAlignmentLeft, [UIColor blackColor], [UIFont systemFontOfSize:14]);
     UIBarButtonItem* textItem = [[[UIBarButtonItem alloc] initWithCustomView:_resultLabel] autorelease];
@@ -134,12 +140,15 @@
     CGFloat discountPrice = self.orderInfo.userScore / 100.0;
     int total = ( self.orderInfo.totalPrice * 100 - self.orderInfo.userScore );
     CGFloat totalPrice = total / 100.0;
-    
+    NSString* note = [_noteField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if ( !note ) {
+        note = @"";
+    }
     [[DataService sharedService] post:@"/user/orders" params:@{ @"token": [[UserService sharedService] token],
                                                            @"score": NSStringFromInteger(self.orderInfo.userScore),
                                                            @"order_info": @{
                                                                     @"deliver_info_id": NSStringFromInteger(self.orderInfo.deliverInfo.infoId),
-                                                                    @"note": [_noteField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],
+                                                                    @"note": note,
                                                                     @"total_price": [NSString stringWithFormat:@"%.2f", totalPrice],
                                                                     @"discount_price": [NSString stringWithFormat:@"%.2f", discountPrice]
                                                                     
@@ -415,7 +424,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
             //
             UILabel* priceLabel = (UILabel *)[cell.contentView viewWithTag:2001];
             if ( !priceLabel ) {
-                priceLabel = createLabel(CGRectMake(CGRectGetWidth(mainScreenBounds) - leftMargin - 160,
+                priceLabel = createLabel(CGRectMake(CGRectGetWidth(mainScreenBounds) - leftMargin - 160 - 20,
                                                     CGRectGetMinY(label.frame), 160, 30),
                                     NSTextAlignmentRight,
                                     GREEN_COLOR,

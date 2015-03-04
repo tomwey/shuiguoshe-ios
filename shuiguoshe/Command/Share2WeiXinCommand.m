@@ -22,18 +22,34 @@
 - (void)execute:(void (^)(id))result
 {
     ItemDetail* item = self.userData;
-    UIImage* image = [[UIImageView sharedImageCache] cachedImageForRequest:[NSURLRequest requestWithURL:
-                                                                            [NSURL URLWithString:item.largeImage]]];
-    if ( !image ) {
-        [Toast showText:@"图片还在加载中，不能分享"];
-        return;
-    }
+//    UIImage* image = [[UIImageView sharedImageCache] cachedImageForRequest:[NSURLRequest requestWithURL:
+//                                                                            [NSURL URLWithString:item.largeImage]]];
+//    if ( !image ) {
+//        [Toast showText:@"图片还在加载中，不能分享"];
+//        return;
+//    }
+    [MBProgressHUD showHUDAddedTo:AppWindow() animated:YES];
     
-    [[KKShareWeiXin sharedManager] sendNews:item.title
-                                description:[NSString stringWithFormat:@"%@", [item lowPriceText]]
-                                 thumbImage:image
-                                 webpageUrl:[NSString stringWithFormat:@"http://shuiguoshe.com/item-%d", item.itemId]
-                                WXSceneType:(int)self.shareType];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        UIImage* image = [UIImage imageWithData:
+                          [NSData dataWithContentsOfURL:[NSURL URLWithString:item.largeImage]]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:AppWindow() animated:YES];
+            if ( image ) {
+                [[KKShareWeiXin sharedManager] sendNews:item.title
+                                            description:[NSString stringWithFormat:@"%@", [item lowPriceText]]
+                                             thumbImage:image
+                                             webpageUrl:[NSString stringWithFormat:@"http://shuiguoshe.com/item-%d", item.itemId]
+                                            WXSceneType:(int)self.shareType];
+            } else {
+                [Toast showText:@"没找到要分享的图片，稍后再试"];
+            }
+        });
+        
+    });
+    
+    
 }
 
 @end

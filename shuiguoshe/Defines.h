@@ -34,7 +34,25 @@
 #define kWechatAppSecret @"d78c7620e1590330159ff4f3255ee7b5"
 
 // QQ分享
-#define kQQOpenAppId @"222222"
+#define kQQOpenAppId @"1104304977"
+
+static inline CGFloat NavigationBarAndStatusBarHeight()
+{
+    if ( [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 ) {
+        return 0;
+    }
+    
+    return 64.0;
+};
+
+static inline CGFloat NavigationBarHeight()
+{
+    if ( [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 ) {
+        return 0;
+    }
+    
+    return 44.0;
+};
 
 static inline UIButton* createButton(NSString* imageName, id target, SEL action)
 {

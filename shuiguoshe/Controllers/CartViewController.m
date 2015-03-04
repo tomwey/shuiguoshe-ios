@@ -41,7 +41,7 @@
                                                       toController:nil]]];
     
     CGRect frame = self.view.bounds;
-    frame.size.height -= 49;
+    frame.size.height -= (49 + NavigationBarHeight());
     
     _tableView = [[UITableView alloc] initWithFrame:frame style:UITableViewStylePlain];
     [self.view addSubview:_tableView];
@@ -114,11 +114,15 @@
 
 - (void)initToolbar
 {
-    _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(mainScreenBounds) - 49,
+    _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(mainScreenBounds) - 49 - NavigationBarAndStatusBarHeight(),
                                                                      CGRectGetWidth(mainScreenBounds),
                                                                      49)];
     [self.view addSubview:_toolbar];
     [_toolbar release];
+    
+    if ( [[[UIDevice currentDevice] systemVersion] floatValue] < 7.0 ) {
+        [_toolbar setTintColor:[UIColor whiteColor]];
+    }
     
     _selectAll = [[[Checkbox alloc] init] autorelease];
     _selectAll.label = @"全选";

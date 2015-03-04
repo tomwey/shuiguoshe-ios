@@ -16,14 +16,14 @@
 //    NSLog(@"分享到QQ空间");
     ItemDetail* item = self.userData;
     
-    UIImage* image = [[UIImageView sharedImageCache] cachedImageForRequest:[NSURLRequest requestWithURL:
-                                                           [NSURL URLWithString:item.largeImage]]];
+//    UIImage* image = [[UIImageView sharedImageCache] cachedImageForRequest:[NSURLRequest requestWithURL:
+//                                                           [NSURL URLWithString:item.largeImage]]];
+//    
+//    if ( !image ) {
+//        [Toast showText:@"图片还在加载，请稍等"];
+//        return;
+//    }
     
-    if ( !image ) {
-        [Toast showText:@"图片还在加载，请稍等"];
-        return;
-    }
-        
     TCAddShareDic *params = [TCAddShareDic dictionary];
     params.paramTitle = item.title;
     params.paramSummary =  [NSString stringWithFormat:@"%.2f元 %@", item.lowPrice, item.unit];
