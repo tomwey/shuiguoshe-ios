@@ -104,7 +104,9 @@
 
 - (void)share
 {
-    
+    ShareView* shareView = [[[ShareView alloc] init] autorelease];
+    shareView.itemDetail = self.itemDetail;
+    [shareView showInView:AppWindow()];
 }
 
 - (void)handleLike
