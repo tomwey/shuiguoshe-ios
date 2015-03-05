@@ -29,7 +29,7 @@
     
     
     // 订单提交成功
-    UILabel* resultLabel = createLabel(CGRectMake(15, 80, 200, 50),
+    UILabel* resultLabel = createLabel(CGRectMake(15, 80 - NavigationBarAndStatusBarHeight(), 200, 50),
                                        NSTextAlignmentLeft,
                                        GREEN_COLOR,
                                        [UIFont boldSystemFontOfSize:24]);

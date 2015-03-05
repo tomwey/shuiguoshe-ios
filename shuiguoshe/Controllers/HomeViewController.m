@@ -44,7 +44,8 @@
     
     // 创建表视图
     UITableView* tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(mainScreenBounds),
-                                                                           CGRectGetHeight(mainScreenBounds))
+                                                                           CGRectGetHeight(mainScreenBounds) -
+                                                                           NavigationBarAndStatusBarHeight())
                                                           style:UITableViewStylePlain];
     [self.view addSubview:tableView];
     [tableView release];
