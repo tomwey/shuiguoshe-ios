@@ -125,6 +125,7 @@
 		979ECA6D1AA6C5BC00E52B10 /* QQShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 979ECA6C1AA6C5BC00E52B10 /* QQShareManager.m */; };
 		979ECA701AA6C7BD00E52B10 /* KKShareQQZone.m in Sources */ = {isa = PBXBuildFile; fileRef = 979ECA6F1AA6C7BD00E52B10 /* KKShareQQZone.m */; };
 		979ECA731AA6DA1B00E52B10 /* QQShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 979ECA721AA6DA1B00E52B10 /* QQShareView.m */; };
+		979ECA751AA703EF00E52B10 /* button_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 979ECA741AA703EF00E52B10 /* button_bg@2x.png */; };
 		97B77E881AA00D7700C12733 /* NewOrderInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B77E871AA00D7700C12733 /* NewOrderInfo.m */; };
 		97B77E8B1AA00E6900C12733 /* DeliverInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B77E8A1AA00E6900C12733 /* DeliverInfo.m */; };
 		97B77E901AA04E4800C12733 /* DeliverInfoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97B77E8F1AA04E4800C12733 /* DeliverInfoListViewController.m */; };
@@ -373,6 +374,7 @@
 		979ECA6F1AA6C7BD00E52B10 /* KKShareQQZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKShareQQZone.m; sourceTree = "<group>"; };
 		979ECA711AA6DA1B00E52B10 /* QQShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QQShareView.h; sourceTree = "<group>"; };
 		979ECA721AA6DA1B00E52B10 /* QQShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QQShareView.m; sourceTree = "<group>"; };
+		979ECA741AA703EF00E52B10 /* button_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button_bg@2x.png"; sourceTree = "<group>"; };
 		97B77E861AA00D7700C12733 /* NewOrderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewOrderInfo.h; sourceTree = "<group>"; };
 		97B77E871AA00D7700C12733 /* NewOrderInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewOrderInfo.m; sourceTree = "<group>"; };
 		97B77E891AA00E6900C12733 /* DeliverInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliverInfo.h; sourceTree = "<group>"; };
@@ -523,6 +525,7 @@
 		973820FA1A884E7D00B54EEC /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				979ECA741AA703EF00E52B10 /* button_bg@2x.png */,
 				979ECA221AA6A17900E52B10 /* share_Qzone@2x.png */,
 				979ECA231AA6A17900E52B10 /* share_Qzone@3x.png */,
 				979ECA241AA6A17900E52B10 /* share_weixinFriend@2x.png */,
@@ -1077,6 +1080,7 @@
 				977887371A8DA1F1003B5A5D /* btn_submit@3x.png in Resources */,
 				979D642E1AA196D20010F78E /* btn_cancel@3x.png in Resources */,
 				979ECA5E1AA6BED200E52B10 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				979ECA751AA703EF00E52B10 /* button_bg@2x.png in Resources */,
 				9752019E1A89EEE70070FE1F /* up_arrow@2x.png in Resources */,
 				975201851A89E3280070FE1F /* btn_cart@3x.png in Resources */,
 				9752016A1A899FEF0070FE1F /* user_bg@2x.png in Resources */,

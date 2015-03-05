@@ -82,6 +82,15 @@
                                [UIColor blackColor],
                                [UIFont systemFontOfSize:12]);
         [_headerView addSubview:_orderTimeLabel];
+        
+        UIButton* btn = createButton2(nil, @"去支付", nil, nil);
+        btn.backgroundColor = GREEN_COLOR;
+        btn.frame = CGRectMake(248, 10, 60, 30);
+        btn.layer.cornerRadius = 3;
+        btn.titleLabel.font = [UIFont systemFontOfSize:12];
+        btn.clipsToBounds = YES;
+        
+        [self addSubview:btn];
     }
     return self;
 }

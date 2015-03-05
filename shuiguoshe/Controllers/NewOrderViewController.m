@@ -364,7 +364,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                                        [UIFont systemFontOfSize:13]);
                 payLabel1.tag = 1007;
                 [cell.contentView addSubview:payLabel1];
-                payLabel1.text = @"目前只支持货到付款";
+                payLabel1.text = @"支付宝支付";//@"目前只支持货到付款";
                 [payLabel1 sizeToFit];
             }
             

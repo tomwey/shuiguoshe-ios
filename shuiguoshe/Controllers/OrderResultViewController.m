@@ -105,6 +105,15 @@
                                                                       titleColor:[UIColor blackColor]
                                                                          command:[ForwardCommand buildCommandWithForward:aForward]];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:viewBtn] autorelease];
+    
+    UIButton* payBtn = createButton(@"button_bg.png", nil, nil);
+    payBtn.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMaxY(deliverLabel.frame) + CGRectGetHeight(payBtn.frame));
+    [self.view addSubview:payBtn];
+    
+    UILabel* label = createLabel(payBtn.bounds, NSTextAlignmentCenter, [UIColor whiteColor],
+                                 [UIFont systemFontOfSize:14]);
+    [payBtn addSubview:label];
+    label.text = @"立即支付";
 }
 
 - (void)viewOrder
