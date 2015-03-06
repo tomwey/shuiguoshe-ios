@@ -15,7 +15,7 @@
 /**将下面注释取消，并定义自己的app key，app secret以及授权跳转地址uri
  此demo即可编译运行**/
 
-#define kAppID_QQZone              @"222222"
+#define kAppID_QQZone              @"1104304977"//@"222222"
 #define kAppKey_QQZone             @"60f3e45be48f073648b7ee842a94dbc6"
 #define kAppRedirectURI_QQZone     @"http://www.kekestudio.com"
 #define Notification_KKShareQQZoneDidLogin  @"Notification_KKShareQQZoneDidLogin"
