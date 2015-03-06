@@ -169,7 +169,7 @@
         [btn setTitle:cata.name forState:UIControlStateNormal];
         btn.backgroundColor = RGB(232,233,232);
         
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn setTitleColor:COMMON_TEXT_COLOR forState:UIControlStateNormal];
         
         int m = i % numberOfCol;
         int n = i / numberOfCol;

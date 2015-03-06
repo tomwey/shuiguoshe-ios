@@ -34,7 +34,7 @@
             [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
         }
         
-        [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]}];
+        [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : COMMON_TEXT_COLOR}];
         
         _homeController = [[[HomeViewController alloc] init] autorelease];
         _navController = [[UINavigationController alloc] initWithRootViewController:_homeController];

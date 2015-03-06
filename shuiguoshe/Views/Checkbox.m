@@ -73,7 +73,7 @@ NSString * const kCheckboxDidUpdateStateNotification = @"kCheckboxDidUpdateState
     if ( label ) {
         UILabel* realLabel = (UILabel *)[self viewWithTag:1024];
         if ( !realLabel ) {
-            realLabel = createLabel(CGRectZero, NSTextAlignmentLeft, [UIColor blackColor], self.labelFont);
+            realLabel = createLabel(CGRectZero, NSTextAlignmentLeft, COMMON_TEXT_COLOR, self.labelFont);
             [self addSubview:realLabel];
             realLabel.tag = 1024;
             

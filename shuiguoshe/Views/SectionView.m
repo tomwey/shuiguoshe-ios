@@ -26,7 +26,7 @@
         _sectionLabel = createLabel(CGRectMake(CGRectGetMaxY(_iconView.frame), ( CGRectGetHeight(self.bounds) - 37 ) / 2,
                                                200 - CGRectGetWidth(_iconView.frame), 37),
                                     NSTextAlignmentLeft,
-                                    [UIColor blackColor],
+                                    COMMON_TEXT_COLOR,
                                     [UIFont boldSystemFontOfSize:18]);
         [self addSubview:_sectionLabel];
     }

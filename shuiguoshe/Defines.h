@@ -19,6 +19,7 @@
 #define mainScreenBounds [[UIScreen mainScreen] bounds]
 
 #define GREEN_COLOR RGB(7, 156, 22)
+#define COMMON_TEXT_COLOR RGB(56,56,56)
 
 // 家里
 //#define kAPIHost @"http://192.168.1.131:3000/api/v1"

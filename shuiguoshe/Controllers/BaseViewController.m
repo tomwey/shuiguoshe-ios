@@ -30,7 +30,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     if ( [[[UIDevice currentDevice] systemVersion] floatValue] < 7.0 ) {
-        UILabel* titleLabel = createLabel(CGRectMake(0, 0, 150, 37), NSTextAlignmentCenter, [UIColor blackColor],
+        UILabel* titleLabel = createLabel(CGRectMake(0, 0, 150, 37), NSTextAlignmentCenter, COMMON_TEXT_COLOR,
                                           [UIFont boldSystemFontOfSize:18]);
         self.navigationItem.titleView = titleLabel;
         _titleLabel = titleLabel;

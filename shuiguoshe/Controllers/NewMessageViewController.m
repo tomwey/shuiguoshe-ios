@@ -66,7 +66,7 @@
     
     UIButton* commitBtn = [[CoordinatorController sharedInstance] createTextButton:@"提交"
                                                                               font:[UIFont systemFontOfSize:14]
-                                                                        titleColor:[UIColor blackColor]
+                                                                        titleColor:COMMON_TEXT_COLOR
                                                                            command:nil];
     [commitBtn addTarget:self action:@selector(commit) forControlEvents:UIControlEventTouchUpInside];
     

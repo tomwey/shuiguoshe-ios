@@ -68,7 +68,7 @@
     if ( !idLabel ) {
         idLabel = createLabel(CGRectMake(15, 0, width * 0.1, 44),
                               NSTextAlignmentCenter,
-                              [UIColor blackColor],
+                              COMMON_TEXT_COLOR,
                               [UIFont systemFontOfSize:12]);
         idLabel.tag = 100;
         [cell.contentView addSubview:idLabel];
@@ -82,7 +82,7 @@
     if ( !scoreLabel ) {
         scoreLabel = createLabel(CGRectMake(CGRectGetMaxX(idLabel.frame), 0, width * 0.2, 44),
                               NSTextAlignmentCenter,
-                              [UIColor blackColor],
+                              COMMON_TEXT_COLOR,
                               [UIFont systemFontOfSize:12]);
         scoreLabel.tag = 101;
         [cell.contentView addSubview:scoreLabel];
@@ -96,7 +96,7 @@
     if ( !summaryLabel ) {
         summaryLabel = createLabel(CGRectMake(CGRectGetMaxX(scoreLabel.frame), 0, width * 0.35, 44),
                                  NSTextAlignmentCenter,
-                                 [UIColor blackColor],
+                                 COMMON_TEXT_COLOR,
                                  [UIFont systemFontOfSize:12]);
         summaryLabel.tag = 102;
         [cell.contentView addSubview:summaryLabel];
@@ -110,7 +110,7 @@
     if ( !createdAtLabel ) {
         createdAtLabel = createLabel(CGRectMake(CGRectGetMaxX(summaryLabel.frame), 0, width * 0.35, 44),
                                    NSTextAlignmentCenter,
-                                   [UIColor blackColor],
+                                   COMMON_TEXT_COLOR,
                                    [UIFont systemFontOfSize:12]);
         createdAtLabel.tag = 103;
         [cell.contentView addSubview:createdAtLabel];

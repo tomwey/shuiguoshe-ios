@@ -24,7 +24,7 @@
         
         _realLabel = createLabel(self.bounds,
                                  NSTextAlignmentLeft,
-                                 [UIColor blackColor],
+                                 COMMON_TEXT_COLOR,
                                  [UIFont systemFontOfSize:12]);
         [self addSubview:_realLabel];
         _realLabel.adjustsFontSizeToFitWidth = YES;

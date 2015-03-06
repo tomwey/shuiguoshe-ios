@@ -42,7 +42,7 @@
         [_titleLabel release];
         
         _titleLabel.numberOfLines = 2;
-        _titleLabel.textColor = [UIColor blackColor];
+        _titleLabel.textColor = COMMON_TEXT_COLOR;
         _titleLabel.font = [UIFont boldSystemFontOfSize:14];
         
         // 规格

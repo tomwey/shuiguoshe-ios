@@ -90,7 +90,7 @@
         titleLabel = createLabel(CGRectMake(CGRectGetMaxX(iconView.frame) + 10, 10,
                                             CGRectGetWidth(mainScreenBounds) - 15 * 2 - 10, 60),
                                  NSTextAlignmentLeft,
-                              [UIColor blackColor],
+                              COMMON_TEXT_COLOR,
                               [UIFont systemFontOfSize:14]);
         titleLabel.tag = 110;
         [cell.contentView addSubview:titleLabel];

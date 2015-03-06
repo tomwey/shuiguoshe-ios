@@ -56,13 +56,13 @@
         CGFloat leftMargin = 15;
         _orderNo = createLabel(CGRectMake(leftMargin, 10, 240, 25),
                                        NSTextAlignmentLeft,
-                                       [UIColor blackColor],
+                                       COMMON_TEXT_COLOR,
                                        [UIFont systemFontOfSize:12]);
         [_headerView addSubview:_orderNo];
         
         _resultLabel = createLabel(CGRectMake(leftMargin, 2, 240, 36),
                                NSTextAlignmentLeft,
-                               [UIColor blackColor],
+                               COMMON_TEXT_COLOR,
                                [UIFont systemFontOfSize:12]);
         [_footerView addSubview:_resultLabel];
         
@@ -79,7 +79,7 @@
         
         _orderTimeLabel = createLabel(CGRectMake(leftMargin, 30, 240, 25),
                                NSTextAlignmentLeft,
-                               [UIColor blackColor],
+                               COMMON_TEXT_COLOR,
                                [UIFont systemFontOfSize:12]);
         [_headerView addSubview:_orderTimeLabel];
         
@@ -223,7 +223,7 @@
                                              CGRectGetWidth(mainScreenBounds) - CGRectGetMaxX(_iconView.frame) - 20,
                                              37),
                                   NSTextAlignmentLeft,
-                                  [UIColor blackColor],
+                                  COMMON_TEXT_COLOR,
                                   [UIFont boldSystemFontOfSize:12]);
         [self addSubview:_titleLabel];
         _titleLabel.numberOfLines = 2;

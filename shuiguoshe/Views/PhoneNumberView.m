@@ -20,7 +20,7 @@
         self.frame = mainScreenBounds;
         
         _maskView = [[UIView alloc] initWithFrame:self.bounds];
-        _maskView.backgroundColor = [UIColor blackColor];
+        _maskView.backgroundColor = COMMON_TEXT_COLOR;
         _maskView.alpha = .5;
         [self addSubview:_maskView];
         [_maskView release];
@@ -44,7 +44,7 @@
                                                       CGRectGetWidth(_contentView.bounds),
                                                       40),
                                            NSTextAlignmentCenter,
-                                           [UIColor blackColor],
+                                           COMMON_TEXT_COLOR,
                                            [UIFont boldSystemFontOfSize:20]);
         [_contentView addSubview:phoneNumber];
         

@@ -53,14 +53,14 @@ NSString * const kShareViewDidSendNotification = @"kShareViewDidSendNotification
         UIButton* sendBtn = createButton2(nil, @"分享", self, @selector(send));
         sendBtn.frame = frame;
         
-        [sendBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [sendBtn setTitleColor:COMMON_TEXT_COLOR forState:UIControlStateNormal];
         
         [navBar addSubview:sendBtn];
         
         CGRect labelFrame = CGRectMake(0, 0, 200, 37);
         UILabel* titleLabel = createLabel(labelFrame,
                                           NSTextAlignmentCenter,
-                                          [UIColor blackColor],
+                                          COMMON_TEXT_COLOR,
                                           [UIFont systemFontOfSize:16]);
         titleLabel.center = CGPointMake(CGRectGetMidX(navBar.bounds), CGRectGetMidY(navBar.bounds) );
         titleLabel.text = @"分享到QQ空间";

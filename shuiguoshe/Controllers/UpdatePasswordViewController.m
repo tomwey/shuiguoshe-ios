@@ -28,7 +28,7 @@
     self.title = @"修改密码";
     
     UIButton* btn = [[CoordinatorController sharedInstance] createTextButton:@"保存"
-                                                                        font:[UIFont systemFontOfSize:14] titleColor:[UIColor blackColor] command:nil];
+                                                                        font:[UIFont systemFontOfSize:14] titleColor:COMMON_TEXT_COLOR command:nil];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:btn] autorelease];
     
     [btn addTarget:self
@@ -39,7 +39,7 @@
     // 旧密码
     UILabel* oldPassword = createLabel(CGRectMake(15, 80, 80, 37),
                                        NSTextAlignmentRight,
-                                       [UIColor blackColor],
+                                       COMMON_TEXT_COLOR,
                                        [UIFont systemFontOfSize:16]);
     [self.view addSubview:oldPassword];
     oldPassword.text = @"旧密码";
@@ -54,7 +54,7 @@
     UILabel* newPassword = createLabel(CGRectMake(15, CGRectGetMaxY(oldPassword.frame),
                                                   80, 37),
                                        NSTextAlignmentRight,
-                                       [UIColor blackColor],
+                                       COMMON_TEXT_COLOR,
                                        [UIFont systemFontOfSize:16]);
     [self.view addSubview:newPassword];
     newPassword.text = @"新密码";
@@ -68,7 +68,7 @@
     // 确认新密码
     UILabel* confirmPassword = createLabel(CGRectMake(15, CGRectGetMaxY(newPassword.frame), 80, 37),
                                        NSTextAlignmentRight,
-                                       [UIColor blackColor],
+                                       COMMON_TEXT_COLOR,
                                        [UIFont systemFontOfSize:16]);
     [self.view addSubview:confirmPassword];
     confirmPassword.text = @"确认新密码";

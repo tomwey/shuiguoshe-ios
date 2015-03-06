@@ -41,7 +41,7 @@
                                               CGRectGetMaxY(resultLabel.frame),
                                               240, 30),
                                    NSTextAlignmentLeft,
-                                   [UIColor blackColor],
+                                   COMMON_TEXT_COLOR,
                                    [UIFont systemFontOfSize:14]);
     [self.view addSubview:orderNo];
     
@@ -52,7 +52,7 @@
                                               CGRectGetMaxY(orderNo.frame),
                                               200, 30),
                                    NSTextAlignmentLeft,
-                                   [UIColor blackColor],
+                                   COMMON_TEXT_COLOR,
                                    [UIFont systemFontOfSize:14]);
     [self.view addSubview:priceLabel];
     
@@ -63,7 +63,7 @@
                                                  CGRectGetMaxY(priceLabel.frame),
                                                  280, 30),
                                       NSTextAlignmentLeft,
-                                      [UIColor blackColor],
+                                      COMMON_TEXT_COLOR,
                                       [UIFont systemFontOfSize:14]);
     [self.view addSubview:deliverLabel];
     
@@ -102,7 +102,7 @@
     
     UIButton* viewBtn = [[CoordinatorController sharedInstance] createTextButton:@"查看订单"
                                                                             font:[UIFont systemFontOfSize:14]
-                                                                      titleColor:[UIColor blackColor]
+                                                                      titleColor:COMMON_TEXT_COLOR
                                                                          command:[ForwardCommand buildCommandWithForward:aForward]];
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:viewBtn] autorelease];
     

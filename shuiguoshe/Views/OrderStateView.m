@@ -29,10 +29,10 @@
         _tapButton = createButton(nil, self, @selector(btnClicked));
         [self addSubview:_tapButton];
         
-        _quantityLabel = createLabel(CGRectZero, NSTextAlignmentCenter, [UIColor blackColor], [UIFont systemFontOfSize:20]);
+        _quantityLabel = createLabel(CGRectZero, NSTextAlignmentCenter, COMMON_TEXT_COLOR, [UIFont systemFontOfSize:20]);
         [self addSubview:_quantityLabel];
         
-        _stateLabel = createLabel(CGRectZero, NSTextAlignmentCenter, [UIColor blackColor], [UIFont systemFontOfSize:18]);
+        _stateLabel = createLabel(CGRectZero, NSTextAlignmentCenter, COMMON_TEXT_COLOR, [UIFont systemFontOfSize:18]);
         [self addSubview:_stateLabel];
         
         _rightLine = [[[UIView alloc] init] autorelease];

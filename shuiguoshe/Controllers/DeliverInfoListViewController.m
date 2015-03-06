@@ -88,7 +88,7 @@
     if ( !mobile ) {
         mobile = createLabel(CGRectMake(15, 5, 100, 37),
                              NSTextAlignmentLeft,
-                             [UIColor blackColor],
+                             COMMON_TEXT_COLOR,
                              [UIFont systemFontOfSize:14]);
         mobile.tag = 100;
         [cell.contentView addSubview:mobile];

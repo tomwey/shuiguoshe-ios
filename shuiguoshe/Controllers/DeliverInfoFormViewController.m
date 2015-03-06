@@ -37,7 +37,7 @@
     UILabel* mobile = createLabel(CGRectMake(15, 70, 80,
                                              37),
                                   NSTextAlignmentLeft,
-                                  [UIColor blackColor],
+                                  COMMON_TEXT_COLOR,
                                   [UIFont systemFontOfSize:14]);
     [self.view addSubview:mobile];
     mobile.text = @"收货人手机";
@@ -45,7 +45,7 @@
     UILabel* address = createLabel(CGRectMake(15, CGRectGetMaxY(mobile.frame), 80,
                                              37),
                                   NSTextAlignmentLeft,
-                                  [UIColor blackColor],
+                                  COMMON_TEXT_COLOR,
                                   [UIFont systemFontOfSize:14]);
     [self.view addSubview:address];
     address.text = @"收货人地址";
@@ -70,7 +70,7 @@
     
     UIButton* save = createButton(nil, self, @selector(save));
     [save setTitle:@"保存" forState:UIControlStateNormal];
-    [save setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [save setTitleColor:COMMON_TEXT_COLOR forState:UIControlStateNormal];
     [save sizeToFit];
     
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:save] autorelease];
@@ -93,7 +93,7 @@
 {
     Apartment* a = noti.object;
     _addressLabel.text = [NSString stringWithFormat:@"%@（%@）",a.name, a.address];
-    _addressLabel.textColor = [UIColor blackColor];
+    _addressLabel.textColor = COMMON_TEXT_COLOR;
     
     _apartmentId = a.oid;
 }

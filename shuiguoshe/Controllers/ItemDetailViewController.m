@@ -156,7 +156,7 @@
     // 标题
     UILabel* titleLabel = (UILabel *)[cell.contentView viewWithTag:1002];
     if ( !titleLabel ) {
-        titleLabel = createLabel(CGRectZero, NSTextAlignmentLeft, [UIColor blackColor], kTitleLabelFont);
+        titleLabel = createLabel(CGRectZero, NSTextAlignmentLeft, COMMON_TEXT_COLOR, kTitleLabelFont);
         [cell.contentView addSubview:titleLabel];
         titleLabel.tag = 1002;
         titleLabel.numberOfLines = 0;
@@ -271,7 +271,7 @@
     UILabel* unitLabel2 = (UILabel *)[cell.contentView viewWithTag:1008];
     if ( !unitLabel2 ) {
         unitLabel2 = createLabel(CGRectMake(CGRectGetMaxX(unitLabel.frame), dtTop, 50, 30),
-                                NSTextAlignmentLeft, [UIColor blackColor], [UIFont systemFontOfSize:14]);
+                                NSTextAlignmentLeft, COMMON_TEXT_COLOR, [UIFont systemFontOfSize:14]);
         unitLabel2.tag = 1008;
         [cell.contentView addSubview:unitLabel2];
         
@@ -298,7 +298,7 @@
     UILabel* deliverLabel2 = (UILabel *)[cell.contentView viewWithTag:2002];
     if ( !deliverLabel2 ) {
         deliverLabel2 = createLabel(CGRectMake(CGRectGetMaxX(deliverLabel.frame), dtTop, width - kLeftMargin * 2, 30),
-                                    NSTextAlignmentLeft, [UIColor blackColor], [UIFont systemFontOfSize:14]);
+                                    NSTextAlignmentLeft, COMMON_TEXT_COLOR, [UIFont systemFontOfSize:14]);
         deliverLabel2.tag = 2002;
         deliverLabel2.numberOfLines = 0;
         [cell.contentView addSubview:deliverLabel2];
@@ -352,7 +352,7 @@
     if ( !tipLabel ) {
         tipLabel = createLabel(CGRectMake(kLeftMargin, 5, width - kLeftMargin * 2, 30),
                                NSTextAlignmentLeft,
-                               [UIColor blackColor],
+                               COMMON_TEXT_COLOR,
                                [UIFont boldSystemFontOfSize:16]);
         tipLabel.tag = 4001;
         [cell.contentView addSubview:tipLabel];

@@ -85,7 +85,7 @@
                                                      CGRectGetWidth(mainScreenBounds),
                                                      50),
                                           NSTextAlignmentCenter,
-                                          [UIColor blackColor],
+                                          COMMON_TEXT_COLOR,
                                           [UIFont systemFontOfSize:16]);
              label.text = @"购物车是空的";
              [me.view addSubview:label];
@@ -158,7 +158,7 @@
     _resultLabel = [[UpdateValueLabel alloc] initWithFrame:CGRectMake(0, 0, 200, 49)];
     _resultLabel.backgroundColor = [UIColor clearColor];
     _resultLabel.textAlignment = NSTextAlignmentCenter;
-    _resultLabel.textColor = [UIColor blackColor];
+    _resultLabel.textColor = COMMON_TEXT_COLOR;
     _resultLabel.prefix = @"总计：";
     _resultLabel.font = [UIFont systemFontOfSize:14];
     
@@ -274,7 +274,7 @@
                                             CGRectGetMinY(iconView.frame),
                                             CGRectGetWidth(mainScreenBounds) - CGRectGetMaxX(iconView.frame) - 20,40),
                                  NSTextAlignmentLeft,
-                                 [UIColor blackColor],
+                                 COMMON_TEXT_COLOR,
                                  [UIFont systemFontOfSize:14]);
         titleLabel.tag = 1003;
         titleLabel.numberOfLines = 2;

@@ -47,7 +47,7 @@
                                                      CGRectGetWidth(self.bounds) * 0.4,
                                                      CGRectGetHeight(self.bounds)),
                                           NSTextAlignmentCenter,
-                                          [UIColor blackColor],
+                                          COMMON_TEXT_COLOR,
                                           [UIFont systemFontOfSize:12]);
         [self addSubview:_valueLabel];
 //        _valueLabel.backgroundColor = [UIColor redColor];

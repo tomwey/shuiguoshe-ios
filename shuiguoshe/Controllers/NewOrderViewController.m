@@ -71,7 +71,7 @@
         [toolbar setTintColor:[UIColor whiteColor]];
     }
     
-    _resultLabel = createLabel(CGRectMake(0, 0, 240, 37), NSTextAlignmentLeft, [UIColor blackColor], [UIFont systemFontOfSize:14]);
+    _resultLabel = createLabel(CGRectMake(0, 0, 240, 37), NSTextAlignmentLeft, COMMON_TEXT_COLOR, [UIFont systemFontOfSize:14]);
     UIBarButtonItem* textItem = [[[UIBarButtonItem alloc] initWithCustomView:_resultLabel] autorelease];
     
     UIBarButtonItem* flexItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
@@ -213,7 +213,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                 if ( newLabel == nil ) {
                     newLabel = createLabel(CGRectMake(leftMargin, 5, 200, 34),
                                               NSTextAlignmentLeft,
-                                              [UIColor blackColor],
+                                              COMMON_TEXT_COLOR,
                                               [UIFont systemFontOfSize:16]);
                     newLabel.tag = 101;
                     [cell.contentView addSubview:newLabel];
@@ -229,7 +229,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                 if ( mobileLabel == nil ) {
                     mobileLabel = createLabel(CGRectMake(leftMargin, 5, 200, 20),
                                               NSTextAlignmentLeft,
-                                              [UIColor blackColor],
+                                              COMMON_TEXT_COLOR,
                                               [UIFont systemFontOfSize:14]);
                     mobileLabel.tag = 1001;
                     [cell.contentView addSubview:mobileLabel];
@@ -305,7 +305,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                                                     CGRectGetWidth(mainScreenBounds) - CGRectGetMaxX(iconView.frame) - 20,
                                                     50),
                                          NSTextAlignmentLeft,
-                                         [UIColor blackColor],
+                                         COMMON_TEXT_COLOR,
                                          [UIFont systemFontOfSize:14]);
                 titleLabel.tag = 1003;
                 [cell.contentView addSubview:titleLabel];
@@ -358,7 +358,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
             if ( !payLabel ) {
                 payLabel = createLabel(CGRectMake(leftMargin, 3, 100, 30),
                                        NSTextAlignmentLeft,
-                                       [UIColor blackColor],
+                                       COMMON_TEXT_COLOR,
                                        [UIFont boldSystemFontOfSize:14]);
                 payLabel.tag = 1006;
                 [cell.contentView addSubview:payLabel];
@@ -369,7 +369,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
             if ( !payLabel1 ) {
                 payLabel1 = createLabel(CGRectMake(leftMargin, CGRectGetMaxY(payLabel.frame) + 3, 200, 30),
                                        NSTextAlignmentLeft,
-                                       [UIColor blackColor],
+                                       COMMON_TEXT_COLOR,
                                        [UIFont systemFontOfSize:13]);
                 payLabel1.tag = 1007;
                 [cell.contentView addSubview:payLabel1];
@@ -381,7 +381,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
             if ( !payLabel2 ) {
                 payLabel2 = createLabel(CGRectMake(leftMargin, CGRectGetMaxY(payLabel1.frame), 200, 30),
                                        NSTextAlignmentLeft,
-                                       [UIColor blackColor],
+                                       COMMON_TEXT_COLOR,
                                        [UIFont systemFontOfSize:13]);
                 payLabel2.tag = 1008;
                 [cell.contentView addSubview:payLabel2];
@@ -414,7 +414,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
             if ( !label ) {
                 label = createLabel(CGRectMake(leftMargin, 7, 60, 30),
                                     NSTextAlignmentLeft,
-                                    [UIColor blackColor],
+                                    COMMON_TEXT_COLOR,
                                     [UIFont systemFontOfSize:14]);
                 label.tag = 1009;
                 [cell.contentView addSubview:label];
@@ -441,7 +441,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                 if ( !dLabel ) {
                     dLabel = createLabel(CGRectMake(leftMargin, CGRectGetMaxY(priceLabel.frame), 160, 30),
                                          NSTextAlignmentLeft,
-                                         [UIColor blackColor],
+                                         COMMON_TEXT_COLOR,
                                          [UIFont systemFontOfSize:14]);
                     dLabel.tag = 2002;
                     [cell.contentView addSubview:dLabel];

@@ -43,7 +43,7 @@ static NSString* commands[kShareButtonsCount] = {
         self.frame = mainScreenBounds;
         
         _maskView = [[UIView alloc] initWithFrame:self.bounds];
-        _maskView.backgroundColor = [UIColor blackColor];
+        _maskView.backgroundColor = COMMON_TEXT_COLOR;
         _maskView.alpha = .6;
         
         [self addSubview:_maskView];
@@ -99,7 +99,7 @@ static NSString* commands[kShareButtonsCount] = {
         
         // 取消按钮
         UIButton* cancelBtn = createButton2(nil, @"取消", self, @selector(dismiss));
-        [cancelBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [cancelBtn setTitleColor:COMMON_TEXT_COLOR forState:UIControlStateNormal];
         cancelBtn.frame = CGRectMake(0, CGRectGetMaxY(splitLine.frame), CGRectGetWidth(mainScreenBounds), 44);
         [_shareButtonsContainer addSubview:cancelBtn];
         
