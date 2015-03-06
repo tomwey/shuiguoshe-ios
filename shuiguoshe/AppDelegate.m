@@ -31,6 +31,8 @@
     
     [WXApi registerApp:kWechatAppID];
     
+    NSLog(@"result: %@", [@"123456" md5String]);
+    
     return YES;
 }
 

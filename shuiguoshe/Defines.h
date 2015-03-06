@@ -150,6 +150,7 @@ static inline UIWindow* AppWindow()
 #import "Section.h"
 
 #import "GTMBase64.h"
+#import "NSString+Additions.h"
 
 #import "Command.h"
 #import "ForwardCommand.h"

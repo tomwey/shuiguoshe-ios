@@ -86,6 +86,7 @@
 		977887461A8DD3A6003B5A5D /* btn_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 977887441A8DD3A6003B5A5D /* btn_share@2x.png */; };
 		977887471A8DD3A6003B5A5D /* btn_share@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 977887451A8DD3A6003B5A5D /* btn_share@3x.png */; };
 		9778874A1A8DF531003B5A5D /* Cart.m in Sources */ = {isa = PBXBuildFile; fileRef = 977887491A8DF531003B5A5D /* Cart.m */; };
+		977BCE761AA977F400521E04 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 977BCE751AA977F400521E04 /* NSString+Additions.m */; };
 		979D64111AA145190010F78E /* OrderResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64101AA145190010F78E /* OrderResultViewController.m */; };
 		979D64141AA148AD0010F78E /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64131AA148AD0010F78E /* Order.m */; };
 		979D64171AA1558D0010F78E /* OrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64161AA1558D0010F78E /* OrderListViewController.m */; };
@@ -313,6 +314,8 @@
 		977887451A8DD3A6003B5A5D /* btn_share@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_share@3x.png"; sourceTree = "<group>"; };
 		977887481A8DF531003B5A5D /* Cart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cart.h; sourceTree = "<group>"; };
 		977887491A8DF531003B5A5D /* Cart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cart.m; sourceTree = "<group>"; };
+		977BCE741AA977F400521E04 /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
+		977BCE751AA977F400521E04 /* NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
 		979D640F1AA145190010F78E /* OrderResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderResultViewController.h; sourceTree = "<group>"; };
 		979D64101AA145190010F78E /* OrderResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderResultViewController.m; sourceTree = "<group>"; };
 		979D64121AA148AD0010F78E /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
@@ -734,6 +737,8 @@
 			children = (
 				976EF31B1A8C7FFF00A94B15 /* UITextField+Attributes.h */,
 				976EF31C1A8C7FFF00A94B15 /* UITextField+Attributes.m */,
+				977BCE741AA977F400521E04 /* NSString+Additions.h */,
+				977BCE751AA977F400521E04 /* NSString+Additions.m */,
 			);
 			path = Additions;
 			sourceTree = "<group>";
@@ -1202,6 +1207,7 @@
 				99C274BF1A4EECD000898741 /* BannerView.m in Sources */,
 				979D64331AA1AB180010F78E /* ScoreTrace.m in Sources */,
 				99C274DC1A4EEE1900898741 /* AFURLSessionManager.m in Sources */,
+				977BCE761AA977F400521E04 /* NSString+Additions.m in Sources */,
 				979D64231AA160630010F78E /* ScoreListViewController.m in Sources */,
 				99A7BD7F1A519DD10092EA89 /* Sale.m in Sources */,
 				9717CFF21A9EFA6A00B1C473 /* UpdateValueLabel.m in Sources */,
