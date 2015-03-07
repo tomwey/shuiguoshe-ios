@@ -19,6 +19,8 @@
 {
     BannerView* _bannerView;
     UITableView* _tableView;
+    
+    UIRefreshControl* _refreshControl;
 }
 
 - (void)viewDidLoad {
@@ -51,11 +53,27 @@
     [self.view addSubview:_tableView];
     [_tableView release];
     
+//    _tableView.backgroundColor = [UIColor clearColor];
+    
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     _tableView.dataSource = self;
     _tableView.delegate   = self;
     
+    _refreshControl = [[UIRefreshControl alloc] init];
+    [_tableView addSubview:_refreshControl];
+    
+    [_refreshControl release];
+    
+    [_refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+    
+//    _refreshControl.attributedTitle = [[[NSAttributedString alloc] initWithString:@"下拉刷新"] autorelease];
+    
+    [self loadData];
+}
+
+- (void)refreshTable
+{
     [self loadData];
 }
 
@@ -64,6 +82,8 @@
     [[DataService sharedService] loadEntityForClass:@"Section"
                                                 URI:@"/sections"
                                          completion:^(id result, BOOL succeed) {
+//                                             [self doneLoadingTableViewData];
+                                             [_refreshControl endRefreshing];
                                              if ( succeed ) {
                                                  self.dataSource = result;
                                                  _tableView.hidden = NO;
@@ -74,7 +94,7 @@
                                                  } else {
                                                      
                                                  }
-                                                 _tableView.hidden = YES;
+//                                                 _tableView.hidden = YES;
                                              }
                                          }];
 }
@@ -103,6 +123,7 @@
     if ( !cell ) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId] autorelease];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.backgroundColor = [UIColor whiteColor];
     }
     
     Section* s = [self.dataSource objectAtIndex:indexPath.row];
@@ -133,6 +154,8 @@
     if ( [s.identifier isEqualToString:@"hot_items"] ) {
         [self addItems:cell atIndex:indexPath.row];
     }
+    
+    cell.backgroundColor = [UIColor whiteColor];
     
     return cell;
 }
