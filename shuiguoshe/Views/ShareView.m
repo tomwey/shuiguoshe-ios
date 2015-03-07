@@ -119,6 +119,8 @@ static NSString* commands[kShareButtonsCount] = {
     Command* aCommand = [[[NSClassFromString(commands[sender.tag - 100]) alloc] init] autorelease];
     aCommand.userData = self.itemDetail;
     [aCommand execute];
+    
+    [self dismiss];
 }
 
 - (void)dismiss

@@ -8,11 +8,18 @@
 
 #import "Share2QzoneCommand.h"
 #import "Defines.h"
+#import <TencentOpenAPI/TencentApiInterface.h>
 
 @implementation Share2QzoneCommand
 
 - (void)execute:(void (^)(id))result
 {
+    
+    if ( ![TencentApiInterface isTencentAppInstall:kIphoneQQ] ) {
+        [Toast showText:@"抱歉，您尚未安装QQ"];
+        return;
+    }
+    
 //    NSLog(@"分享到QQ空间");
     ItemDetail* item = self.userData;
     
@@ -23,6 +30,8 @@
 //        [Toast showText:@"图片还在加载，请稍等"];
 //        return;
 //    }
+    
+    
     
     TCAddShareDic *params = [TCAddShareDic dictionary];
     params.paramTitle = item.title;

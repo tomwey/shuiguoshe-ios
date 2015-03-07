@@ -56,6 +56,16 @@
 				<string>tencent1104304977</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>shuiguoshe</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>shuiguoshe</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>

@@ -21,6 +21,12 @@
 
 - (void)execute:(void (^)(id))result
 {
+    
+    if (![WXApi isWXAppInstalled]) {
+        [Toast showText:@"抱歉，您尚未安装微信"];
+        return;
+    }
+    
     ItemDetail* item = self.userData;
 //    UIImage* image = [[UIImageView sharedImageCache] cachedImageForRequest:[NSURLRequest requestWithURL:
 //                                                                            [NSURL URLWithString:item.largeImage]]];

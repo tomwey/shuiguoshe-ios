@@ -352,19 +352,88 @@
 - (BOOL)addShare:(TCAddShareDic*)params{
     if ([self isAuthValid]) {
         
-        QQShareView* shareView = [[[QQShareView alloc] init] autorelease];
+//        QQShareView* shareView = [[[QQShareView alloc] init] autorelease];
+//        
+//        NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+//        
+//        [dict setObject:params.paramTitle forKey:@"title"];
+//        [dict setObject:params.paramSummary forKey:@"summary"];
+//        [dict setObject:params.paramImages forKey:@"imageUrl"];
+//        [dict setObject:@"" forKey:@"message"];
+//        [dict setObject:params.paramUrl forKey:@"link"];
+//        
+//        shareView.shareInfo = dict;
+//        
+//        [shareView show];
         
-        NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+        NSString *previewImageUrl = params.paramImages;
+        QQApiNewsObject *newsObj = [QQApiNewsObject
+                                    objectWithURL:
+                                    [NSURL URLWithString:params.paramUrl]
+                                    title: params.paramTitle
+                                    description:params.paramSummary
+                                    previewImageURL:[NSURL URLWithString:previewImageUrl]];
+        SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:newsObj];
+        //将内容分享到qq
+        //QQApiSendResultCode sent = [QQApiInterface sendReq:req];
+        //将内容分享到qzone
+        QQApiSendResultCode sendResult = [QQApiInterface SendReqToQZone:req];
         
-        [dict setObject:params.paramTitle forKey:@"title"];
-        [dict setObject:params.paramSummary forKey:@"summary"];
-        [dict setObject:params.paramImages forKey:@"imageUrl"];
-        [dict setObject:@"" forKey:@"message"];
-        [dict setObject:params.paramUrl forKey:@"link"];
+//        if ( sent == EQQAPISENDSUCESS ) {
+//            [Toast showText:@"分享成功"];
+//        } else {
+//            [Toast showText:@"分享失败"];
+//        }
         
-        shareView.shareInfo = dict;
-        
-        [shareView show];
+        switch (sendResult)
+        {
+            case EQQAPIAPPNOTREGISTED:
+            {
+                UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"App未注册" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+                [msgbox show];
+                [msgbox release];
+                
+                break;
+            }
+            case EQQAPIMESSAGECONTENTINVALID:
+            case EQQAPIMESSAGECONTENTNULL:
+            case EQQAPIMESSAGETYPEINVALID:
+            {
+                UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"发送参数错误" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+                [msgbox show];
+                [msgbox release];
+                
+                break;
+            }
+            case EQQAPIQQNOTINSTALLED:
+            {
+                UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"未安装手Q" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+                [msgbox show];
+                [msgbox release];
+                
+                break;
+            }
+            case EQQAPIQQNOTSUPPORTAPI:
+            {
+                UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"API接口不支持" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+                [msgbox show];
+                [msgbox release];
+                
+                break;
+            }
+            case EQQAPISENDFAILD:
+            {
+                UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"发送失败" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+                [msgbox show];
+                [msgbox release];
+                
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
         
         return YES;
         
@@ -382,16 +451,37 @@
 {
     QQShareView* view = noti.object;
     
-    [MBProgressHUD showHUDAddedTo:AppWindow() animated:YES];
+//    [MBProgressHUD showHUDAddedTo:AppWindow() animated:YES];
+//
+//    TCAddShareDic *params = [TCAddShareDic dictionary];
+//    params.paramTitle = [view.shareInfo objectForKey:@"title"];
+//    params.paramSummary =  [view.shareInfo objectForKey:@"summary"];
+//    params.paramImages = [view.shareInfo objectForKey:@"imageUrl"];
+//    params.paramComment = [view.shareInfo objectForKey:@"message"];
+//    params.paramUrl = [view.shareInfo objectForKey:@"link"];
+//    
+//    [tencentOAuth addShareWithParams:params];
     
-    TCAddShareDic *params = [TCAddShareDic dictionary];
-    params.paramTitle = [view.shareInfo objectForKey:@"title"];
-    params.paramSummary =  [view.shareInfo objectForKey:@"summary"];
-    params.paramImages = [view.shareInfo objectForKey:@"imageUrl"];
-    params.paramComment = [view.shareInfo objectForKey:@"message"];
-    params.paramUrl = [view.shareInfo objectForKey:@"link"];
+    //分享跳转URL
+//    NSString *url = @"http://xxx.xxx.xxx/";
+    //分享图预览图URL地址
+    NSString *previewImageUrl = [view.shareInfo objectForKey:@"imageUrl"];
+    QQApiNewsObject *newsObj = [QQApiNewsObject
+                                objectWithURL:[NSURL URLWithString:[view.shareInfo objectForKey:@"link"]]
+                                title: [view.shareInfo objectForKey:@"title"]
+                                description:[view.shareInfo objectForKey:@"summary"]
+                                previewImageURL:[NSURL URLWithString:previewImageUrl]];
+    SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:newsObj];
+    //将内容分享到qq
+    //QQApiSendResultCode sent = [QQApiInterface sendReq:req];
+    //将内容分享到qzone
+    QQApiSendResultCode sent = [QQApiInterface SendReqToQZone:req];
     
-    [tencentOAuth addShareWithParams:params];
+    if ( sent == EQQAPISENDSUCESS ) {
+        [Toast showText:@"分享成功"];
+    } else {
+        [Toast showText:@"分享失败"];
+    }
 }
 
 /**
@@ -492,6 +582,8 @@
 		for (id key in response.jsonResponse) {
 			[str appendString: [NSString stringWithFormat:@"%@:%@\n",key,[response.jsonResponse objectForKey:key]]];
 		}
+        
+        NSLog(@"errorMsg: %@", str);
         
         [Toast showText:@"分享到QQ空间成功"];
 //        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"分享到QQ空间成功"];
