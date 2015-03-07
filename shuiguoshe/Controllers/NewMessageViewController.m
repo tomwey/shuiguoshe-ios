@@ -88,14 +88,19 @@
     [[DataService sharedService] post:@"/messages" params:@{ @"token": [[UserService sharedService] token],
                                                              @"title": [_titleField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]],
                                                              @"body": [_bodyView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]}
-                           completion:^(id result, BOOL succeed) {
-                               if ( succeed ) {
-                                   [Toast showText:@"提交成功"];
-                                   [self.navigationController popViewControllerAnimated:YES];
-                               } else {
-                                   [Toast showText:@"提交失败"];
-                               }
-                           }];
+                           completion:^(NetworkResponse* resp)
+    {
+       if ( !resp.requestSuccess ) {
+           [Toast showText:@"服务器错误"];
+       } else {
+           if ( resp.statusCode == 0 ) {
+               [Toast showText:@"留言成功"];
+               [self.navigationController popViewControllerAnimated:YES];
+           } else {
+               [Toast showText:@"留言失败"];
+           }
+       }
+    }];
 }
 
 - (void)textViewDidChange:(UITextView *)textView

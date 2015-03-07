@@ -74,7 +74,7 @@
 
 - (void)post:(NSString *)uri
       params:(NSDictionary *)params
-  completion:( void (^)(id result, BOOL succeed) )completion
+  completion:( void (^)(NetworkResponse* resp) )completion
 {
     NSString* url = [self buildUrlFor:uri];
     
@@ -82,58 +82,39 @@
     
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     [manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
+#if DEBUG
+        NSLog(@"uri: %@, resp: %@", uri, responseObject);
+#endif
         dispatch_async(dispatch_get_main_queue(), ^{
             [self finishRequest];
             if ( completion ) {
-                if ( [[responseObject objectForKey:@"code"] intValue] == 0 ) {
-                    completion(responseObject, YES);
-                } else {
-                    NSLog(@"error message: %@", [responseObject objectForKey:@"message"]);
-                    completion(@{ @"code": [responseObject objectForKey:@"code"], @"message": [responseObject objectForKey:@"message"] }, NO);
-                }
                 
+                NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
+                NSString* msg = [responseObject objectForKey:@"message"];
+                
+                NetworkResponse* resp = [NetworkResponse responseWithStatusCode:code
+                                                                        message:msg
+                                                                         result:[responseObject objectForKey:@"data"]];
+                resp.requestSuccess = YES;
+                
+                completion(resp);
             }
         });
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error: %@", error);
+#if DEBUG
+        NSLog(@"post error: %@", error);
+#endif
         dispatch_async(dispatch_get_main_queue(), ^{
             [self finishRequest];
             if ( completion ) {
-                completion(@{ @"code": @(error.code), @"message": error.domain }, NO);
-            }
-        });
-    }];
-}
-
-- (void)delete:(NSString *)uri
-      params:(NSDictionary *)params
-  completion:( void (^)(id result, BOOL succeed) )completion
-{
-    NSString* url = [self buildUrlFor:uri];
-    
-    [self startRequest];
-    
-    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
-    [manager DELETE:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self finishRequest];
-            if ( completion ) {
-                if ( [[responseObject objectForKey:@"code"] intValue] == 0 ) {
-                    completion(responseObject, YES);
-                } else {
-                    completion(@{ @"code": [responseObject objectForKey:@"code"], @"message": [responseObject objectForKey:@"message"] }, NO);
-                }
+                NSInteger code = error.code;
+                NSString* msg = error.localizedDescription;
+                NetworkResponse* resp = [NetworkResponse responseWithStatusCode:code
+                                                                        message:msg
+                                                                         result:nil];
+                resp.requestSuccess = NO;
                 
-            }
-        });
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error: %@", error);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self finishRequest];
-            if ( completion ) {
-                completion(@{ @"code": @(error.code), @"message": error.domain }, NO);
+                completion(resp);
             }
         });
     }];
@@ -177,12 +158,13 @@
              NSLog(@"Load Entity Error: %@", error);
              [self finishRequest];
              if ( completion ) {
-                 completion(nil, NO);
+                 NSDictionary* result = @{ @"code": @"500", @"message": @"请求失败" };
+                 completion(result, NO);
              }
          }];
 }
 
-- (void)uploadImage:(UIImage *)anImage URI:(NSString *)uri params:(NSDictionary *)params completion:( void (^)(id result, BOOL succeed) )completion
+- (void)uploadImage:(UIImage *)anImage URI:(NSString *)uri params:(NSDictionary *)params completion:(void (^)(NetworkResponse *))completion
 {
     NSData* imageData = UIImageJPEGRepresentation(anImage, 0.5);
     
@@ -197,18 +179,39 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     
 }
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              NSLog(@"upload success");
+//              NSLog(@"upload success");
               [self finishRequest];
+              
+              NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
+              NSString* msg = [responseObject objectForKey:@"message"];
+              
+              NetworkResponse* resp = [NetworkResponse responseWithStatusCode:code
+                                                                      message:msg
+                                                                       result:nil];
+              
+              resp.requestSuccess = YES;
+              
               if ( completion ) {
-                  completion(nil, YES);
+                  completion(resp);
               }
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"upload error");
+//              NSLog(@"upload error");
               [self finishRequest];
+              
+              NSInteger code = error.code;
+              NSString* msg = error.localizedDescription;
+              
+              NetworkResponse* resp = [NetworkResponse responseWithStatusCode:code
+                                                                      message:msg
+                                                                       result:nil];
+              
+              resp.requestSuccess = NO;
+              
               if ( completion ) {
-                  completion(nil, NO);
+                  completion(resp);
               }
+              
           }];
 }
 
@@ -228,6 +231,29 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     }
     
     return nil;
+}
+
+@end
+
+@implementation NetworkResponse
+
++ (NetworkResponse *)responseWithStatusCode:(NSInteger)code
+                                    message:(NSString *)message
+                                     result:(id)result
+{
+    NetworkResponse* resp = [[[NetworkResponse alloc] init] autorelease];
+    resp.statusCode = code;
+    resp.message = message;
+    resp.result = result;
+    return resp;
+}
+
+- (void)dealloc
+{
+    self.message = nil;
+    self.result = nil;
+    
+    [super dealloc];
 }
 
 @end

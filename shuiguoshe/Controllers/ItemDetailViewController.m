@@ -78,9 +78,11 @@
 - (void)loadItemDetail
 {
     __block ItemDetailViewController* me = self;
+    NSString* token = !![[UserService sharedService] token] ?
+    [[UserService sharedService] token] : @"";
     [[DataService sharedService] loadEntityForClass:@"ItemDetail"
-                                                URI:[NSString stringWithFormat:@"/items/%d",
-                                                     [self.userData iid]]
+                                                URI:[NSString stringWithFormat:@"/items/%d?token=%@",
+                                                     [self.userData iid], token]
                                          completion:^(id result, BOOL succeed) {
                                              me.itemDetail = result;
                                              

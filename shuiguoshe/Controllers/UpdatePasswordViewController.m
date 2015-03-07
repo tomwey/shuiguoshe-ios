@@ -126,11 +126,15 @@
                                params:@{ @"token":[[UserService sharedService] token],
                                          @"old_password": oldPassword,
                                          @"password": newPassword}
-                           completion:^(id result, BOOL succeed) {
-                               if ( succeed ) {
-                                   [Toast showText:@"密码修改成功"];
+                           completion:^(NetworkResponse* resp) {
+                               if ( resp.requestSuccess ) {
+                                   if ( resp.statusCode == 0 ) {
+                                       [Toast showText:@"密码修改成功"];
+                                   } else {
+                                       [Toast showText:resp.message];
+                                   }
                                } else {
-                                   [Toast showText:@"密码修改失败"];
+                                   [Toast showText:@"服务器错误"];
                                }
                            }];
 }

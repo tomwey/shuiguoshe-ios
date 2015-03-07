@@ -18,6 +18,7 @@
 @implementation HomeViewController
 {
     BannerView* _bannerView;
+    UITableView* _tableView;
 }
 
 - (void)viewDidLoad {
@@ -43,27 +44,37 @@
     };
     
     // 创建表视图
-    UITableView* tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(mainScreenBounds),
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(mainScreenBounds),
                                                                            CGRectGetHeight(mainScreenBounds) -
                                                                            NavigationBarAndStatusBarHeight())
                                                           style:UITableViewStylePlain];
-    [self.view addSubview:tableView];
-    [tableView release];
+    [self.view addSubview:_tableView];
+    [_tableView release];
     
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    tableView.dataSource = self;
-    tableView.delegate   = self;
+    _tableView.dataSource = self;
+    _tableView.delegate   = self;
     
+    [self loadData];
+}
+
+- (void)loadData
+{
     [[DataService sharedService] loadEntityForClass:@"Section"
                                                 URI:@"/sections"
                                          completion:^(id result, BOOL succeed) {
                                              if ( succeed ) {
                                                  self.dataSource = result;
-                                                 tableView.hidden = NO;
-                                                 [tableView reloadData];
+                                                 _tableView.hidden = NO;
+                                                 [_tableView reloadData];
                                              } else {
-                                                 tableView.hidden = YES;
+                                                 if ( result ) {
+                                                     
+                                                 } else {
+                                                     
+                                                 }
+                                                 _tableView.hidden = YES;
                                              }
                                          }];
 }

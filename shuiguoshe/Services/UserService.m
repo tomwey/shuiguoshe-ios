@@ -52,19 +52,24 @@
 - (void)login:(User *)aUser completion:( void (^)(BOOL succeed, NSString* errorMsg) )completion
 {
     [[DataService sharedService] post:@"/account/login"
-                               params:@{ @"login": aUser.name, @"password": aUser.password }
-                           completion:^(id result, BOOL succeed2)
+                               params:@{ @"login": aUser.name,
+                                         @"password": aUser.password }
+                           completion:^(NetworkResponse* resp)
     {
-        if ( succeed2 ) {
-            if ( completion ) {
-                NSString* token = [[result objectForKey:@"data"] objectForKey:@"token"];
-                [self saveToken:token];
-                
-                completion(YES, nil);
-            }
+        if ( !resp.requestSuccess ) {
+            [Toast showText:@"请求失败"];
         } else {
-            if ( completion ) {
-                completion(NO, [result objectForKey:@"message"]);
+            if ( resp.statusCode == 0 ) {
+                if ( completion ) {
+                    NSString* token = [resp.result objectForKey:@"token"];
+                    [self saveToken:token];
+                    
+                    completion(YES, nil);
+                }
+            } else {
+                if ( completion ) {
+                    completion(NO, resp.message);
+                }
             }
         }
     }];
@@ -74,66 +79,73 @@
 {
     [[DataService sharedService] post:@"/account/logout"
                                params:@{ @"token" : [self token] }
-                           completion:^(id result, BOOL succeed) {
-                               if ( succeed ) {
-                                   [self saveToken:nil];
-                               }
+                           completion:^(NetworkResponse* resp)
+    {
                                
-                               if ( completion ) {
-                                   if ( succeed ) {
-                                       completion(YES, nil);
-                                   } else {
-                                       completion(NO, [result objectForKey:@"message"]);
-                                   }
-                               }
-                           }];
+       if ( !resp.requestSuccess ) {
+           [Toast showText:@"请求失败"];
+       } else {
+           if ( resp.statusCode == 0 ) {
+               [self saveToken:nil];
+               if ( completion ) {
+                   completion(YES, nil);
+               }
+           } else {
+               if ( completion ) {
+                   completion(NO, resp.message);
+               }
+           }
+       }
+       
+    }];
 }
 
 - (void)fetchCode:(User *)aUser completion:( void (^)(BOOL succeed2, NSString* errorMsg) )completion
 {
     [[DataService sharedService] post:@"/auth_codes"
                                params:@{ @"mobile": aUser.name, @"type" : aUser.codeType }
-                           completion:^(id result, BOOL succeed) {
-                               NSLog(@"result:%@", result);
-                               if ( succeed ) {
-                                   if ( [[result objectForKey:@"code"] integerValue] == 0 ) {
-                                       if ( completion ) {
-                                           completion(YES, nil);
-                                       }
-                                   } else {
-                                       if ( completion ) {
-                                           completion(NO, [result objectForKey:@"message"]);
-                                       }
-                                   }
-                               } else {
-                                   if ( completion ) {
-                                       completion(NO, [result objectForKey:@"message"]);
-                                   }
-                               }
-                           }];
+                           completion:^(NetworkResponse* resp)
+     {
+         if ( !resp.requestSuccess ) {
+             [Toast showText:@"请求失败"];
+             completion(NO, resp.message);
+         } else {
+             if ( resp.statusCode == 0 ) {
+                 if ( completion ) {
+                     completion(YES, nil);
+                 }
+             } else {
+                 if ( completion ) {
+                     completion(NO, resp.message);
+                 }
+             }
+         }
+    }];
 }
 
 - (void)signup:(User *)aUser completion:( void (^)(BOOL succeed, NSString* errorMsg) )completion
 {
     [[DataService sharedService] post:@"/account/sign_up"
                                params:@{ @"mobile": aUser.name, @"code": aUser.code, @"password": aUser.password }
-                           completion:^(id result, BOOL succeed) {
-                               if ( succeed ) {
-                                   if ( [[result objectForKey:@"code"] integerValue] == 0 ) {
-                                       [self saveToken:[[result objectForKey:@"data"] objectForKey:@"token"]];
+                           completion:^(NetworkResponse* resp) {
+                               if ( !resp.requestSuccess ) {
+                                   [Toast showText:@"请求失败"];
+                                   if ( completion ) {
+                                       completion(NO, resp.message);
+                                   }
+                               } else {
+                                   if ( resp.statusCode == 0 ) {
+                                       [self saveToken:[resp.result objectForKey:@"token"]];
                                        if ( completion ) {
                                            completion(YES, nil);
                                        }
                                    } else {
                                        if ( completion ) {
-                                           completion(NO, [result objectForKey:@"message"]);
+                                           completion(NO, resp.message);
                                        }
                                    }
-                               } else {
-                                   if ( completion ) {
-                                       completion(NO, [result objectForKey:@"message"]);
-                                   }
                                }
+                               
                            }];
 }
 
@@ -141,23 +153,25 @@
 {
     [[DataService sharedService] post:@"/account/password/reset"
                                params:@{ @"mobile": aUser.name, @"code": aUser.code, @"password": aUser.password }
-                           completion:^(id result, BOOL succeed) {
-                               if ( succeed ) {
-                                   if ( [[result objectForKey:@"code"] integerValue] == 0 ) {
-                                       [self saveToken:[[result objectForKey:@"data"] objectForKey:@"token"]];
+                           completion:^(NetworkResponse* resp) {
+                               if ( !resp.requestSuccess ) {
+                                   [Toast showText:@"请求失败"];
+                                   if ( completion ) {
+                                       completion(NO, resp.message);
+                                   }
+                               } else {
+                                   if ( resp.statusCode == 0 ) {
+                                       [self saveToken:[resp.result objectForKey:@"token"]];
                                        if ( completion ) {
                                            completion(YES, nil);
                                        }
                                    } else {
                                        if ( completion ) {
-                                           completion(NO, [result objectForKey:@"message"]);
+                                           completion(NO, resp.message);
                                        }
                                    }
-                               } else {
-                                   if ( completion ) {
-                                       completion(NO, [result objectForKey:@"message"]);
-                                   }
                                }
+                               
                            }];
 }
 
@@ -175,15 +189,19 @@
     [[DataService sharedService] uploadImage:anImage
                                          URI:@"/user/update_avatar.json"
                                       params:@{ @"token": [self token] }
-                                  completion:^(id result, BOOL succeed) {
-//                                      NSLog(@"result:%@", result);
-                                      if ( completion ) {
-                                          if ( succeed ) {
-                                              completion(YES);
-                                          } else {
-                                              completion(NO);
+                                  completion:^(NetworkResponse* resp) {
+                                      if ( !resp.requestSuccess ) {
+                                          [Toast showText:@"请求失败"];
+                                      } else {
+                                          if ( completion ) {
+                                              if ( resp.statusCode == 0 ) {
+                                                  completion(YES);
+                                              } else {
+                                                  completion(NO);
+                                              }
                                           }
                                       }
+                                      
                                   }];
 }
 

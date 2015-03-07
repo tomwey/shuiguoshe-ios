@@ -88,9 +88,14 @@
                                                      [[UserService sharedService] token],
                                                      self.filter, page]
                                          completion:^(id result, BOOL succeed) {
-                                             self.orderCollection = result;
-                                             [_dataSource addObjectsFromArray:self.orderCollection.orders];
-                                             [_tableView reloadData];
+                                             if ( succeed ) {
+                                                 self.orderCollection = result;
+                                                 [_dataSource addObjectsFromArray:self.orderCollection.orders];
+                                                 [_tableView reloadData];
+                                             } else {
+                                                 
+                                             }
+                                             
                                          }];
 }
 

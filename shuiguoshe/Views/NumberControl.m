@@ -99,11 +99,21 @@
                                params:@{ @"token": [[UserService sharedService] token],
                                          @"id" : NSStringFromInteger(self.itemId) ,
                                          @"quantity": NSStringFromInteger(self.value)  }
-                           completion:^(id result, BOOL succeed) {
+                           completion:^(NetworkResponse* resp) {
                                _updating = NO;
-                               if ( succeed && me.finishUpdatingBlock ) {
-                                   me.finishUpdatingBlock(me.value);
+                               
+                               if ( !resp.requestSuccess ) {
+                                   [Toast showText:@"服务器错误"];
+                               } else {
+                                   if ( resp.statusCode == 0 ) {
+                                       if ( me.finishUpdatingBlock ) {
+                                           me.finishUpdatingBlock(me.value);
+                                       }
+                                   } else {
+                                       [Toast showText:@"更新失败"];
+                                   }
                                }
+                               
                            }];
 }
 

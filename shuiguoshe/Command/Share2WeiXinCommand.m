@@ -49,7 +49,7 @@
                                              webpageUrl:[NSString stringWithFormat:@"http://shuiguoshe.com/item-%d", item.itemId]
                                             WXSceneType:(int)self.shareType];
             } else {
-                [Toast showText:@"没找到要分享的图片，稍后再试"];
+                [Toast showText:@"图片加载失败"];
             }
         });
         

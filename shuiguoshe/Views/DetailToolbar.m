@@ -88,7 +88,6 @@
         _itemDetail = [itemDetail retain];
         
         self.liked = itemDetail.likesCount > 0;
-        
     }
 }
 
@@ -128,10 +127,16 @@
 {
     [[DataService sharedService] post:@"/likes"
                                params:@{ @"id" : NSStringFromInteger(self.itemDetail.itemId), @"type" : @"Product", @"token" : [[UserService sharedService] token] }
-                           completion:^(id result, BOOL succeed) {
+                           completion:^(NetworkResponse* resp) {
                                _likeView.userInteractionEnabled = YES;
-                               if ( succeed && [[result objectForKey:@"code"] integerValue] == 0 ) {
-                                   self.liked = YES;
+                               if ( !resp.requestSuccess ) {
+                                   [Toast showText:@"服务器错误"];
+                               } else {
+                                   if ( resp.statusCode == 0 ) {
+                                       self.liked = YES;
+                                   } else {
+                                       [Toast showText:@"收藏失败"];
+                                   }
                                }
                            }];
 }
@@ -140,13 +145,18 @@
 {
     [[DataService sharedService] post:[NSString stringWithFormat:@"/likes/%d", self.itemDetail.itemId]
                                params:@{ @"token" : [[UserService sharedService] token], @"type": @"Product" }
-                           completion:^(id result, BOOL succeed) {
+                           completion:^(NetworkResponse* resp) {
                                _likeView.userInteractionEnabled = YES;
-                               if ( succeed && [[result objectForKey:@"code"] integerValue] == 0 ) {
-                                   self.liked = NO;
+                               if ( !resp.requestSuccess ) {
+                                   [Toast showText:@"服务器错误"];
                                } else {
-                                   
+                                   if ( resp.statusCode == 0 ) {
+                                       self.liked = NO;
+                                   } else {
+                                       [Toast showText:@"取消收藏失败"];
+                                   }
                                }
+                               
                            }];
 }
 
@@ -160,19 +170,20 @@
     
     [[DataService sharedService] post:@"/cart/add_item"
                                params:@{ @"token": [[UserService sharedService] token], @"pid": NSStringFromInteger(self.itemDetail.itemId) }
-                           completion:^(id result, BOOL succeed) {
-                               sender.userInteractionEnabled = YES;
-                               
-                               if ( succeed ) {
-                                   if ( [[result objectForKey:@"code"] integerValue] == 0 ) {
-                                       [Toast showText:@"成功添加到购物车"];
-                                       [[NSNotificationCenter defaultCenter] postNotificationName:kCartTotalDidChangeNotification object:@(1)];
-                                   } else {
-                                       [Toast showText:@"添加到购物车失败"];
-                                   }
-                               } else {
-                                   [Toast showText:@"添加到购物车失败"];
-                               }
+                           completion:^(NetworkResponse* resp)
+    {
+       sender.userInteractionEnabled = YES;
+       
+       if ( !resp.requestSuccess ) {
+           [Toast showText:@"服务器错误"];
+       } else {
+           if ( resp.statusCode == 0 ) {
+               [Toast showText:@"成功添加到购物车"];
+               [[NSNotificationCenter defaultCenter] postNotificationName:kCartTotalDidChangeNotification object:@(1)];
+           } else {
+               [Toast showText:@"添加到购物车失败"];
+           }
+       }
     }];
 }
 

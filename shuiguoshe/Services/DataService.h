@@ -8,6 +8,7 @@
 
 #import "Defines.h"
 
+@class NetworkResponse;
 @interface DataService : NSObject
 
 + (DataService *)sharedService;
@@ -18,15 +19,31 @@
 
 - (void)post:(NSString *)uri
       params:(NSDictionary *)params
-  completion:( void (^)(id result, BOOL succeed) )completion;
-
-- (void)delete:(NSString *)uri
-        params:(NSDictionary *)params
-    completion:( void (^)(id result, BOOL succeed) )completion;
+  completion:( void (^)(NetworkResponse *) )completion;
 
 - (void)uploadImage:(UIImage *)anImage
                 URI:(NSString *)uri
              params:(NSDictionary *)params
-         completion:( void (^)(id result, BOOL succeed) )completion;
+         completion:( void (^)(NetworkResponse* resp) )completion;
+
+@end
+
+typedef NS_ENUM(NSInteger, NetworkResponseResultType) {
+    NetworkResponseResultTypeSuccess = 0,
+    NetworkResponseResultTypeServerError = -1,
+    NetworkResponseResultTypeNoRecords = 1,
+};
+
+@interface NetworkResponse : NSObject
+
+@property (nonatomic, assign) NSInteger statusCode;
+@property (nonatomic, copy) NSString* message;
+@property (nonatomic, retain) id result;
+
+@property (nonatomic, assign) BOOL requestSuccess;
+
++ (NetworkResponse *)responseWithStatusCode:(NSInteger)code
+                                    message:(NSString *)message
+                                     result:(id)result;
 
 @end

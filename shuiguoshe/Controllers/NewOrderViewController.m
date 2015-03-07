@@ -152,21 +152,25 @@
                                                                     @"discount_fee": [NSString stringWithFormat:@"%.2f", discountPrice]
                                                                     
                                                                    }
-                           completion:^(id result, BOOL succeed) {
-                               if ( [[result objectForKey:@"code"] integerValue] == 0 ) {
-                                   Order* anOrder = [[[Order alloc] initWithDictionary:[result objectForKey:@"data"]] autorelease];
-                                   Forward* aForward = [Forward buildForwardWithType:ForwardTypePush
-                                                                                from:self
-                                                                    toControllerName:@"OrderResultViewController"];
-                                   aForward.userData = anOrder;
-                                   
-                                   [[ForwardCommand buildCommandWithForward:aForward] execute];
-                               } else {
-                                   [Toast showText:[result objectForKey:@"message"]];
-                               }
-                               
-                               
-                           }];
+                           completion:^(NetworkResponse* resp)
+     {
+         if ( !resp.requestSuccess ) {
+             [Toast showText:@"服务器错误"];
+         } else {
+           if ( resp.statusCode == 0 ) {
+               Order* anOrder = [[[Order alloc] initWithDictionary:resp.result] autorelease];
+               Forward* aForward = [Forward buildForwardWithType:ForwardTypePush
+                                                            from:self
+                                                toControllerName:@"OrderResultViewController"];
+               aForward.userData = anOrder;
+               
+               [[ForwardCommand buildCommandWithForward:aForward] execute];
+           } else {
+               [Toast showText:resp.message];
+           }
+             
+        }
+    }];
 }
 
 - (void)hideKeyboard

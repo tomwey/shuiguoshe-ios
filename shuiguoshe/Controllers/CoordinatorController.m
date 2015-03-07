@@ -38,8 +38,29 @@
         
         _homeController = [[[HomeViewController alloc] init] autorelease];
         _navController = [[UINavigationController alloc] initWithRootViewController:_homeController];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didBecomeActive) name:UIApplicationWillEnterForegroundNotification
+                                                   object:nil];
+        
+        // 网络检查
+        [[AFNetworkReachabilityManager sharedManager] startMonitoring];
+        
+        // 检测网络连接的单例,网络变化时的回调方法
+        [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+            [self didBecomeActive];
+        }];
     }
     return self;
+}
+
+- (void)didBecomeActive
+{
+    AFNetworkReachabilityStatus status = [[AFNetworkReachabilityManager sharedManager] networkReachabilityStatus];
+    
+    if ( status == AFNetworkReachabilityStatusNotReachable ) {
+        [Toast showText:@"网络开小差，请检查设置"];
+    }
 }
 
 - (UINavigationController *)navController

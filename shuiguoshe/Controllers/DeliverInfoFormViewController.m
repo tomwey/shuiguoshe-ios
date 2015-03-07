@@ -127,12 +127,18 @@
     [[DataService sharedService] post:@"/deliver_infos"
                                params:@{ @"token": [[UserService sharedService] token],
                                          @"mobile": mobile,
-                                                     @"apartment_id": NSStringFromInteger(_apartmentId)} completion:^(id result, BOOL succeed) {
-                                                         if ( succeed ) {
-                                                             [self.navigationController popViewControllerAnimated:YES];
+                                                     @"apartment_id": NSStringFromInteger(_apartmentId)} completion:^(NetworkResponse* resp) {
+                                                         
+                                                         if ( resp.requestSuccess ) {
+                                                             if ( resp.statusCode == 0 ) {
+                                                                 [self.navigationController popViewControllerAnimated:YES];
+                                                             } else {
+                                                                 [Toast showText:resp.message];
+                                                             }
                                                          } else {
                                                              [Toast showText:@"保存失败"];
                                                          }
+                                                         
                                                      }];
 }
 

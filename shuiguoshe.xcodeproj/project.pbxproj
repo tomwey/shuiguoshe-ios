@@ -139,6 +139,7 @@
 		97D1E3A31A8B3A2600A8B3B6 /* DetailToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 97D1E3A21A8B3A2600A8B3B6 /* DetailToolbar.m */; };
 		97D1E3A51A8B3BD100A8B3B6 /* btn_add_to_cart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97D1E3A41A8B3BD100A8B3B6 /* btn_add_to_cart@2x.png */; };
 		97D1E3A71A8B3BEE00A8B3B6 /* btn_add_to_cart@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97D1E3A61A8B3BEE00A8B3B6 /* btn_add_to_cart@3x.png */; };
+		990371A11AAB0CA3007A42EF /* NetworkErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 990371A01AAB0CA3007A42EF /* NetworkErrorView.m */; };
 		9921EAB91A8A4627006B57D1 /* LPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9921EAB81A8A4627006B57D1 /* LPLabel.m */; };
 		9921EABB1A8A5121006B57D1 /* btn_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9921EABA1A8A5121006B57D1 /* btn_back@3x.png */; };
 		9921EABD1A8A515E006B57D1 /* btn_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9921EABC1A8A515E006B57D1 /* btn_back@2x.png */; };
@@ -396,6 +397,8 @@
 		97D1E3A21A8B3A2600A8B3B6 /* DetailToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailToolbar.m; sourceTree = "<group>"; };
 		97D1E3A41A8B3BD100A8B3B6 /* btn_add_to_cart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_add_to_cart@2x.png"; sourceTree = "<group>"; };
 		97D1E3A61A8B3BEE00A8B3B6 /* btn_add_to_cart@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_add_to_cart@3x.png"; sourceTree = "<group>"; };
+		9903719F1AAB0CA3007A42EF /* NetworkErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkErrorView.h; sourceTree = "<group>"; };
+		990371A01AAB0CA3007A42EF /* NetworkErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkErrorView.m; sourceTree = "<group>"; };
 		9921EAB71A8A4627006B57D1 /* LPLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPLabel.h; sourceTree = "<group>"; };
 		9921EAB81A8A4627006B57D1 /* LPLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPLabel.m; sourceTree = "<group>"; };
 		9921EABA1A8A5121006B57D1 /* btn_back@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_back@3x.png"; sourceTree = "<group>"; };
@@ -937,6 +940,8 @@
 				970F4A271AA42AD000BC0F4D /* TimerLabel.m */,
 				979ECA1F1AA69DDF00E52B10 /* ShareView.h */,
 				979ECA201AA69DDF00E52B10 /* ShareView.m */,
+				9903719F1AAB0CA3007A42EF /* NetworkErrorView.h */,
+				990371A01AAB0CA3007A42EF /* NetworkErrorView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1244,6 +1249,7 @@
 				979D642C1AA17EE40010F78E /* OrderCellView.m in Sources */,
 				975201641A8992570070FE1F /* CustomButton.m in Sources */,
 				975201821A89E1FA0070FE1F /* SectionView.m in Sources */,
+				990371A11AAB0CA3007A42EF /* NetworkErrorView.m in Sources */,
 				979ECA331AA6A7D500E52B10 /* Share2WeiXinFriendsCommand.m in Sources */,
 				97B77E901AA04E4800C12733 /* DeliverInfoListViewController.m in Sources */,
 				9752017F1A89DD6A0070FE1F /* MBProgressHUD.m in Sources */,

@@ -56,6 +56,12 @@
     [_tableView addSubview:backBtn];
     backBtn.center = CGPointMake(20 + CGRectGetWidth(backBtn.bounds) / 2, 42 - _tableView.contentInset.top);
     
+    [self loadData];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(loadData)
+                                                 name:@"kOrderDidCancelNotification"
+                                               object:nil];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -265,12 +271,8 @@ static NSString* controllers[] = {@"ScoreListViewController", @"LikeListViewCont
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)loadData
 {
-    [super viewWillAppear:animated];
-    
-    self.navigationController.navigationBarHidden = YES;
-    
     [[DataService sharedService] loadEntityForClass:@"User"
                                                 URI:[NSString stringWithFormat:@"/user/me?token=%@", [[UserService sharedService] token]]
                                          completion:^(id result, BOOL succeed) {
@@ -279,11 +281,19 @@ static NSString* controllers[] = {@"ScoreListViewController", @"LikeListViewCont
                                                  _tableView.hidden = NO;
                                                  [_tableView reloadData];
                                              } else {
-//                                                 [Toast showText:@"登录失败"];
-//                                                 _tableView.hidden = YES;
+                                                 //                                                 [Toast showText:@"登录失败"];
+                                                 //                                                 _tableView.hidden = YES;
                                              }
                                              
                                          }];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = YES;
+    
 }
 
 - (void)didReceiveMemoryWarning {

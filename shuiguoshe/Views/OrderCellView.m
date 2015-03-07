@@ -179,20 +179,27 @@
         if ( yesOrNo ) {
             [[DataService sharedService] post:[NSString stringWithFormat:@"/user/orders/%d/cancel", _orderId]
                                        params:@{ @"token" : [[UserService sharedService] token] }
-                                   completion:^(id result, BOOL succeed) {
-                                       if ( succeed ) {
-                                           [[_footerView viewWithTag:10011] removeFromSuperview];
-                                           
-                                           UILabel* stateLabel = (UILabel *)[_footerView viewWithTag:10010];
-                                           CGRect frame = stateLabel.frame;
-                                           frame.origin.x = CGRectGetWidth(mainScreenBounds) - 15 - CGRectGetWidth(frame);
-                                           stateLabel.frame = frame;
-                                           
-                                           stateLabel.text = @"已取消";
-                                           //                                   [[NSNotificationCenter defaultCenter] postNotificationName:@"kOrderDidCancelNotification" object:nil];
+                                   completion:^(NetworkResponse* resp) {
+                                       if ( !resp.requestSuccess ) {
+                                           [Toast showText:@"服务器错误"];
                                        } else {
-                                           [Toast showText:[result objectForKey:@"message"]];
+                                           if ( resp.statusCode == 0 ) {
+                                               [[_footerView viewWithTag:10011] removeFromSuperview];
+                                               
+                                               UILabel* stateLabel = (UILabel *)[_footerView viewWithTag:10010];
+                                               CGRect frame = stateLabel.frame;
+                                               frame.origin.x = CGRectGetWidth(mainScreenBounds) - 15 - CGRectGetWidth(frame);
+                                               stateLabel.frame = frame;
+                                               
+                                               stateLabel.text = @"已取消";
+                                               
+                                               [[NSNotificationCenter defaultCenter] postNotificationName:@"kOrderDidCancelNotification" object:nil];
+                                               
+                                           } else {
+                                               [Toast showText:@"操作失败"];
+                                           }
                                        }
+                                       
                                    }];
         }
     }];

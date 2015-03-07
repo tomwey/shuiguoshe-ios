@@ -163,12 +163,16 @@
     [[DataService sharedService] post:@"/user/update_deliver_info"
                                params:@{ @"token": [[UserService sharedService] token],
                                          @"deliver_info_id": NSStringFromInteger(di.infoId) }
-                           completion:^(id result, BOOL succeed) {
-                               if ( succeed ) {
-                                   [[NSNotificationCenter defaultCenter] postNotificationName:@"kUpdateDeliverInfoSuccessNotification"
-                                                                                       object:di];
+                           completion:^(NetworkResponse* resp) {
+                               if ( !resp.requestSuccess ) {
+                                   [Toast showText:@"请求失败"];
                                } else {
-                                   [Toast showText:@"更新收货信息失败"];
+                                   if ( resp.statusCode == 0 ) {
+                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"kUpdateDeliverInfoSuccessNotification"
+                                                                                           object:di];
+                                   } else {
+                                       [Toast showText:@"更新收货信息失败"];
+                                   }
                                }
                            }];
     
@@ -185,12 +189,21 @@
              DeliverInfo* info = [_dataSource objectAtIndex:index];
              [[DataService sharedService] post:[NSString stringWithFormat:@"/deliver_infos/%d",info.infoId]
                                         params:@{ @"token" : [[UserService sharedService] token] }
-                                    completion:^(id result, BOOL succeed) {
-                                        [_dataSource removeObjectAtIndex:index];
-                                        [_tableView reloadData];
-                                        if ( [_dataSource count] == 0 ||
-                                            [self.userData infoId] == info.infoId) {
-                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"kDeliverInfoDidRemoveAll" object:nil];
+                                    completion:^(NetworkResponse* resp) {
+                                        if ( !resp.requestSuccess ) {
+                                            [Toast showText:@"服务器错误"];
+                                        } else {
+                                            if ( resp.statusCode == 0 ) {
+                                                [_dataSource removeObjectAtIndex:index];
+                                                [_tableView reloadData];
+                                                if ( [_dataSource count] == 0 ||
+                                                    [self.userData infoId] == info.infoId) {
+                                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"kDeliverInfoDidRemoveAll" object:nil];
+                                                }
+                                            } else {
+                                                [Toast showText:@"删除失败"];
+                                            }
+                                            
                                         }
                                     }];
          }

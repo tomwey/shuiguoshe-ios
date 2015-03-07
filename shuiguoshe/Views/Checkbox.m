@@ -122,34 +122,38 @@ NSString * const kCheckboxDidUpdateStateNotification = @"kCheckboxDidUpdateState
     [[DataService sharedService] post:@"/cart/update_states" params:@{ @"token": [[UserService sharedService] token],
                                                                        @"ids": idString,
                                                                        @"state": NSStringFromInteger(state) }
-                           completion:^(id result, BOOL succeed) {
-                               if ( succeed ) {
-                                   self.checked = !self.checked;
-                                   if ( self.checkboxType == CheckboxTypeSelectAll ) { // 全选按钮
-                                       for ( Checkbox* cb in self.checkboxGroup.checkboxes ) {
-                                           if ( cb != self ) {
-                                               cb.checked = self.checked;
+                           completion:^(NetworkResponse* resp) {
+                               if ( !resp.requestSuccess ) {
+                                   [Toast showText:@"服务器错误"];
+                               } else {
+                                   if ( resp.statusCode == 0 ) {
+                                       self.checked = !self.checked;
+                                       if ( self.checkboxType == CheckboxTypeSelectAll ) { // 全选按钮
+                                           for ( Checkbox* cb in self.checkboxGroup.checkboxes ) {
+                                               if ( cb != self ) {
+                                                   cb.checked = self.checked;
+                                               }
                                            }
-                                       }
-                                   } else { // 单个按钮
-                                       BOOL flag = YES;
-                                       for ( Checkbox* cb in self.checkboxGroup.checkboxes ) {
-                                           if ( cb.checkboxType == CheckboxTypeSingle ) {
-                                               flag &= cb.checked;
+                                       } else { // 单个按钮
+                                           BOOL flag = YES;
+                                           for ( Checkbox* cb in self.checkboxGroup.checkboxes ) {
+                                               if ( cb.checkboxType == CheckboxTypeSingle ) {
+                                                   flag &= cb.checked;
+                                               }
                                            }
+                                           
+                                           [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateSelectAllStateNotification
+                                                                                               object:nil
+                                                                                             userInfo:@{ @"state": NSStringFromInteger(flag) }];
                                        }
                                        
-                                       [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateSelectAllStateNotification
-                                                                                           object:nil
-                                                                                         userInfo:@{ @"state": NSStringFromInteger(flag) }];
+                                       if ( self.didUpdateStateBlock ) {
+                                           self.didUpdateStateBlock(self);
+                                       }
+                                       
+                                   } else {
+                                       [Toast showText:@"更新状态失败"];
                                    }
-                                   
-                                   if ( self.didUpdateStateBlock ) {
-                                       self.didUpdateStateBlock(self);
-                                   }
-                                   
-                               } else {
-                                   [Toast showText:@"更新状态失败"];
                                }
                            }];
     
