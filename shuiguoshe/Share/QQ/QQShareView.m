@@ -81,25 +81,40 @@ NSString * const kShareViewDidSendNotification = @"kShareViewDidSendNotification
         [_shareInfo release];
         _shareInfo = [shareInfo mutableCopy];
         
-        _imageView.image = [[UIImageView sharedImageCache] cachedImageForRequest:
-                            [NSURLRequest requestWithURL:[NSURL URLWithString:[shareInfo objectForKey:@"imageUrl"]]]];
-        CGFloat factor = _imageView.image.size.width / _imageView.image.size.height;
+        [MBProgressHUD showHUDAddedTo:self animated:YES];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            UIImage* image = [UIImage imageWithData:
+                              [NSData dataWithContentsOfURL:
+                               [NSURL URLWithString:
+                                [shareInfo objectForKey:@"imageUrl"]]]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self animated:YES];
+                if ( !image ) {
+                    [Toast showText:@"需要分享的图片加载失败"];
+                } else {
+                    _imageView.image = image;
+                    
+                    CGFloat factor = _imageView.image.size.width / _imageView.image.size.height;
+                    
+                    CGFloat width = CGRectGetWidth(mainScreenBounds) * 0.5;
+                    
+                    _imageView.frame = CGRectMake(CGRectGetWidth(mainScreenBounds) / 2 - width / 2, 70, width,
+                                                  width / factor ) ;
+                    
+                    
+                    
+                    _textField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMinX(_imageView.frame) - 20 ,
+                                                                               CGRectGetMaxY(_imageView.frame),
+                                                                               CGRectGetWidth(_imageView.frame) + 40,
+                                                                               37)];
+                    [self addSubview:_textField];
+                    [_textField release];
+                    
+                    _textField.placeholder = @"说点什么吧！限40字以内";
+                }
+            });
+        });
         
-        CGFloat width = CGRectGetWidth(mainScreenBounds) * 0.5;
-        
-        _imageView.frame = CGRectMake(CGRectGetWidth(mainScreenBounds) / 2 - width / 2, 70, width,
-                                      width / factor ) ;
-        
-        
-        
-        _textField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMinX(_imageView.frame) - 20 ,
-                                                                   CGRectGetMaxY(_imageView.frame),
-                                                                   CGRectGetWidth(_imageView.frame) + 40,
-                                                                   37)];
-        [self addSubview:_textField];
-        [_textField release];
-        
-        _textField.placeholder = @"说点什么吧！限40字以内";
     }
 }
 

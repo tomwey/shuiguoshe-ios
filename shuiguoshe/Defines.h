@@ -35,7 +35,7 @@
 #define kWechatAppSecret @"d78c7620e1590330159ff4f3255ee7b5"
 
 // QQ分享
-#define kQQOpenAppId @"222222"//@"1104304977"
+#define kQQOpenAppId @"1104304977"
 
 static inline CGFloat NavigationBarAndStatusBarHeight()
 {

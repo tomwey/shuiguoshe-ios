@@ -31,7 +31,7 @@
 -(id)init{
     self = [super init];
     if(self){
-        tencentOAuth = [[TencentOAuth alloc] initWithAppId:kAppID_QQZone andDelegate:self];
+        tencentOAuth = [[TencentOAuth alloc] initWithAppId:kQQOpenAppId andDelegate:self];
 //        tencentOAuth.redirectURI = kAppRedirectURI_QQZone;
         
         willShareInfomation = [[NSMutableArray alloc]init];

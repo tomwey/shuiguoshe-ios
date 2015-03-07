@@ -48,11 +48,13 @@
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
-    return [[KKShareWeiXin sharedManager ] handleOpenURL:url];
+    return [[KKShareWeiXin sharedManager ] handleOpenURL:url] |
+    [[KKShareQQZone sharedManager] handleOpenURL:url];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    return [[KKShareWeiXin sharedManager ] handleOpenURL:url];
+    return [[KKShareWeiXin sharedManager ] handleOpenURL:url] |
+    [[KKShareQQZone sharedManager] handleOpenURL:url];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
