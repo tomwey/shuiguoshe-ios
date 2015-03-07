@@ -146,13 +146,12 @@
     }
     [[DataService sharedService] post:@"/user/orders" params:@{ @"token": [[UserService sharedService] token],
                                                            @"score": NSStringFromInteger(self.orderInfo.userScore),
-                                                           @"order_info": @{
-                                                                    @"deliver_info_id": NSStringFromInteger(self.orderInfo.deliverInfo.infoId),
+                                                                @"deliver_info_id": NSStringFromInteger(self.orderInfo.deliverInfo.infoId),
                                                                     @"note": note,
-                                                                    @"total_price": [NSString stringWithFormat:@"%.2f", totalPrice],
-                                                                    @"discount_price": [NSString stringWithFormat:@"%.2f", discountPrice]
+                                                                    @"total_fee": [NSString stringWithFormat:@"%.2f", totalPrice],
+                                                                    @"discount_fee": [NSString stringWithFormat:@"%.2f", discountPrice]
                                                                     
-                                                                   } }
+                                                                   }
                            completion:^(id result, BOOL succeed) {
                                if ( [[result objectForKey:@"code"] integerValue] == 0 ) {
                                    Order* anOrder = [[[Order alloc] initWithDictionary:[result objectForKey:@"data"]] autorelease];

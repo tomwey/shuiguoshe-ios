@@ -126,8 +126,8 @@
     
     [[DataService sharedService] post:@"/deliver_infos"
                                params:@{ @"token": [[UserService sharedService] token],
-                                         @"item": @{ @"mobile": mobile,
-                                                     @"apartment_id": NSStringFromInteger(_apartmentId)} } completion:^(id result, BOOL succeed) {
+                                         @"mobile": mobile,
+                                                     @"apartment_id": NSStringFromInteger(_apartmentId)} completion:^(id result, BOOL succeed) {
                                                          if ( succeed ) {
                                                              [self.navigationController popViewControllerAnimated:YES];
                                                          } else {
