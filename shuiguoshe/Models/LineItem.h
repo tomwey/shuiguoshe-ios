@@ -16,6 +16,8 @@
 @property (nonatomic, copy) NSString* itemTitle;
 @property (nonatomic, copy) NSString* itemIconUrl;
 
+@property (nonatomic, copy) NSString* itemUnit;
+
 @property (nonatomic, assign) NSUInteger quantity;
 @property (nonatomic, assign) float price;
 @property (nonatomic, assign) float totalPrice;

@@ -25,9 +25,10 @@
     if ( self = [super initWithFrame:frame] ) {
         _discounted = NO;
         
-        self.layer.cornerRadius = 3;
-        self.layer.borderColor = [RGB(224, 224, 224) CGColor];
-        self.layer.borderWidth = 1;
+        self.layer.cornerRadius = 2;
+        self.layer.borderColor = [RGB(193, 193, 193) CGColor];
+        self.layer.borderWidth = .5;
+//        self.layer.masksToBounds = YES;
         self.clipsToBounds = YES;
         
         self.backgroundColor = [UIColor whiteColor];
@@ -43,14 +44,14 @@
         
         _titleLabel.numberOfLines = 2;
         _titleLabel.textColor = COMMON_TEXT_COLOR;
-        _titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        _titleLabel.font = [UIFont systemFontOfSize:14];
         
         // 规格
         _unitLabel = [[UILabel alloc] init];
         [self addSubview:_unitLabel];
         [_unitLabel release];
-        _unitLabel.font = [UIFont systemFontOfSize:14];
-        _unitLabel.textColor = RGB(80,80,80);
+        _unitLabel.font = [UIFont systemFontOfSize:12];
+        _unitLabel.textColor = COMMON_TEXT_COLOR;//RGB(80,80,80);
         
         // 价格
         _priceLabel = [[UILabel alloc] init];
@@ -106,7 +107,7 @@
         
         CGRect bounds = self.bounds;
         
-        CGFloat dt = 6;
+        CGFloat dt = 0;
         CGFloat width = CGRectGetWidth(bounds) - dt;
         _avatarView.frame = CGRectMake(dt/2, dt/2, width, width * 5 / 6);
         
@@ -140,7 +141,7 @@
     
     CGRect bounds = self.bounds;
     
-    CGFloat dt = 6;
+    CGFloat dt = 0;
     CGFloat width = CGRectGetWidth(bounds) - dt;
     _avatarView.frame = CGRectMake(dt/2, dt/2, width, width * 5 / 6);
     

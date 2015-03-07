@@ -55,6 +55,11 @@ static inline CGFloat NavigationBarHeight()
     return 44.0;
 };
 
+static inline NSString* formatFee(CGFloat fee)
+{
+    return [NSString stringWithFormat:@"￥%.2f", fee];
+};
+
 static inline UIButton* createButton(NSString* imageName, id target, SEL action)
 {
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];

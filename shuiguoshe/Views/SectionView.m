@@ -27,7 +27,7 @@
                                                200 - CGRectGetWidth(_iconView.frame), 37),
                                     NSTextAlignmentLeft,
                                     COMMON_TEXT_COLOR,
-                                    [UIFont boldSystemFontOfSize:18]);
+                                    [UIFont systemFontOfSize:18]);
         [self addSubview:_sectionLabel];
     }
     return self;

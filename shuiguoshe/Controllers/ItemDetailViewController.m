@@ -8,8 +8,8 @@
 
 #import "ItemDetailViewController.h"
 
-#define kTitleLabelFont [UIFont boldSystemFontOfSize:16]
-#define kPriceLabelFont [UIFont boldSystemFontOfSize:18]
+#define kTitleLabelFont [UIFont systemFontOfSize:16]
+#define kPriceLabelFont [UIFont systemFontOfSize:18]
 
 #define kLeftMargin 15
 

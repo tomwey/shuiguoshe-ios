@@ -20,6 +20,8 @@
         self.itemTitle = [jsonObj objectForKey:@"title"];
         self.itemIconUrl = [jsonObj objectForKey:@"icon_url"];
         
+        self.itemUnit = [jsonObj objectForKey:@"unit"];
+        
         self.quantity = [[jsonObj objectForKey:@"quantity"] floatValue];
         
         self.price = [[jsonObj objectForKey:@"price"] floatValue];
@@ -33,6 +35,8 @@
 - (void)dealloc
 {
     self.itemTitle = nil;
+    self.itemUnit = nil;
+    
     self.itemIconUrl = nil;
     [super dealloc];
 }

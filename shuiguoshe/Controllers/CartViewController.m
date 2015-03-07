@@ -91,7 +91,7 @@
              [me.view addSubview:label];
              
          } else {
-             me->_resultLabel.value = [NSString stringWithFormat:@"%.2f",me.currentCart.totalPrice];
+             me->_resultLabel.value = [NSString stringWithFormat:@"￥%.2f",me.currentCart.totalPrice];
              
              me->_toolbar.hidden = NO;
              me->_tableView.hidden = NO;
@@ -118,6 +118,7 @@
                                                                      CGRectGetWidth(mainScreenBounds),
                                                                      49)];
     [self.view addSubview:_toolbar];
+    _toolbar.hidden = YES;
     [_toolbar release];
     
     if ( [[[UIDevice currentDevice] systemVersion] floatValue] < 7.0 ) {
@@ -257,7 +258,7 @@
         Item* anItem = [[[Item alloc] init] autorelease];
         anItem.iid = item.itemId;
         anItem.title = item.itemTitle;
-        anItem.lowPrice = [NSString stringWithFormat:@"%.2f", item.price];
+        anItem.lowPrice = [NSString stringWithFormat:@"￥%.2f", item.price];
         aCommand.userData = anItem;
         CommandButton* cmdButton = [[CoordinatorController sharedInstance] createCommandButton:nil
                                                                                        command:aCommand];
@@ -299,6 +300,24 @@
         [cell.contentView addSubview:priceLabel];
     }
     priceLabel.text = [NSString stringWithFormat:@"￥%.2f", item.price];
+
+    CGSize size = [priceLabel.text sizeWithFont:priceLabel.font
+                              constrainedToSize:CGSizeMake(CGRectGetWidth(priceLabel.frame), 50)];
+    
+    // 规格
+    UILabel* unitLabel = (UILabel *)[cell.contentView viewWithTag:2004];
+    if ( !unitLabel ) {
+        unitLabel = createLabel(CGRectMake(size.width + CGRectGetMinX(priceLabel.frame),
+                                            CGRectGetMinY(priceLabel.frame),
+                                            CGRectGetWidth(titleLabel.frame),
+                                            30),
+                                 NSTextAlignmentLeft,
+                                 COMMON_TEXT_COLOR,
+                                 [UIFont systemFontOfSize:14]);
+        unitLabel.tag = 2004;
+        [cell.contentView addSubview:unitLabel];
+    }
+    unitLabel.text = [NSString stringWithFormat:@" • %@", item.itemUnit];
     
     // 更新数量控件
     NumberControl* nc = (NumberControl *)[cell.contentView viewWithTag:1005];
@@ -344,7 +363,7 @@
         label.prefix = @"小计：";
     }
     
-    label.value = [NSString stringWithFormat:@"%.2f",item.totalPrice];
+    label.value = [NSString stringWithFormat:@"￥%.2f",item.totalPrice];
     
     // 更新信息
     __block CartViewController* me = self;
@@ -352,7 +371,7 @@
     nc.finishUpdatingBlock = ^(NSInteger currentValue) {
         
         CGFloat total = item.price * currentValue;
-        label.value = [NSString stringWithFormat:@"%.2f",total];
+        label.value = [NSString stringWithFormat:@"￥%.2f",total];
         
         cb.checked = YES;
         cb.currentItem.visible = YES;
@@ -377,7 +396,7 @@
         }
     }
     
-    _resultLabel.value = [NSString stringWithFormat:@"%.2f", sum];
+    _resultLabel.value = [NSString stringWithFormat:@"￥%.2f", sum];
 }
 
 - (LineItem *)itemForRow:(NSInteger)row
