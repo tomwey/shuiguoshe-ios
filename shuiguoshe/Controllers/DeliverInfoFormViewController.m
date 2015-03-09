@@ -15,6 +15,7 @@
 
 @implementation DeliverInfoFormViewController
 {
+    UITextField* _nameField;
     UITextField* _mobileField;
     UILabel*     _addressLabel;
     int          _apartmentId;
@@ -34,7 +35,15 @@
 //                            command:[ForwardCommand buildCommandWithForward:
 //                                     [Forward buildForwardWithType:ForwardTypeDismiss
 //                                                              from:self toControllerName:nil]]];
-    UILabel* mobile = createLabel(CGRectMake(15, 70, 80,
+    UILabel* name = createLabel(CGRectMake(15, 70, 80,
+                                             37),
+                                  NSTextAlignmentLeft,
+                                  COMMON_TEXT_COLOR,
+                                  [UIFont systemFontOfSize:14]);
+    [self.view addSubview:name];
+    name.text = @"收货人姓名";
+    
+    UILabel* mobile = createLabel(CGRectMake(15, CGRectGetMaxY(name.frame), 80,
                                              37),
                                   NSTextAlignmentLeft,
                                   COMMON_TEXT_COLOR,
@@ -50,10 +59,17 @@
     [self.view addSubview:address];
     address.text = @"收货人地址";
     
+    _nameField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(name.frame) + 5, CGRectGetMinY(name.frame), 200, 37)];
+    _nameField.placeholder = @"输入收货人姓名";
+    _nameField.font = [UIFont systemFontOfSize:14];
+    [self.view addSubview:_nameField];
+    [_nameField release];
+    
     _mobileField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(mobile.frame) + 5, CGRectGetMinY(mobile.frame), 200, 37)];
     _mobileField.placeholder = @"输入11位手机号";
     _mobileField.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:_mobileField];
+    [_mobileField release];
     _mobileField.keyboardType = UIKeyboardTypeNumberPad;
     
     CGRect frame = address.frame;
@@ -66,7 +82,7 @@
     _addressLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [self.view addSubview:_addressLabel];
     
-    _addressLabel.text = @"请选择所在小区";
+    _addressLabel.text = [[[DataService sharedService] areaForLocal] name];//@"请选择所在小区或大学";
     
     UIButton* save = createButton(nil, self, @selector(save));
     [save setTitle:@"保存" forState:UIControlStateNormal];
@@ -75,18 +91,18 @@
     
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:save] autorelease];
     
-    ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:
-                                [Forward buildForwardWithType:ForwardTypeModal
-                                                         from:self
-                                             toControllerName:@"ApartmentListViewController"]];
-    UIButton* btn = [[CoordinatorController sharedInstance] createCommandButton:nil
-                                                                        command:aCommand];
-    btn.frame = _addressLabel.frame;
-    [self.view addSubview:btn];
+//    ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:
+//                                [Forward buildForwardWithType:ForwardTypeModal
+//                                                         from:self
+//                                             toControllerName:@"ApartmentListViewController"]];
+//    UIButton* btn = [[CoordinatorController sharedInstance] createCommandButton:nil
+//                                                                        command:aCommand];
+//    btn.frame = _addressLabel.frame;
+//    [self.view addSubview:btn];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelect:)
-                                                 name:@"kApartmentDidSelctNotification"
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelect:)
+//                                                 name:@"kApartmentDidSelctNotification"
+//                                               object:nil];
 }
 
 - (void)didSelect:(NSNotification *)noti
@@ -119,15 +135,20 @@
         return;
     }
     
-    if ( _apartmentId == 0 ) {
-        [Toast showText:@"必须选择收货地址"];
-        return;
-    }
+//    if ( _apartmentId == 0 ) {
+//        [Toast showText:@"必须选择收货地址"];
+//        return;
+//    }
     
+    
+    NSString* name = !!_nameField.text ? [_nameField.text stringByTrimmingCharactersInSet:
+                                          [NSCharacterSet whitespaceAndNewlineCharacterSet]] : @"";
     [[DataService sharedService] post:@"/deliver_infos"
                                params:@{ @"token": [[UserService sharedService] token],
+                                         @"name": name,
                                          @"mobile": mobile,
-                                                     @"apartment_id": NSStringFromInteger(_apartmentId)} completion:^(NetworkResponse* resp) {
+                                         @"area_id": NSStringFromInteger([[[DataService sharedService] areaForLocal] oid])}
+                            completion:^(NetworkResponse* resp) {
                                                          
                                                          if ( resp.requestSuccess ) {
                                                              if ( resp.statusCode == 0 ) {

@@ -183,9 +183,9 @@
                 moreBtn = [[CoordinatorController sharedInstance] createCommandButton:nil command:nil];
                 moreBtn.tag = 888;
                 [cell.contentView addSubview:moreBtn];
-                [moreBtn setTitle:@"查看更多" forState:UIControlStateNormal];
+                [moreBtn setTitle:@"查看更多〉" forState:UIControlStateNormal];
                 [moreBtn setTitleColor:GREEN_COLOR forState:UIControlStateNormal];
-                moreBtn.frame = CGRectMake(CGRectGetWidth(mainScreenBounds) - 10 - 80, 10, 80, 30);
+                moreBtn.frame = CGRectMake(CGRectGetWidth(mainScreenBounds) - 10 - 90, 10, 90, 30);
             }
             
             Catalog* cata = [[[Catalog alloc] init] autorelease];

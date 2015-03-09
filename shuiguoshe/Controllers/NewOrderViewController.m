@@ -49,6 +49,9 @@
     _tableView.dataSource = self;
     _tableView.delegate = self;
     
+//    _tableView.sectionHeaderHeight = 10;
+//    _tableView.sectionFooterHeight = 5;
+    
     UIButton* commitBtn = [[CoordinatorController sharedInstance] createTextButton:@"提交订单"
                                                                               font:[UIFont systemFontOfSize:14]
                                                                         titleColor:[UIColor whiteColor]
@@ -83,8 +86,12 @@
     toolbar.items = @[textItem, flexItem, commitItem];
     
     __block NewOrderViewController* me = self;
+    NSString* uri = [NSString stringWithFormat:@"/cart/items?token=%@&area_id=%d",
+                     [[UserService sharedService] token],
+                     [[[DataService sharedService] areaForLocal] oid]];
+    
     [[DataService sharedService] loadEntityForClass:@"NewOrderInfo"
-                                                URI:[NSString stringWithFormat:@"/cart/items?token=%@", [[UserService sharedService] token]]
+                                                URI:uri
                                          completion:^(id result, BOOL succeed) {
                                              if ( succeed ) {
                                                  me.orderInfo = result;
@@ -581,6 +588,16 @@ static int rows[] = { 1, 1, 1, 1, 1 };
         
         [aCommand execute];
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.5;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 15;
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView

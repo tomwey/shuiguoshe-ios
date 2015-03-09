@@ -280,7 +280,7 @@
                                             CGRectGetWidth(mainScreenBounds) - CGRectGetMaxX(iconView.frame) - 20,40),
                                  NSTextAlignmentLeft,
                                  COMMON_TEXT_COLOR,
-                                 [UIFont systemFontOfSize:14]);
+                                 [UIFont systemFontOfSize:fontSize(14)]);
         titleLabel.tag = 1003;
         titleLabel.numberOfLines = 2;
         titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -299,7 +299,7 @@
                                             30),
                                  NSTextAlignmentLeft,
                                  GREEN_COLOR,
-                                 [UIFont systemFontOfSize:14]);
+                                 [UIFont systemFontOfSize:fontSize(14)]);
         priceLabel.tag = 1004;
         [cell.contentView addSubview:priceLabel];
     }
@@ -355,7 +355,7 @@
         [cell.contentView addSubview:label];
         [label release];
         label.tag = 1007;
-        label.font = [UIFont systemFontOfSize:14];
+        label.font = [UIFont systemFontOfSize:fontSize(14)];
         label.textColor = GREEN_COLOR;
         
         label.prefix = @"小计：";
