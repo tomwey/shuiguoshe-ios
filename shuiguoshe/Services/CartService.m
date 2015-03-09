@@ -41,7 +41,8 @@ NSString * const kCartTotalDidChangeNotification = @"kCartTotalDidChangeNotifica
 
 - (void)initTotal:(NSInteger)total
 {
-    [[NSUserDefaults standardUserDefaults] setInteger:total forKey:@"cart.total"];
+    [[NSUserDefaults standardUserDefaults] setInteger:total
+                                               forKey:[self cartTotalKey]];
     
     [self updateTotal:total];
 }
@@ -60,7 +61,8 @@ NSString * const kCartTotalDidChangeNotification = @"kCartTotalDidChangeNotifica
     NSInteger dt = [noti.object integerValue];
     NSInteger total = [self totalCount];
     total += dt;
-    [[NSUserDefaults standardUserDefaults] setInteger:total forKey:@"cart.total"];
+    [[NSUserDefaults standardUserDefaults] setInteger:total
+                                               forKey:[self cartTotalKey]];
     
     [self updateTotal:total];
 }
@@ -73,7 +75,12 @@ NSString * const kCartTotalDidChangeNotification = @"kCartTotalDidChangeNotifica
 
 - (NSUInteger)totalCount
 {
-    return [[NSUserDefaults standardUserDefaults] integerForKey:@"cart.total"];
+    return [[NSUserDefaults standardUserDefaults] integerForKey:[self cartTotalKey]];
+}
+
+- (NSString *)cartTotalKey
+{
+    return [NSString stringWithFormat:@"cart.total.area-%d", [[[DataService sharedService] areaForLocal] oid]];
 }
 
 @end

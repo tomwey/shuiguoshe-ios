@@ -17,7 +17,7 @@
 @implementation CartViewController
 {
     UITableView* _tableView;
-    UIToolbar*   _toolbar;
+    UIView*      _toolbar;
     
     UpdateValueLabel* _resultLabel;
     
@@ -71,8 +71,12 @@
     [super viewWillAppear:animated];
     
     __block CartViewController* me = self;
+    NSString* uri = [NSString stringWithFormat:@"/user/cart?token=%@&area_id=%d",
+                     [[UserService sharedService] token],
+                     [[[DataService sharedService] areaForLocal] oid]];
+    
     [[DataService sharedService] loadEntityForClass:@"Cart"
-                                                URI:[NSString stringWithFormat:@"/user/cart?token=%@", [[UserService sharedService] token]]
+                                                URI:uri
                                          completion:^(id result, BOOL succeed)
      {
          me.currentCart = result;
@@ -86,7 +90,7 @@
                                                      50),
                                           NSTextAlignmentCenter,
                                           COMMON_TEXT_COLOR,
-                                          [UIFont systemFontOfSize:16]);
+                                          [UIFont systemFontOfSize:fontSize(16)]);
              label.text = @"购物车是空的";
              [me.view addSubview:label];
              
@@ -114,22 +118,35 @@
 
 - (void)initToolbar
 {
-    _toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(mainScreenBounds) - 49 - NavigationBarAndStatusBarHeight(),
-                                                                     CGRectGetWidth(mainScreenBounds),
-                                                                     49)];
+    _toolbar = [[UIView alloc] initWithFrame:
+                CGRectMake(0, CGRectGetHeight(mainScreenBounds) -
+                           49 - NavigationBarAndStatusBarHeight(),
+                           CGRectGetWidth(mainScreenBounds),49)];
     [self.view addSubview:_toolbar];
     _toolbar.hidden = YES;
     [_toolbar release];
+    _toolbar.backgroundColor = [UIColor whiteColor];
     
-    if ( [[[UIDevice currentDevice] systemVersion] floatValue] < 7.0 ) {
-        [_toolbar setTintColor:[UIColor whiteColor]];
-    }
+    // 上边线
+    UIView* topLine = [[UIView alloc] initWithFrame:
+                       CGRectMake(0, 0, CGRectGetWidth(mainScreenBounds), 1)];
+    [_toolbar addSubview:topLine];
+    [topLine release];
     
+    topLine.backgroundColor = RGB(207,207,207);
+    
+    // 全选按钮
     _selectAll = [[[Checkbox alloc] init] autorelease];
+    _selectAll.labelFont = [UIFont systemFontOfSize:fontSize(14)];
     _selectAll.label = @"全选";
     _selectAll.checkboxType = CheckboxTypeSelectAll;
     _selectAll.checkboxGroup = _checkboxGroup;
     
+    [_toolbar addSubview:_selectAll];
+    
+    CGRect frame = _selectAll.frame;
+    frame.origin = CGPointMake( 5, ( 49 - CGRectGetHeight(frame) ) / 2 );
+    _selectAll.frame = frame;
     
     __block CartViewController* me = self;
     
@@ -149,38 +166,25 @@
         }
     };
     
-    UIBarButtonItem* checkAll = [[[UIBarButtonItem alloc] initWithCustomView:_selectAll] autorelease];
-    
-    UIBarButtonItem* flexItem1 = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                                                               target:nil
-                                                                                action:nil] autorelease];
-    
     // 总计
-    _resultLabel = [[UpdateValueLabel alloc] initWithFrame:CGRectMake(0, 0, 200, 49)];
+    _resultLabel = [[UpdateValueLabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(mainScreenBounds), 49)];
     _resultLabel.backgroundColor = [UIColor clearColor];
     _resultLabel.textAlignment = NSTextAlignmentCenter;
     _resultLabel.textColor = COMMON_TEXT_COLOR;
     _resultLabel.prefix = @"总计：";
-    _resultLabel.font = [UIFont systemFontOfSize:14];
+    _resultLabel.font = [UIFont boldSystemFontOfSize:fontSize(14)];
     
-    UIBarButtonItem* resultItem = [[[UIBarButtonItem alloc] initWithCustomView:_resultLabel] autorelease];
-    
-    UIBarButtonItem* flexItem2 = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                                                                                target:nil
-                                                                                action:nil] autorelease];
+    [_toolbar addSubview:_resultLabel];
+    [_resultLabel release];
     
     // 结算
-//    ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePush
-//                                                                                                from:self
-//                                                                                    toControllerName:@"NewOrderViewController"]];
-//    CommandButton* cmdBtn = [[CoordinatorController sharedInstance] createCommandButton:@"btn_calcu.png"
-//                                                                                command:aCommand];
-    
     UIButton* cmdBtn = createButton(@"btn_calcu.png", self, @selector(checkout));
+    [_toolbar addSubview:cmdBtn];
     
-    UIBarButtonItem* calcu = [[[UIBarButtonItem alloc] initWithCustomView:cmdBtn] autorelease];
-    
-    _toolbar.items = @[checkAll, flexItem1, resultItem, flexItem2, calcu];
+    frame = cmdBtn.frame;
+    frame.origin = CGPointMake(CGRectGetWidth(mainScreenBounds) - 15 - CGRectGetWidth(frame),
+                               ( 49 - CGRectGetHeight(frame) ) / 2);
+    cmdBtn.frame = frame;
 }
 
 - (void)checkout
@@ -291,7 +295,7 @@
     if ( !priceLabel ) {
         priceLabel = createLabel(CGRectMake(CGRectGetMinX(titleLabel.frame),
                                             CGRectGetMinY(titleLabel.frame) + 32,
-                                            CGRectGetWidth(titleLabel.frame),
+                                            200,
                                             30),
                                  NSTextAlignmentLeft,
                                  GREEN_COLOR,
@@ -299,25 +303,19 @@
         priceLabel.tag = 1004;
         [cell.contentView addSubview:priceLabel];
     }
-    priceLabel.text = [NSString stringWithFormat:@"￥%.2f", item.price];
-
-    CGSize size = [priceLabel.text sizeWithFont:priceLabel.font
-                              constrainedToSize:CGSizeMake(CGRectGetWidth(priceLabel.frame), 50)];
+//    priceLabel.text = [NSString stringWithFormat:@"￥%.2f", item.price];
     
-    // 规格
-    UILabel* unitLabel = (UILabel *)[cell.contentView viewWithTag:2004];
-    if ( !unitLabel ) {
-        unitLabel = createLabel(CGRectMake(size.width + CGRectGetMinX(priceLabel.frame),
-                                            CGRectGetMinY(priceLabel.frame),
-                                            CGRectGetWidth(titleLabel.frame),
-                                            30),
-                                 NSTextAlignmentLeft,
-                                 COMMON_TEXT_COLOR,
-                                 [UIFont systemFontOfSize:14]);
-        unitLabel.tag = 2004;
-        [cell.contentView addSubview:unitLabel];
-    }
-    unitLabel.text = [NSString stringWithFormat:@" • %@", item.itemUnit];
+    
+    NSString* priceText = [NSString stringWithFormat:@"￥%.2f • %@", item.price, item.itemUnit];
+    
+    NSRange range = [priceText rangeOfString:@"•"];
+    range.length = priceText.length - range.location;
+    
+    NSMutableAttributedString* string =
+    [[[NSMutableAttributedString alloc] initWithString:priceText] autorelease];
+    [string addAttributes:@{ NSForegroundColorAttributeName: COMMON_TEXT_COLOR }
+                    range:range];
+    priceLabel.attributedText = string;
     
     // 更新数量控件
     NumberControl* nc = (NumberControl *)[cell.contentView viewWithTag:1005];

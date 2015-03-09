@@ -169,7 +169,8 @@
     sender.userInteractionEnabled = NO;
     
     [[DataService sharedService] post:@"/cart/add_item"
-                               params:@{ @"token": [[UserService sharedService] token], @"pid": NSStringFromInteger(self.itemDetail.itemId) }
+                               params:@{ @"token": [[UserService sharedService] token], @"pid": NSStringFromInteger(self.itemDetail.itemId),
+                                         @"area_id": NSStringFromInteger([[[DataService sharedService] areaForLocal] oid])}
                            completion:^(NetworkResponse* resp)
     {
        sender.userInteractionEnabled = YES;
