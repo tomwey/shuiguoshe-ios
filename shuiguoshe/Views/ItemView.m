@@ -44,26 +44,26 @@
         
         _titleLabel.numberOfLines = 2;
         _titleLabel.textColor = COMMON_TEXT_COLOR;
-        _titleLabel.font = [UIFont systemFontOfSize:14];
+        _titleLabel.font = [UIFont systemFontOfSize:fontSize(14)];
         
         // 规格
         _unitLabel = [[UILabel alloc] init];
         [self addSubview:_unitLabel];
         [_unitLabel release];
-        _unitLabel.font = [UIFont systemFontOfSize:12];
+        _unitLabel.font = [UIFont systemFontOfSize:fontSize(12)];
         _unitLabel.textColor = COMMON_TEXT_COLOR;//RGB(80,80,80);
         
         // 价格
         _priceLabel = [[UILabel alloc] init];
         [self addSubview:_priceLabel];
         [_priceLabel release];
-        _priceLabel.font = [UIFont systemFontOfSize:14];
+        _priceLabel.font = [UIFont systemFontOfSize:fontSize(14)];
         _priceLabel.textColor = GREEN_COLOR;
         
         _originPriceLabel = [[LPLabel alloc] init];
         [self addSubview:_originPriceLabel];
         [_originPriceLabel release];
-        _originPriceLabel.font = [UIFont systemFontOfSize:12];
+        _originPriceLabel.font = [UIFont systemFontOfSize:fontSize(12)];
         _originPriceLabel.textColor = RGB(137, 137, 137);
         _originPriceLabel.strikeThroughColor = _originPriceLabel.textColor;
         
@@ -74,7 +74,7 @@
         
         _saleCountLabel.backgroundColor = GREEN_COLOR;
         _saleCountLabel.textColor = [UIColor whiteColor];
-        _saleCountLabel.font = [UIFont systemFontOfSize:12];
+        _saleCountLabel.font = [UIFont systemFontOfSize:fontSize(12)];
         
         UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap)];
         

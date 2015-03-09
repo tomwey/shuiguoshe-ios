@@ -12,17 +12,19 @@
 @interface HomeViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, copy) NSArray* dataSource;
+@property (nonatomic, retain) UITableView* tableView;
+@property (nonatomic, retain) UIRefreshControl* refreshControl;
 
 @end
 
 @implementation HomeViewController
 {
     BannerView* _bannerView;
-    UITableView* _tableView;
-    
-    UIRefreshControl* _refreshControl;
     
     HomeTitleView* _titleView;
+    
+    NSInteger _dtHeight;
+    
 }
 
 - (void)viewDidLoad {
@@ -34,82 +36,99 @@
     aCommand.forward.loginCheck = YES;
     [self setLeftBarButtonWithImage:@"btn_user.png" command:aCommand];
     
-    // 设置导航条标题视图
-//    LogoTitleView* titleView = [[[LogoTitleView alloc] init] autorelease];
-//    self.navigationItem.titleView = titleView;
-//    
-//    PhoneNumberView* pnv = [PhoneNumberView currentPhoneNumberView];
-//    titleView.didClickBlock = ^(BOOL closed) {
-//        if ( closed ) {
-//            [pnv dismiss];
-//        } else {
-//            [pnv showInView:self.view];
-//        }
-//    };
-    
+    // 标题
     HomeTitleView* titleView = [[[HomeTitleView alloc] init] autorelease];
     self.navigationItem.titleView = titleView;
     _titleView = titleView;
     
     titleView.titleDidClickBlock = ^{
-        ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypeModal
-                                                                                                    from:self
-                                                                                        toControllerName:@"AreaListViewController"]];
+        ForwardCommand* aCommand =
+        [ForwardCommand buildCommandWithForward:
+         [Forward buildForwardWithType:ForwardTypeModal
+                                  from:self
+                      toControllerName:@"AreaListViewController"]];
+        
+        aCommand.userData = @"Home";
         [aCommand execute];
     };
     
+    _dtHeight = 0;
+    
+    [self initTable];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateTable)
+                                                 name:kAreaDidSelectNotification2Home
+                                               object:nil];
+    
+    [self loadData:YES];
+}
+
+- (void)updateTable
+{
+    _dtHeight = 64;
+    
+    [self initTable];
+    
+    _bannerView = nil;
+    
+    [self loadData:YES];
+}
+
+- (void)initTable
+{
     // 创建表视图
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(mainScreenBounds),
-                                                                           CGRectGetHeight(mainScreenBounds) -
-                                                                           NavigationBarAndStatusBarHeight())
-                                                          style:UITableViewStylePlain];
-    [self.view addSubview:_tableView];
-    [_tableView release];
+    [self.refreshControl removeFromSuperview];
+    [self.tableView removeFromSuperview];
     
-//    _tableView.backgroundColor = [UIColor clearColor];
+    self.tableView = [[[UITableView alloc] initWithFrame:
+                       CGRectMake(0, _dtHeight,
+                                  CGRectGetWidth(mainScreenBounds),
+                                  CGRectGetHeight(mainScreenBounds) -
+                                  NavigationBarAndStatusBarHeight() -
+                                  _dtHeight)
+                                                   style:UITableViewStylePlain] autorelease];
     
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:self.tableView];
     
-    _tableView.dataSource = self;
-    _tableView.delegate   = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    _refreshControl = [[UIRefreshControl alloc] init];
-    [_tableView addSubview:_refreshControl];
-    
-    [_refreshControl release];
-    
-    [_refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
-    
-//    _refreshControl.attributedTitle = [[[NSAttributedString alloc] initWithString:@"下拉刷新"] autorelease];
-    
-    [self loadData];
+    self.refreshControl = [[[UIRefreshControl alloc] init] autorelease];
+    [self.tableView addSubview:self.refreshControl];
+
+    [self.refreshControl addTarget:self
+                            action:@selector(refreshTable)
+                  forControlEvents:UIControlEventValueChanged];
 }
 
 - (void)refreshTable
 {
-    [self loadData];
+    [self loadData:NO];
 }
 
-- (void)loadData
+- (void)loadData:(BOOL)yesOrNo
 {
     [[DataService sharedService] loadEntityForClass:@"Section"
-                                                URI:[NSString stringWithFormat:@"/sections?area_id=%d", [[[DataService sharedService] areaForLocal] oid]]
+                                                URI:[NSString stringWithFormat:@"/sections?area_id=%ld", [[[DataService sharedService] areaForLocal] oid]]
                                          completion:^(id result, BOOL succeed) {
-//                                             [self doneLoadingTableViewData];
                                              [_refreshControl endRefreshing];
+                                             
                                              if ( succeed ) {
                                                  self.dataSource = result;
-                                                 _tableView.hidden = NO;
-                                                 [_tableView reloadData];
+                                                 self.tableView.hidden = NO;
+                                                 
+                                                 self.tableView.dataSource = self;
+                                                 self.tableView.delegate   = self;
+                                                 
+                                                 [self.tableView reloadData];
                                              } else {
                                                  if ( result ) {
                                                      
                                                  } else {
                                                      
                                                  }
-//                                                 _tableView.hidden = YES;
                                              }
-                                         }];
+                                         } showLoading:yesOrNo];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -138,7 +157,7 @@
     if ( !cell ) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId] autorelease];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        cell.backgroundColor = [UIColor whiteColor];
+//        cell.backgroundColor = [UIColor redColor];
     }
     
     Section* s = [self.dataSource objectAtIndex:indexPath.row];
@@ -156,23 +175,39 @@
         }
         
         [sv setSectionName:s.name];
+        
+        // 更多按钮
+        if ( s.data.count > 2 ) {
+            CommandButton* moreBtn = (CommandButton *)[cell.contentView viewWithTag:888];
+            if ( !moreBtn ) {
+                moreBtn = [[CoordinatorController sharedInstance] createCommandButton:nil command:nil];
+                moreBtn.tag = 888;
+                [cell.contentView addSubview:moreBtn];
+                [moreBtn setTitle:@"查看更多" forState:UIControlStateNormal];
+                [moreBtn setTitleColor:GREEN_COLOR forState:UIControlStateNormal];
+                moreBtn.frame = CGRectMake(CGRectGetWidth(mainScreenBounds) - 10 - 80, 10, 80, 30);
+            }
+            
+            Catalog* cata = [[[Catalog alloc] init] autorelease];
+            cata.name = s.name;
+            cata.cid = [[[s.identifier componentsSeparatedByString:@"-"] lastObject] integerValue];
+            
+            Forward* aForward = [Forward buildForwardWithType:ForwardTypePush
+                                                         from:self
+                                             toControllerName:@"ItemsViewController"];
+            aForward.userData = cata;
+            ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:aForward];
+            moreBtn.command = aCommand;
+        }
     }
     
     if ( [s.identifier isEqualToString:@"banners"] ) {
         [self addBanner:cell atIndex:indexPath.row];
     } else {
+        _bannerView = nil;
+        
         [self addItems:cell atIndex:indexPath.row];
     }
-    
-//    if ( [s.identifier isEqualToString:@"catalogs"] ) {
-//        [self addCatalog:cell atIndex:indexPath.row];
-//    }
-//    
-//    if ( [s.identifier isEqualToString:@"hot_items"] ) {
-//        [self addItems:cell atIndex:indexPath.row];
-//    }
-    
-//    cell.backgroundColor = [UIColor whiteColor];
     
     return cell;
 }
@@ -196,47 +231,6 @@
     
 }
 
-- (void)addCatalog:(UITableViewCell *)cell atIndex:(NSInteger)index
-{
-    // 分类
-    Section* s = [self.dataSource objectAtIndex:index];
-    
-    int numberOfCol = 2;
-    CGFloat padding = 20;
-    CGFloat width = ( CGRectGetWidth(mainScreenBounds) - ( numberOfCol + 1 ) * padding ) / numberOfCol;
-    CGFloat height = 48;
-    
-    for (int i=0; i<[s.data count]; i++) {
-        
-        Catalog* cata = [s.data objectAtIndex:i];
-        NSUInteger tag = 2000 + cata.cid;
-        CommandButton* btn = (CommandButton *)[cell.contentView viewWithTag:tag];
-        if ( !btn ) {
-            btn = [[CoordinatorController sharedInstance] createCommandButton:nil command:nil];
-            btn.tag = tag;
-            [cell.contentView addSubview:btn];
-        }
-        
-        [btn setTitle:cata.name forState:UIControlStateNormal];
-        btn.backgroundColor = RGB(232,233,232);
-        
-        [btn setTitleColor:COMMON_TEXT_COLOR forState:UIControlStateNormal];
-        
-        int m = i % numberOfCol;
-        int n = i / numberOfCol;
-        btn.frame = CGRectMake(padding + ( padding + width ) * m,
-                               30 + 10 + ( padding + height ) * n,
-                               width, height);
-        
-        ForwardCommand* fc = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePush
-                                                                                              from:self
-                                                                                  toControllerName:@"ItemsViewController"]];
-        btn.command = fc;
-        fc.userData = cata;
-        
-    }
-}
-
 - (void)addItems:(UITableViewCell *)cell atIndex:(NSInteger)index
 {
     Section* s = [self.dataSource objectAtIndex:index];
@@ -245,11 +239,16 @@
     CGFloat padding = 10;
     CGFloat width = ( CGRectGetWidth(mainScreenBounds) - (numberOfCol + 1) * padding ) / numberOfCol;
     
-    CGFloat height = width / 0.618;
+    CGFloat height = width / [self factorForDevice];
     
-    CGFloat factor = [self factorForDevice];
+    CGFloat factor = 0.0;//[self factorForDevice];
     
-    for (int i=0; i<[s.data count]; i++) {
+    CGRect frame = CGRectZero;
+    if ( [cell.contentView viewWithTag:1002] ) {
+        frame = [[cell.contentView viewWithTag:1002] frame];
+    }
+    
+    for (int i=0; i<[self itemsCountFor:s]; i++) {
         ItemView* itemView = (ItemView *)[cell.contentView viewWithTag:3000+i];
         if ( !itemView ) {
             itemView = [[[ItemView alloc] init] autorelease];
@@ -261,7 +260,7 @@
         int n = i / numberOfCol;
         
         itemView.frame = CGRectMake(padding + (width + padding) * m,
-                                    30 + 20 + ( height + factor + padding ) * n,
+                                    CGRectGetMaxY(frame) + 10 + ( height + factor + padding ) * n,
                                     width, height + factor);
         
         itemView.item = [s.data objectAtIndex:i];
@@ -275,27 +274,34 @@
         return s.height * ( CGRectGetWidth(mainScreenBounds) / 320.0 );
     }
     
+    CGFloat dtRowHeight = indexPath.row == self.dataSource.count - 1 ? 20 : 0;
+    
     int numberOfCol = 2;
     CGFloat padding = 10;
     CGFloat width = ( CGRectGetWidth(mainScreenBounds) - (numberOfCol + 1) * padding ) / numberOfCol;
     
-    CGFloat height = width / 0.618;
     
-    int row = (s.data.count + 1 ) / 2;
+    CGFloat height = width / [self factorForDevice];
+    NSInteger row = 1;//(s.data.count + 1 ) / 2;
     
-    return row * (height + padding) + 30 * ( self.dataSource.count - 1 );// * ( CGRectGetWidth(mainScreenBounds) / 320.0 );
+    return dtRowHeight + (row * (height + padding)) + 25 + 20;
+}
+
+- (NSInteger)itemsCountFor:(Section*)sec
+{
+    return MIN(2, sec.data.count);
 }
 
 - (CGFloat)factorForDevice
 {
-    CGFloat factor = 0;
-    NSLog(@"%f", CGRectGetHeight(mainScreenBounds));
+    CGFloat factor = 0.6;
+    
     if ( CGRectGetHeight(mainScreenBounds) > 568 ) {
-        factor = 24;
+        factor = 0.65;
     }
     
     if ( CGRectGetHeight(mainScreenBounds) > 667 ) {
-        factor = 38;
+        factor = 0.68;
     }
     
     return factor;

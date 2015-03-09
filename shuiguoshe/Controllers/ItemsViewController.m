@@ -45,9 +45,9 @@
     tableView.dataSource = self;
     tableView.delegate   = self;
     
-    tableView.rowHeight = 240 + [self factorForDevice];
+//    tableView.rowHeight = 240 + [self factorForDevice];
     
-    tableView.contentInset = UIEdgeInsetsMake(0, 0, 10, 0);
+//    tableView.contentInset = UIEdgeInsetsMake(0, 0, 10, 0);
     
     [[DataService sharedService] loadEntityForClass:@"Item"
                                                 URI:[NSString stringWithFormat:@"/items/type-%ld", [self.userData cid]]
@@ -97,8 +97,11 @@
         colCount = [_dataSource count] - row * _numberOfCols;
     }
     
-    CGFloat padding = 20;
-    CGFloat width = ( CGRectGetWidth(mainScreenBounds) - _numberOfCols * padding - padding / 2 ) / _numberOfCols;
+    int numberOfCol = _numberOfCols;
+    CGFloat padding = 10;
+    CGFloat width = ( CGRectGetWidth(mainScreenBounds) - (numberOfCol + 1) * padding ) / numberOfCol;
+    
+    CGFloat height = width / [self factorForDevice];
     
     for (int i=0; i<colCount; i++) {
         NSInteger index = row * _numberOfCols + i;
@@ -110,21 +113,38 @@
             [cell.contentView addSubview:itemView];
         }
         
-        itemView.frame = CGRectMake(padding + (width + padding/2) * i,
-                                    10, width, 230 + [self factorForDevice]);
+        itemView.frame = CGRectMake(padding + (width + padding) * i,
+                                    10, width, height);
         itemView.item = [_dataSource objectAtIndex:index];
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger rowCount = ( _dataSource.count + _numberOfCols - 1 ) / _numberOfCols;
+    
+    CGFloat dtRowHeight = indexPath.row == rowCount - 1 ? 10 : 0;
+    
+    int numberOfCol = _numberOfCols;
+    CGFloat padding = 10;
+    
+    CGFloat width = ( CGRectGetWidth(mainScreenBounds) - (numberOfCol + 1) * padding ) / numberOfCol;
+    
+    CGFloat height = width / [self factorForDevice];
+    
+    return dtRowHeight + height + 10;
+}
+
 - (CGFloat)factorForDevice
 {
-    CGFloat factor = 0;
+    CGFloat factor = 0.6;
+    
     if ( CGRectGetHeight(mainScreenBounds) > 568 ) {
-        factor = 24;
+        factor = 0.65;
     }
     
     if ( CGRectGetHeight(mainScreenBounds) > 667 ) {
-        factor = 38;
+        factor = 0.68;
     }
     
     return factor;

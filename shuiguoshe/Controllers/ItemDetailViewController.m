@@ -8,8 +8,8 @@
 
 #import "ItemDetailViewController.h"
 
-#define kTitleLabelFont [UIFont systemFontOfSize:16]
-#define kPriceLabelFont [UIFont systemFontOfSize:18]
+#define kTitleLabelFont [UIFont systemFontOfSize:fontSize(16)]
+#define kPriceLabelFont [UIFont systemFontOfSize:fontSize(18)]
 
 #define kLeftMargin 15
 
@@ -197,7 +197,7 @@
         
         originPriceLabel.strikeThroughColor = RGB(137,137, 137);
         originPriceLabel.textColor = originPriceLabel.strikeThroughColor;
-        originPriceLabel.font = [UIFont systemFontOfSize:14];
+        originPriceLabel.font = [UIFont systemFontOfSize:fontSize(14)];
     }
     
     originPriceLabel.frame = CGRectMake(CGRectGetMaxX(priceLabel.frame) + 5,
@@ -235,7 +235,7 @@
         UILabel* discountLabel = (UILabel *)[cell.contentView viewWithTag:1005];
         if ( !discountLabel ) {
             discountLabel = createLabel(CGRectMake(kLeftMargin, dtTop, 40, 30),
-                                        NSTextAlignmentLeft, RGB(137,137,137), [UIFont boldSystemFontOfSize:14]);
+                                        NSTextAlignmentLeft, RGB(137,137,137), [UIFont boldSystemFontOfSize:fontSize(14)]);
             discountLabel.tag = 1005;
             [cell.contentView addSubview:discountLabel];
             
@@ -247,7 +247,7 @@
             CGRect frame = discountLabel.frame;
             frame.origin.x = CGRectGetMaxX(frame);
             frame.size.width = width - CGRectGetWidth(frame);
-            discountInfoLabel = createLabel(frame, NSTextAlignmentLeft, GREEN_COLOR, [UIFont systemFontOfSize:14]);
+            discountInfoLabel = createLabel(frame, NSTextAlignmentLeft, GREEN_COLOR, [UIFont systemFontOfSize:fontSize(14)]);
             discountInfoLabel.tag = 1006;
             [cell.contentView addSubview:discountInfoLabel];
         }
@@ -261,7 +261,7 @@
     UILabel* unitLabel = (UILabel *)[cell.contentView viewWithTag:1007];
     if ( !unitLabel ) {
         unitLabel = createLabel(CGRectMake(kLeftMargin, dtTop, 40, 30),
-                                    NSTextAlignmentLeft, RGB(137,137,137), [UIFont boldSystemFontOfSize:14]);
+                                    NSTextAlignmentLeft, RGB(137,137,137), [UIFont boldSystemFontOfSize:fontSize(14)]);
         unitLabel.tag = 1007;
         [cell.contentView addSubview:unitLabel];
         
@@ -273,7 +273,7 @@
     UILabel* unitLabel2 = (UILabel *)[cell.contentView viewWithTag:1008];
     if ( !unitLabel2 ) {
         unitLabel2 = createLabel(CGRectMake(CGRectGetMaxX(unitLabel.frame), dtTop, 50, 30),
-                                NSTextAlignmentLeft, COMMON_TEXT_COLOR, [UIFont systemFontOfSize:14]);
+                                NSTextAlignmentLeft, COMMON_TEXT_COLOR, [UIFont systemFontOfSize:fontSize(14)]);
         unitLabel2.tag = 1008;
         [cell.contentView addSubview:unitLabel2];
         
@@ -288,7 +288,7 @@
     UILabel* deliverLabel = (UILabel *)[cell.contentView viewWithTag:2001];
     if ( !deliverLabel ) {
         deliverLabel = createLabel(CGRectMake(kLeftMargin, dtTop, 40, 30),
-                                   NSTextAlignmentLeft, RGB(137,137,137), [UIFont boldSystemFontOfSize:14]);
+                                   NSTextAlignmentLeft, RGB(137,137,137), [UIFont boldSystemFontOfSize:fontSize(14)]);
         deliverLabel.tag = 2001;
         [cell.contentView addSubview:deliverLabel];
         
@@ -300,7 +300,7 @@
     UILabel* deliverLabel2 = (UILabel *)[cell.contentView viewWithTag:2002];
     if ( !deliverLabel2 ) {
         deliverLabel2 = createLabel(CGRectMake(CGRectGetMaxX(deliverLabel.frame), dtTop, width - kLeftMargin * 2, 30),
-                                    NSTextAlignmentLeft, COMMON_TEXT_COLOR, [UIFont systemFontOfSize:14]);
+                                    NSTextAlignmentLeft, COMMON_TEXT_COLOR, [UIFont systemFontOfSize:fontSize(14)]);
         deliverLabel2.tag = 2002;
         deliverLabel2.numberOfLines = 0;
         [cell.contentView addSubview:deliverLabel2];
@@ -328,13 +328,13 @@
         saleLabel = createLabel(CGRectMake(kLeftMargin, dtTop + 10, width - kLeftMargin * 2, 30),
                                 NSTextAlignmentLeft,
                                 unitLabel.textColor,
-                                [UIFont boldSystemFontOfSize:16]);
+                                [UIFont boldSystemFontOfSize:fontSize(16)]);
         [cell.contentView addSubview:saleLabel];
         
         saleLabel.tag = 3001;
     }
     
-    saleLabel.frame = CGRectMake(kLeftMargin, dtTop + 10, width - kLeftMargin * 2, 30);
+    saleLabel.frame = CGRectMake(kLeftMargin, dtTop + 15, width - kLeftMargin * 2, 30);
     
     NSMutableAttributedString *string =
     [[[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"已售%d件", self.itemDetail.ordersCount]] autorelease];
@@ -355,7 +355,7 @@
         tipLabel = createLabel(CGRectMake(kLeftMargin, 5, width - kLeftMargin * 2, 30),
                                NSTextAlignmentLeft,
                                COMMON_TEXT_COLOR,
-                               [UIFont boldSystemFontOfSize:16]);
+                               [UIFont boldSystemFontOfSize:fontSize(16)]);
         tipLabel.tag = 4001;
         [cell.contentView addSubview:tipLabel];
         tipLabel.text = @"商品简介";
@@ -408,7 +408,7 @@
         }
             
         case 1: {
-            CGSize size2 = [self.itemDetail.deliverInfo sizeWithFont:[UIFont systemFontOfSize:14]
+            CGSize size2 = [self.itemDetail.deliverInfo sizeWithFont:[UIFont systemFontOfSize:fontSize(14)]
                                                 constrainedToSize:CGSizeMake(width - kLeftMargin * 2 - 40, 1000)
                                                     lineBreakMode:NSLineBreakByWordWrapping];
             

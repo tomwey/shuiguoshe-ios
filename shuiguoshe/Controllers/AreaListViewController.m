@@ -9,6 +9,9 @@
 #import "AreaListViewController.h"
 #import "Defines.h"
 
+NSString * const kAreaDidSelectNotification = @"kAreaDidSelectNotification";
+NSString * const kAreaDidSelectNotification2Home = @"kAreaDidSelectNotification2Home";
+
 @interface AreaListViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @end
@@ -48,7 +51,6 @@
     _tableView.delegate = self;
     
     _searchResults = [[NSMutableArray alloc] init];
-    
     _dataSource = [[NSMutableArray alloc] init];
     
     [[DataService sharedService] loadEntityForClass:@"Area"
@@ -143,8 +145,14 @@
         Area* a = [_currentDataSource objectAtIndex:indexPath.row];
         [[DataService sharedService] saveAreaToLocal:a];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"kApartmentDidSelctNotification"
-                                                            object:[_dataSource objectAtIndex:indexPath.row]];
+        if ( [self.userData isEqualToString:@"Home"] ) {
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:kAreaDidSelectNotification2Home object:nil];
+        } else {
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:kAreaDidSelectNotification
+             object:[_dataSource objectAtIndex:indexPath.row]];
+        }
         
         [self dismissViewControllerAnimated:YES completion:nil];
         
@@ -152,9 +160,14 @@
         Area* a = [_currentDataSource objectAtIndex:indexPath.row];
         [[DataService sharedService] saveAreaToLocal:a];
         
-        ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePush
-                                                                                                    from:self
-                                                                                        toControllerName:@"HomeViewController"]];
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:kAreaDidSelectNotification2Home object:nil];
+        
+        ForwardCommand* aCommand =
+        [ForwardCommand buildCommandWithForward:
+         [Forward buildForwardWithType:ForwardTypePush
+                                  from:self
+                      toControllerName:@"HomeViewController"]];
         aCommand.userData = a;
         [aCommand execute];
     }

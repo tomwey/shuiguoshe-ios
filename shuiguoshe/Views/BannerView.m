@@ -69,9 +69,6 @@ NSString * const kBannerViewDidHideNotification = @"kBannerViewDidHideNotificati
         [self bringSubviewToFront:_pager];
         _pager.hidesForSinglePage = YES;
         
-//        _pager.pageIndicatorTintColor = COMMON_TEXT_COLOR;
-//        _pager.currentPageIndicatorTintColor = [UIColor redColor];//RGB(99, 185, 76);
-        
         _timer = [NSTimer scheduledTimerWithTimeInterval:3.0
                                                  target:self
                                                selector:@selector(onTimer:)
@@ -92,9 +89,9 @@ NSString * const kBannerViewDidHideNotification = @"kBannerViewDidHideNotificati
     return self;
 }
 
-- (void)btnClicked:(UIGestureRecognizer*)sender
+- (void)btnClicked:(id)sender
 {
-    CustomImageView* imageView = (CustomImageView *)[sender view];
+    CustomImageView* imageView = (CustomImageView *)[sender superview];
     Banner* banner = imageView.banner;
     
     if ( banner.link.length > 0 ) {
@@ -233,16 +230,18 @@ NSString * const kBannerViewDidHideNotification = @"kBannerViewDidHideNotificati
         imageView.tag = 100 + index;
         imageView.banner = banner;
         
-//        UIButton* btn = createButton(nil, self, @selector(btnClicked:));
-//        [imageView addSubview:btn];
-//        btn.frame = imageView.bounds;
-        
         imageView.userInteractionEnabled = YES;
         
-        UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnClicked:)];
-        [imageView addGestureRecognizer:tap];
-        [tap release];
+//        UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(btnClicked:)];
+//        [imageView addGestureRecognizer:tap];
+//        [tap release];
+        
+        UIButton* btn = createButton(nil, self, @selector(btnClicked:));
+        [imageView addSubview:btn];
+        btn.frame = imageView.bounds;
+        
     }
+    
     [imageView setImageWithURL:[NSURL URLWithString:banner.imageUrl] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
 }
 

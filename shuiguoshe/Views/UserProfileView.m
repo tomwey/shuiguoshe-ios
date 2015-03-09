@@ -82,7 +82,10 @@
 - (void)setUser:(User *)aUser
 {
     [_avatarView setImageWithURL:[NSURL URLWithString:aUser.avatarUrl] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
-    _nameLabel.text = aUser.name;
+    _nameLabel.text = [aUser.name stringByReplacingCharactersInRange:
+                                                          NSMakeRange(3, 4)
+                                                          withString:@"****"];
+    
     _scoreLabel.text = [NSString stringWithFormat:@"您目前拥有的积分是：%ld", aUser.score];
 }
 

@@ -8,6 +8,9 @@
 
 #import "BaseViewController.h"
 
+FOUNDATION_EXTERN NSString * const kAreaDidSelectNotification;
+FOUNDATION_EXTERN NSString * const kAreaDidSelectNotification2Home;
+
 @interface AreaListViewController : BaseViewController
 
 @end

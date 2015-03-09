@@ -11,6 +11,7 @@
 @implementation DataService
 {
     NSMutableDictionary* _cacheDict;
+    BOOL _loading;
 }
 
 + (DataService *)sharedService
@@ -28,6 +29,7 @@
 - (DataService *)init
 {
     if ( self = [super init] ) {
+        _loading = NO;
         _cacheDict = [[NSMutableDictionary alloc] init];
     }
     return self;
@@ -65,12 +67,16 @@
 
 - (void)startRequest
 {
+    _loading = YES;
+    
     UIView* view = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
     [MBProgressHUD showHUDAddedTo:view animated:YES];
 }
 
 - (void)finishRequest
 {
+    _loading = NO;
+    
     UIView* view = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
     [MBProgressHUD hideHUDForView:view animated:YES];
 }
@@ -98,6 +104,10 @@
       params:(NSDictionary *)params
   completion:( void (^)(NetworkResponse* resp) )completion
 {
+    if ( _loading ) {
+        return;
+    }
+    
     NSString* url = [self buildUrlFor:uri];
     
     [self startRequest];
@@ -144,23 +154,29 @@
 
 - (void)loadEntityForClass:(NSString *)clz
                        URI:(NSString *)uri
-                completion:( void (^)(id result, BOOL succeed) )completion;
+                completion:( void (^)(id result, BOOL succeed) )completion
+               showLoading:(BOOL)yesOrNo
 {
-    NSString* url = [self buildUrlFor:uri];
-//    id responseObject = [_cacheDict objectForKey:url];
-//    if ( responseObject && completion ) {
-//        completion([self handleResponse:responseObject forClass:clz], YES);
-//        return;
-//    }
+    if ( _loading ) {
+        return;
+    }
     
-    [self startRequest];
+    _loading = YES;
+    
+    NSString* url = [self buildUrlFor:uri];
+    
+    if ( yesOrNo ) {
+        UIView* view = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
+        [MBProgressHUD showHUDAddedTo:view animated:YES];
+    }
+    
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  [self finishRequest];
-             
+                 
                  int code = [[responseObject objectForKey:@"code"] intValue];
                  
                  if ( code == 0 ) {
@@ -174,7 +190,7 @@
                          completion(nil, NO);
                      }
                  }
-            });
+             });
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"Load Entity Error: %@", error);
@@ -186,8 +202,22 @@
          }];
 }
 
+- (void)loadEntityForClass:(NSString *)clz
+                       URI:(NSString *)uri
+                completion:( void (^)(id result, BOOL succeed) )completion;
+{
+    [self loadEntityForClass:clz
+                         URI:uri
+                  completion:completion
+                 showLoading:YES];
+}
+
 - (void)uploadImage:(UIImage *)anImage URI:(NSString *)uri params:(NSDictionary *)params completion:(void (^)(NetworkResponse *))completion
 {
+    if ( _loading ) {
+        return;
+    }
+    
     NSData* imageData = UIImageJPEGRepresentation(anImage, 0.5);
     
     [self startRequest];

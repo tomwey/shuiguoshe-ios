@@ -22,10 +22,10 @@
 #define COMMON_TEXT_COLOR RGB(56,56,56)
 
 // 家里
-//#define kAPIHost @"http://192.168.1.131:3000/api/v1"
+#define kAPIHost @"http://192.168.1.131:3000/api/v1"
 
 // 公司
-#define kAPIHost @"http://10.0.16.11:3000/api/v1"
+//#define kAPIHost @"http://10.0.16.11:3000/api/v1"
 
 // 产品
 //#define kAPIHost @"http://shuiguoshe.com/api/v1"
@@ -58,6 +58,11 @@ static inline CGFloat NavigationBarHeight()
 static inline NSString* formatFee(CGFloat fee)
 {
     return [NSString stringWithFormat:@"￥%.2f", fee];
+};
+
+static inline CGFloat fontSize(CGFloat size)
+{
+    return CGRectGetWidth(mainScreenBounds) / 320 * size;
 };
 
 static inline UIButton* createButton(NSString* imageName, id target, SEL action)

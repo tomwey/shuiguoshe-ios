@@ -127,8 +127,9 @@
         case ForwardTypeModal:
         {
             NSAssert(!!clz, @"需要设置toController");
-            UIViewController* to = [[[NSClassFromString(clz) alloc] init] autorelease];
+            BaseViewController* to = [[[NSClassFromString(clz) alloc] init] autorelease];
             UINavigationController* nav = [[[UINavigationController alloc] initWithRootViewController:to] autorelease];
+            to.userData = aForward.userData;
             [aForward.from presentViewController:nav animated:YES completion:nil];
         }
             break;

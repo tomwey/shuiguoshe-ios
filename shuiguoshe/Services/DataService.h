@@ -17,6 +17,11 @@
                        URI:(NSString *)uri
                 completion:( void (^)(id result, BOOL succeed) )completion;
 
+- (void)loadEntityForClass:(NSString *)clz
+                       URI:(NSString *)uri
+                completion:( void (^)(id result, BOOL succeed) )completion
+               showLoading:(BOOL)yesOrNo;
+
 - (void)post:(NSString *)uri
       params:(NSDictionary *)params
   completion:( void (^)(NetworkResponse *) )completion;
