@@ -11,7 +11,7 @@
 @implementation CoordinatorController
 {
     UINavigationController* _navController;
-    HomeViewController*     _homeController;
+    UIViewController*     _homeController;
 }
 
 + (id)sharedInstance
@@ -36,7 +36,12 @@
         
         [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : COMMON_TEXT_COLOR}];
         
-        _homeController = [[[HomeViewController alloc] init] autorelease];
+        if ( [[DataService sharedService] areaForLocal] ) {
+            _homeController = [[[HomeViewController alloc] init] autorelease];
+        } else {
+            _homeController = [[[AreaListViewController alloc] init] autorelease];
+        }
+        
         _navController = [[UINavigationController alloc] initWithRootViewController:_homeController];
         
         [[NSNotificationCenter defaultCenter] addObserver:self

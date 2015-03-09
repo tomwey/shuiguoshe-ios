@@ -21,6 +21,8 @@
     UITableView* _tableView;
     
     UIRefreshControl* _refreshControl;
+    
+    HomeTitleView* _titleView;
 }
 
 - (void)viewDidLoad {
@@ -33,16 +35,27 @@
     [self setLeftBarButtonWithImage:@"btn_user.png" command:aCommand];
     
     // 设置导航条标题视图
-    LogoTitleView* titleView = [[[LogoTitleView alloc] init] autorelease];
-    self.navigationItem.titleView = titleView;
+//    LogoTitleView* titleView = [[[LogoTitleView alloc] init] autorelease];
+//    self.navigationItem.titleView = titleView;
+//    
+//    PhoneNumberView* pnv = [PhoneNumberView currentPhoneNumberView];
+//    titleView.didClickBlock = ^(BOOL closed) {
+//        if ( closed ) {
+//            [pnv dismiss];
+//        } else {
+//            [pnv showInView:self.view];
+//        }
+//    };
     
-    PhoneNumberView* pnv = [PhoneNumberView currentPhoneNumberView];
-    titleView.didClickBlock = ^(BOOL closed) {
-        if ( closed ) {
-            [pnv dismiss];
-        } else {
-            [pnv showInView:self.view];
-        }
+    HomeTitleView* titleView = [[[HomeTitleView alloc] init] autorelease];
+    self.navigationItem.titleView = titleView;
+    _titleView = titleView;
+    
+    titleView.titleDidClickBlock = ^{
+        ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypeModal
+                                                                                                    from:self
+                                                                                        toControllerName:@"AreaListViewController"]];
+        [aCommand execute];
     };
     
     // 创建表视图
@@ -80,7 +93,7 @@
 - (void)loadData
 {
     [[DataService sharedService] loadEntityForClass:@"Section"
-                                                URI:@"/sections"
+                                                URI:[NSString stringWithFormat:@"/sections?area_id=%d", [[[DataService sharedService] areaForLocal] oid]]
                                          completion:^(id result, BOOL succeed) {
 //                                             [self doneLoadingTableViewData];
                                              [_refreshControl endRefreshing];
@@ -104,6 +117,8 @@
     [super viewWillAppear:animated];
     
     [_bannerView startLoop];
+    
+    _titleView.title = [[[DataService sharedService] areaForLocal] name];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -123,7 +138,7 @@
     if ( !cell ) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId] autorelease];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.backgroundColor = [UIColor whiteColor];
+//        cell.backgroundColor = [UIColor whiteColor];
     }
     
     Section* s = [self.dataSource objectAtIndex:indexPath.row];
@@ -136,7 +151,7 @@
             sv.tag = 1002;
             
             CGRect frame = sv.frame;
-            frame.origin = CGPointMake(20, 20);
+            frame.origin = CGPointMake(10, 10);
             sv.frame = frame;
         }
         
@@ -145,17 +160,19 @@
     
     if ( [s.identifier isEqualToString:@"banners"] ) {
         [self addBanner:cell atIndex:indexPath.row];
-    }
-    
-    if ( [s.identifier isEqualToString:@"catalogs"] ) {
-        [self addCatalog:cell atIndex:indexPath.row];
-    }
-    
-    if ( [s.identifier isEqualToString:@"hot_items"] ) {
+    } else {
         [self addItems:cell atIndex:indexPath.row];
     }
     
-    cell.backgroundColor = [UIColor whiteColor];
+//    if ( [s.identifier isEqualToString:@"catalogs"] ) {
+//        [self addCatalog:cell atIndex:indexPath.row];
+//    }
+//    
+//    if ( [s.identifier isEqualToString:@"hot_items"] ) {
+//        [self addItems:cell atIndex:indexPath.row];
+//    }
+    
+//    cell.backgroundColor = [UIColor whiteColor];
     
     return cell;
 }
@@ -208,7 +225,7 @@
         int m = i % numberOfCol;
         int n = i / numberOfCol;
         btn.frame = CGRectMake(padding + ( padding + width ) * m,
-                               30 + 20 + ( padding + height ) * n,
+                               30 + 10 + ( padding + height ) * n,
                                width, height);
         
         ForwardCommand* fc = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePush
@@ -225,8 +242,10 @@
     Section* s = [self.dataSource objectAtIndex:index];
         
     int numberOfCol = 2;
-    CGFloat padding = 20;
-    CGFloat width = ( CGRectGetWidth(mainScreenBounds) - numberOfCol * padding - padding / 2 ) / numberOfCol;
+    CGFloat padding = 10;
+    CGFloat width = ( CGRectGetWidth(mainScreenBounds) - (numberOfCol + 1) * padding ) / numberOfCol;
+    
+    CGFloat height = width / 0.618;
     
     CGFloat factor = [self factorForDevice];
     
@@ -241,9 +260,9 @@
         int m = i % numberOfCol;
         int n = i / numberOfCol;
         
-        itemView.frame = CGRectMake(padding + (width + padding/2) * m,
-                                    30 + 20 + ( 230 + factor + padding ) * n,
-                                    width, 230 + factor);
+        itemView.frame = CGRectMake(padding + (width + padding) * m,
+                                    30 + 20 + ( height + factor + padding ) * n,
+                                    width, height + factor);
         
         itemView.item = [s.data objectAtIndex:i];
     }
@@ -256,20 +275,21 @@
         return s.height * ( CGRectGetWidth(mainScreenBounds) / 320.0 );
     }
     
-    if ( [s.identifier isEqualToString:@"catalogs"] ) {
-        return s.height;
-    }
+    int numberOfCol = 2;
+    CGFloat padding = 10;
+    CGFloat width = ( CGRectGetWidth(mainScreenBounds) - (numberOfCol + 1) * padding ) / numberOfCol;
     
-    if ( [s.identifier isEqualToString:@"hot_items"] ) {
-        return s.height + ( ( [s.data count] + 1 ) / 2 ) * [self factorForDevice];
-    }
+    CGFloat height = width / 0.618;
     
-    return s.height * ( CGRectGetWidth(mainScreenBounds) / 320.0 );
+    int row = (s.data.count + 1 ) / 2;
+    
+    return row * (height + padding) + 30 * ( self.dataSource.count - 1 );// * ( CGRectGetWidth(mainScreenBounds) / 320.0 );
 }
 
 - (CGFloat)factorForDevice
 {
     CGFloat factor = 0;
+    NSLog(@"%f", CGRectGetHeight(mainScreenBounds));
     if ( CGRectGetHeight(mainScreenBounds) > 568 ) {
         factor = 24;
     }

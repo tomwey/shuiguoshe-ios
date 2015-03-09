@@ -41,6 +41,28 @@
     [super dealloc];
 }
 
+- (Area *)areaForLocal
+{
+    id val = [[NSUserDefaults standardUserDefaults] objectForKey:@"select.area"];
+    if ( !val ) {
+        return nil;
+    }
+    
+    NSArray* values = [val componentsSeparatedByString:@";"];
+    
+    Area* a = [[[Area alloc] init] autorelease];
+    a.oid = [values[0] integerValue];
+    a.name = values[1];
+    
+    return a;
+}
+
+- (void)saveAreaToLocal:(Area *)area
+{
+    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%d;%@", area.oid, area.name]
+                                              forKey:@"select.area"];
+}
+
 - (void)startRequest
 {
     UIView* view = [[[UIApplication sharedApplication] windows] objectAtIndex:0];

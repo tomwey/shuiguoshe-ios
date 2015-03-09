@@ -25,10 +25,10 @@
 //#define kAPIHost @"http://192.168.1.131:3000/api/v1"
 
 // 公司
-//#define kAPIHost @"http://10.0.16.11:3000/api/v1"
+#define kAPIHost @"http://10.0.16.11:3000/api/v1"
 
 // 产品
-#define kAPIHost @"http://shuiguoshe.com/api/v1"
+//#define kAPIHost @"http://shuiguoshe.com/api/v1"
 
 // 微信分享
 #define kWechatAppID @"wx4accd427c1693a84"
@@ -154,6 +154,7 @@ static inline UIWindow* AppWindow()
 #import "Like.h"
 #import "Apartment.h"
 #import "Section.h"
+#import "Area.h"
 
 #import "GTMBase64.h"
 #import "NSString+Additions.h"
@@ -192,6 +193,7 @@ static inline UIWindow* AppWindow()
 #import "TimerLabel.h"
 #import "ShareView.h"
 #import "QQShareView.h"
+#import "HomeTitleView.h"
 
 #import "BaseViewController.h"
 #import "HomeViewController.h"
@@ -201,5 +203,6 @@ static inline UIWindow* AppWindow()
 #import "ApartmentsViewController.h"
 #import "ItemDetailViewController.h"
 #import "LoginViewController.h"
+#import "AreaListViewController.h"
 
 #endif

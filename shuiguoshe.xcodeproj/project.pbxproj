@@ -87,6 +87,9 @@
 		977887471A8DD3A6003B5A5D /* btn_share@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 977887451A8DD3A6003B5A5D /* btn_share@3x.png */; };
 		9778874A1A8DF531003B5A5D /* Cart.m in Sources */ = {isa = PBXBuildFile; fileRef = 977887491A8DF531003B5A5D /* Cart.m */; };
 		977BCE761AA977F400521E04 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 977BCE751AA977F400521E04 /* NSString+Additions.m */; };
+		979734831AAD4F8600542423 /* AreaListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 979734821AAD4F8600542423 /* AreaListViewController.m */; };
+		979734861AAD50FB00542423 /* Area.m in Sources */ = {isa = PBXBuildFile; fileRef = 979734851AAD50FB00542423 /* Area.m */; };
+		979734891AAD96B000542423 /* HomeTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 979734881AAD96B000542423 /* HomeTitleView.m */; };
 		979D64111AA145190010F78E /* OrderResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64101AA145190010F78E /* OrderResultViewController.m */; };
 		979D64141AA148AD0010F78E /* Order.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64131AA148AD0010F78E /* Order.m */; };
 		979D64171AA1558D0010F78E /* OrderListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 979D64161AA1558D0010F78E /* OrderListViewController.m */; };
@@ -317,6 +320,12 @@
 		977887491A8DF531003B5A5D /* Cart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cart.m; sourceTree = "<group>"; };
 		977BCE741AA977F400521E04 /* NSString+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
 		977BCE751AA977F400521E04 /* NSString+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
+		979734811AAD4F8600542423 /* AreaListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AreaListViewController.h; sourceTree = "<group>"; };
+		979734821AAD4F8600542423 /* AreaListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AreaListViewController.m; sourceTree = "<group>"; };
+		979734841AAD50FB00542423 /* Area.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Area.h; sourceTree = "<group>"; };
+		979734851AAD50FB00542423 /* Area.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Area.m; sourceTree = "<group>"; };
+		979734871AAD96B000542423 /* HomeTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTitleView.h; sourceTree = "<group>"; };
+		979734881AAD96B000542423 /* HomeTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTitleView.m; sourceTree = "<group>"; };
 		979D640F1AA145190010F78E /* OrderResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderResultViewController.h; sourceTree = "<group>"; };
 		979D64101AA145190010F78E /* OrderResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderResultViewController.m; sourceTree = "<group>"; };
 		979D64121AA148AD0010F78E /* Order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Order.h; sourceTree = "<group>"; };
@@ -610,6 +619,8 @@
 		975201931A89EDBB0070FE1F /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				979734871AAD96B000542423 /* HomeTitleView.h */,
+				979734881AAD96B000542423 /* HomeTitleView.m */,
 				975201941A89EDCE0070FE1F /* LogoTitleView.h */,
 				975201951A89EDCE0070FE1F /* LogoTitleView.m */,
 				9752019F1A89F5930070FE1F /* PhoneNumberView.h */,
@@ -791,6 +802,8 @@
 				998800AA1AA2D9610050582F /* Apartment.m */,
 				970F4A231AA3F2A400BC0F4D /* Section.h */,
 				970F4A241AA3F2A400BC0F4D /* Section.m */,
+				979734841AAD50FB00542423 /* Area.h */,
+				979734851AAD50FB00542423 /* Area.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -893,6 +906,8 @@
 				998800AD1AA2DEA50050582F /* ApartmentListViewController.m */,
 				970F4A291AA45F3300BC0F4D /* AdDetailViewController.h */,
 				970F4A2A1AA45F3300BC0F4D /* AdDetailViewController.m */,
+				979734811AAD4F8600542423 /* AreaListViewController.h */,
+				979734821AAD4F8600542423 /* AreaListViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1165,6 +1180,7 @@
 				979ECA701AA6C7BD00E52B10 /* KKShareQQZone.m in Sources */,
 				99A7BD7B1A519D840092EA89 /* SaleView.m in Sources */,
 				97B77E881AA00D7700C12733 /* NewOrderInfo.m in Sources */,
+				979734861AAD50FB00542423 /* Area.m in Sources */,
 				99A7BD851A519DEB0092EA89 /* Item.m in Sources */,
 				976EF2F91A8C37F300A94B15 /* LoginViewController.m in Sources */,
 				9717CFEF1A9ECB2500B1C473 /* Toast.m in Sources */,
@@ -1230,10 +1246,12 @@
 				9747F9E71A8EDC78008099D4 /* LineItem.m in Sources */,
 				970F4A2B1AA45F3300BC0F4D /* AdDetailViewController.m in Sources */,
 				99C274F41A4EF00D00898741 /* UIProgressView+AFNetworking.m in Sources */,
+				979734891AAD96B000542423 /* HomeTitleView.m in Sources */,
 				979D64141AA148AD0010F78E /* Order.m in Sources */,
 				976EF3101A8C6ED500A94B15 /* RegisterViewController.m in Sources */,
 				975201731A89A6460070FE1F /* UserService.m in Sources */,
 				99C274851A4EE1F200898741 /* ItemsViewController.m in Sources */,
+				979734831AAD4F8600542423 /* AreaListViewController.m in Sources */,
 				99C274F21A4EF00D00898741 /* UIButton+AFNetworking.m in Sources */,
 				99C274DB1A4EEE1900898741 /* AFURLResponseSerialization.m in Sources */,
 				99C2747D1A4EE15300898741 /* ApartmentsViewController.m in Sources */,
