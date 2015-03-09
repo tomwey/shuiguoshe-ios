@@ -26,6 +26,9 @@
              params:(NSDictionary *)params
          completion:( void (^)(NetworkResponse* resp) )completion;
 
+- (Area *)areaForLocal;
+- (void)saveAreaToLocal:(Area *)area;
+
 @end
 
 typedef NS_ENUM(NSInteger, NetworkResponseResultType) {
