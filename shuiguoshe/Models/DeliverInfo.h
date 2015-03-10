@@ -13,6 +13,7 @@
 @property (nonatomic, assign) NSInteger infoId;
 @property (nonatomic, copy) NSString* mobile;
 @property (nonatomic, copy) NSString* address;
+@property (nonatomic, copy) NSString* name;
 
 - (id)initWithDictionary:(NSDictionary *)jsonObj;
 

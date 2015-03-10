@@ -17,6 +17,7 @@
 {
     UITextField* _nameField;
     UITextField* _mobileField;
+    UITextField* _addressField;
     UILabel*     _addressLabel;
     int          _apartmentId;
 }
@@ -31,10 +32,6 @@
     
     self.title = @"新建收货信息";
     
-//    [self setLeftBarButtonWithImage:@"btn_close.png"
-//                            command:[ForwardCommand buildCommandWithForward:
-//                                     [Forward buildForwardWithType:ForwardTypeDismiss
-//                                                              from:self toControllerName:nil]]];
     UILabel* name = createLabel(CGRectMake(15, 70, 80,
                                              37),
                                   NSTextAlignmentLeft,
@@ -59,12 +56,14 @@
     [self.view addSubview:address];
     address.text = @"收货人地址";
     
+    // 收货人姓名
     _nameField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(name.frame) + 5, CGRectGetMinY(name.frame), 200, 37)];
     _nameField.placeholder = @"输入收货人姓名";
     _nameField.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:_nameField];
     [_nameField release];
     
+    // 手机号
     _mobileField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(mobile.frame) + 5, CGRectGetMinY(mobile.frame), 200, 37)];
     _mobileField.placeholder = @"输入11位手机号";
     _mobileField.font = [UIFont systemFontOfSize:14];
@@ -72,6 +71,7 @@
     [_mobileField release];
     _mobileField.keyboardType = UIKeyboardTypeNumberPad;
     
+    // 收货地址
     CGRect frame = address.frame;
     frame.origin.x = CGRectGetMaxX(frame) + 5;
     frame.size.width = CGRectGetWidth(mainScreenBounds) - frame.origin.x - 10;
@@ -84,25 +84,25 @@
     
     _addressLabel.text = [[[DataService sharedService] areaForLocal] name];//@"请选择所在小区或大学";
     
-    UIButton* save = createButton(nil, self, @selector(save));
-    [save setTitle:@"保存" forState:UIControlStateNormal];
-    [save setTitleColor:COMMON_TEXT_COLOR forState:UIControlStateNormal];
-    [save sizeToFit];
+    frame = _addressLabel.frame;
+    frame.origin.y = CGRectGetMaxY(frame);
+    UITextField* addressField = [[UITextField alloc] initWithFrame:frame];
+    [self.view addSubview:addressField];
+    [addressField release];
     
-    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:save] autorelease];
+    addressField.font = [UIFont systemFontOfSize:fontSize(14)];
     
-//    ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:
-//                                [Forward buildForwardWithType:ForwardTypeModal
-//                                                         from:self
-//                                             toControllerName:@"ApartmentListViewController"]];
-//    UIButton* btn = [[CoordinatorController sharedInstance] createCommandButton:nil
-//                                                                        command:aCommand];
-//    btn.frame = _addressLabel.frame;
-//    [self.view addSubview:btn];
+    addressField.placeholder = @"详细地址（可不填）";
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSelect:)
-//                                                 name:@"kApartmentDidSelctNotification"
-//                                               object:nil];
+    _addressField = addressField;
+    
+    // 保存按钮
+    UIButton* newBtn = createButton2(@"button_bg3.png", @"保存", self, @selector(save));
+    [newBtn setTitleColor:COMMON_TEXT_COLOR forState:UIControlStateNormal];
+    CGRect frame2 = newBtn.frame;
+    frame2.size.width = 52;
+    newBtn.frame = frame2;
+    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:newBtn] autorelease];
 }
 
 - (void)didSelect:(NSNotification *)noti
@@ -118,6 +118,15 @@
 {
     
     [_mobileField resignFirstResponder];
+    [_nameField resignFirstResponder];
+    [_addressField resignFirstResponder];
+    
+    NSString* name = !!_nameField.text ? [_nameField.text stringByTrimmingCharactersInSet:
+                                          [NSCharacterSet whitespaceAndNewlineCharacterSet]] : @"";
+    if ( [name length] == 0 ) {
+        [Toast showText:@"收货人姓名必须为非空"];
+        return;
+    }
     
     NSString* mobile = [_mobileField.text stringByTrimmingCharactersInSet:
                         [NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -135,19 +144,16 @@
         return;
     }
     
-//    if ( _apartmentId == 0 ) {
-//        [Toast showText:@"必须选择收货地址"];
-//        return;
-//    }
-    
-    
-    NSString* name = !!_nameField.text ? [_nameField.text stringByTrimmingCharactersInSet:
+    NSString* address = !!_addressField.text ? [_addressField.text stringByTrimmingCharactersInSet:
                                           [NSCharacterSet whitespaceAndNewlineCharacterSet]] : @"";
+    
     [[DataService sharedService] post:@"/deliver_infos"
                                params:@{ @"token": [[UserService sharedService] token],
                                          @"name": name,
                                          @"mobile": mobile,
-                                         @"area_id": NSStringFromInteger([[[DataService sharedService] areaForLocal] oid])}
+                                         @"area_id": NSStringFromInteger([[[DataService sharedService] areaForLocal] oid]),
+                                         @"address": address,
+                                        }
                             completion:^(NetworkResponse* resp) {
                                                          
                                                          if ( resp.requestSuccess ) {

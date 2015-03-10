@@ -26,8 +26,8 @@ typedef void (^ResultBlock)(NSUInteger);
 
 + (void) ask:(NSString *)title message:(NSString *)message result:(void (^)(BOOL yesOrNo))result
 {
-    [self showWithTitle:title message:message cancelButton:@"No" otherButtons:@[@"Yes"] result:^(NSUInteger buttonIndex) {
-        result( (buttonIndex == 1) );
+    [self showWithTitle:title message:message cancelButton:@"确定" otherButtons:@[@"取消"] result:^(NSUInteger buttonIndex) {
+        result( (buttonIndex == 0) );
     }];
 }
 

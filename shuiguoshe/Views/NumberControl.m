@@ -98,7 +98,9 @@
     [[DataService sharedService] post:@"/cart/update_item"
                                params:@{ @"token": [[UserService sharedService] token],
                                          @"id" : NSStringFromInteger(self.itemId) ,
-                                         @"quantity": NSStringFromInteger(self.value)  }
+                                         @"quantity": NSStringFromInteger(self.value),
+                                         @"area_id": NSStringFromInteger(
+                                         [[[DataService sharedService] areaForLocal] oid])}
                            completion:^(NetworkResponse* resp) {
                                _updating = NO;
                                

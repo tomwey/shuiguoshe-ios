@@ -62,6 +62,18 @@
                                              selector:@selector(loadData)
                                                  name:@"kOrderDidCancelNotification"
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateInfo:)
+                                                 name:@"kUpdateDeliverInfoSuccessNotification"
+                                               object:nil];
+    
+}
+
+- (void)updateInfo:(NSNotification *)noti
+{
+    DeliverInfo* di = noti.object;
+    self.currentUser.currentDeliverInfoId = di.infoId;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -179,7 +191,7 @@ static NSString* label1s[] = { @"我的积分", @"我的收藏", @"有话要说"
     cell.textLabel.text = label1s[indexPath.row];
 }
 
-static NSString* label2s[] = { @"收货地址管理", @"修改密码", @"退出登录" };
+static NSString* label2s[] = { @"收货信息管理", @"修改密码", @"退出登录" };
 - (void)addContentForSectionThree:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath
 {
     cell.textLabel.text = label2s[indexPath.row];
@@ -274,7 +286,9 @@ static NSString* controllers[] = {@"ScoreListViewController", @"LikeListViewCont
 - (void)loadData
 {
     [[DataService sharedService] loadEntityForClass:@"User"
-                                                URI:[NSString stringWithFormat:@"/user/me?token=%@", [[UserService sharedService] token]]
+                                                URI:[NSString stringWithFormat:@"/user/me?token=%@&area_id=%d",
+                                                     [[UserService sharedService] token],
+                                                     [[[DataService sharedService] areaForLocal] oid]]
                                          completion:^(id result, BOOL succeed) {
                                              if ( succeed ) {
                                                  self.currentUser = result;

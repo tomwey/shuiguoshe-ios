@@ -121,7 +121,9 @@ NSString * const kCheckboxDidUpdateStateNotification = @"kCheckboxDidUpdateState
     
     [[DataService sharedService] post:@"/cart/update_states" params:@{ @"token": [[UserService sharedService] token],
                                                                        @"ids": idString,
-                                                                       @"state": NSStringFromInteger(state) }
+                                                                       @"state": NSStringFromInteger(state),
+                                                                       @"area_id": NSStringFromInteger(
+                                                                       [[[DataService sharedService] areaForLocal] oid])}
                            completion:^(NetworkResponse* resp) {
                                if ( !resp.requestSuccess ) {
                                    [Toast showText:@"服务器错误"];

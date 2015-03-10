@@ -129,7 +129,7 @@
     
     // 上边线
     UIView* topLine = [[UIView alloc] initWithFrame:
-                       CGRectMake(0, 0, CGRectGetWidth(mainScreenBounds), 1)];
+                       CGRectMake(0, 0, CGRectGetWidth(mainScreenBounds), 0.3)];
     [_toolbar addSubview:topLine];
     [topLine release];
     
@@ -338,7 +338,7 @@
         lineView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMinX(iconView.frame),
                                                             CGRectGetMaxY(iconView.frame) + 10,
                                                             CGRectGetWidth(mainScreenBounds) - CGRectGetMinX(iconView.frame),
-                                                            1)];
+                                                            .3)];
         [cell.contentView addSubview:lineView];
         [lineView release];
         lineView.tag = 1006;

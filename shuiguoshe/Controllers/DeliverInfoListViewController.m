@@ -17,6 +17,7 @@
 {
     NSMutableArray* _dataSource;
     UITableView*    _tableView;
+    NSMutableArray* _radioButtons;
 }
 
 - (BOOL) shouldShowingCart { return NO; }
@@ -24,12 +25,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"收货地址";
+    self.title = @"收货信息";
     
-    [self setRightBarButtonWithImage:@"btn_incr.png"
-                             command:[ForwardCommand buildCommandWithForward:
-                                      [Forward buildForwardWithType:ForwardTypePush from:self
-                                                   toControllerName:@"DeliverInfoFormViewController"]]];
+    UIButton* newBtn = createButton2(@"button_bg3.png", @"添加", self, @selector(btnClicked));
+    [newBtn setTitleColor:COMMON_TEXT_COLOR forState:UIControlStateNormal];
+    CGRect frame2 = newBtn.frame;
+    frame2.size.width = 52;
+    newBtn.frame = frame2;
+    self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:newBtn] autorelease];
     
     CGRect frame = self.view.bounds;
     
@@ -42,9 +45,12 @@
     _tableView.delegate = self;
     
     _dataSource = [[NSMutableArray alloc] init];
+    _radioButtons = [[NSMutableArray alloc] init];
     
     UIView* footer = [[[UIView alloc] init] autorelease];
     _tableView.tableFooterView = footer;
+    
+//    _tableView.rowHeight = 70;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -54,18 +60,30 @@
     [_dataSource removeAllObjects];
     
     [[DataService sharedService] loadEntityForClass:@"DeliverInfo"
-                                                URI:[NSString stringWithFormat:@"/deliver_infos?token=%@", [[UserService sharedService] token]]
+                                                URI:[NSString stringWithFormat:@"/deliver_infos?token=%@&area_id=%d",
+                                                     [[UserService sharedService] token],
+                                                     [[[DataService sharedService] areaForLocal] oid]]
                                          completion:^(id result, BOOL succeed)
      {
+         [_dataSource removeAllObjects];
          [_dataSource addObjectsFromArray:result];
          [_tableView reloadData];
      }];
     
 }
 
+- (void)btnClicked
+{
+    [[ForwardCommand buildCommandWithForward:
+     [Forward buildForwardWithType:ForwardTypePush from:self
+                  toControllerName:@"DeliverInfoFormViewController"]] execute];
+}
+
 - (void)dealloc
 {
     [_dataSource release];
+    [_radioButtons release];
+    
     [super dealloc];
 }
 
@@ -82,34 +100,88 @@
     if ( !cell ) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:cellId] autorelease];
-    }
-    
-    UILabel* mobile = (UILabel *)[cell.contentView viewWithTag:100];
-    if ( !mobile ) {
-        mobile = createLabel(CGRectMake(15, 5, 100, 37),
-                             NSTextAlignmentLeft,
-                             COMMON_TEXT_COLOR,
-                             [UIFont systemFontOfSize:14]);
-        mobile.tag = 100;
-        [cell.contentView addSubview:mobile];
-    }
-    
-    
-    DeliverInfo* di = [_dataSource objectAtIndex:indexPath.row];
-    
-    UIButton* btn = (UIButton *)[cell.contentView viewWithTag:1000 + indexPath.row];
-    if ( !btn ) {
-        btn = createButton(nil, self, @selector(delete:));
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        UIButton* btn = createButton(nil, self, @selector(delete:));
         btn.tag = 1000 + indexPath.row;
         [cell.contentView addSubview:btn];
         btn.backgroundColor = RGB(201, 62, 59);
         [btn setTitle:@"删除" forState:UIControlStateNormal];
-        btn.frame = CGRectMake(CGRectGetWidth(mainScreenBounds) - 15 - 60 - 30,
-                               CGRectGetMinY(mobile.frame),
-                               50, 34);
+        btn.frame = CGRectMake(0, 0, 50, 34);
         btn.layer.cornerRadius = 3;
         btn.titleLabel.font = [UIFont systemFontOfSize:13];
         btn.clipsToBounds = YES;
+        
+        cell.accessoryView = btn;
+    }
+    
+    DeliverInfo* di = [_dataSource objectAtIndex:indexPath.row];
+    
+    // 单选框
+    RadioButton* cb = (RadioButton *)[cell.contentView viewWithTag:500];
+    if ( !cb ) {
+        cb = [[[RadioButton alloc] init] autorelease];
+        cb.tag = 500;
+        [cell.contentView addSubview:cb];
+        
+        if ( ![_radioButtons containsObject:cb] ) {
+            [_radioButtons addObject:cb];
+        }
+    }
+    
+    cb.selected = [self.userData infoId] == di.infoId;
+    
+    __block DeliverInfoListViewController* me = self;
+    cb.valueChanged = ^(RadioButton* btn) {
+        [[DataService sharedService] post:@"/user/update_deliver_info"
+                                   params:@{ @"token": [[UserService sharedService] token],
+                                             @"deliver_info_id": NSStringFromInteger(di.infoId),
+                                             @"area_id": NSStringFromInteger([[[DataService sharedService] areaForLocal] oid])}
+                               completion:^(NetworkResponse* resp) {
+                                   if ( !resp.requestSuccess ) {
+                                       [Toast showText:@"请求失败"];
+                                   } else {
+                                       if ( resp.statusCode == 0 ) {
+                                           for (RadioButton* inBtn in me->_radioButtons) {
+                                               inBtn.selected = NO;
+                                           }
+                                           cb.selected = YES;
+                                           
+                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"kUpdateDeliverInfoSuccessNotification"
+                                                                                               object:di];
+                                       } else {
+                                           [Toast showText:@"更新收货信息失败"];
+                                       }
+                                   }
+                               }];
+    };
+    
+    CGFloat rowHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
+    CGRect frame2 = cb.frame;
+    frame2.origin = CGPointMake(5, ( rowHeight - CGRectGetHeight(frame2) ) / 2 );
+    cb.frame = frame2;
+    
+    // 姓名
+    UILabel* name = (UILabel *)[cell.contentView viewWithTag:600];
+    if ( !name ) {
+        name = createLabel(CGRectMake(CGRectGetMaxX(cb.frame), 5, 100, 30),
+                           NSTextAlignmentLeft,
+                           COMMON_TEXT_COLOR,
+                           [UIFont boldSystemFontOfSize:fontSize(14)]);
+        name.tag = 600;
+        [cell.contentView addSubview:name];
+    }
+    
+    name.text = di.name;
+    
+    UILabel* mobile = (UILabel *)[cell.contentView viewWithTag:100];
+    if ( !mobile ) {
+        mobile = createLabel(CGRectMake(CGRectGetMaxX(name.frame) + 5, CGRectGetMinY(name.frame), 100, 30),
+                             NSTextAlignmentLeft,
+                             COMMON_TEXT_COLOR,
+                             [UIFont systemFontOfSize:fontSize(14)]);
+        mobile.tag = 100;
+        [cell.contentView addSubview:mobile];
     }
     
     mobile.text = [di.mobile stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
@@ -117,7 +189,9 @@
     // 地址
     UILabel* address = (UILabel *)[cell.contentView viewWithTag:101];
     if ( !address ) {
-        address = createLabel(CGRectMake(15, CGRectGetMaxY(mobile.frame), CGRectGetWidth(mainScreenBounds) - 50, 37),
+        address = createLabel(CGRectMake(CGRectGetMinX(name.frame),
+                              CGRectGetMaxY(mobile.frame),
+                                         CGRectGetWidth(mainScreenBounds) - 60 - CGRectGetWidth(cell.accessoryView.frame) - 20, 37),
                              NSTextAlignmentLeft,
                              [UIColor grayColor],
                              [UIFont systemFontOfSize:14]);
@@ -129,17 +203,11 @@
     
     address.text = di.address;
     CGSize size = [address.text sizeWithFont:address.font
-                           constrainedToSize:CGSizeMake(CGRectGetWidth(mainScreenBounds) - 50,
+                           constrainedToSize:CGSizeMake(CGRectGetWidth(mainScreenBounds) - CGRectGetWidth(cb.frame) - CGRectGetWidth(cell.accessoryView.frame) - 20,
                                                         1000) lineBreakMode:NSLineBreakByWordWrapping];
     CGRect frame = address.frame;
     frame.size.height = size.height;
     address.frame = frame;
-    
-    if ( di.infoId == [self.userData infoId] ) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    } else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
     
     return cell;
 }
@@ -149,43 +217,24 @@
     DeliverInfo* di = [_dataSource objectAtIndex:indexPath.row];
     
     CGSize size = [di.address sizeWithFont:[UIFont systemFontOfSize:14]
-                           constrainedToSize:CGSizeMake(CGRectGetWidth(mainScreenBounds) - 50,
+                           constrainedToSize:CGSizeMake(CGRectGetWidth(mainScreenBounds) - 60 - 20 - 50,
                                                         1000) lineBreakMode:NSLineBreakByWordWrapping];
     return 37 + size.height + 15;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    DeliverInfo* di = [_dataSource objectAtIndex:indexPath.row];
-    
-    [[DataService sharedService] post:@"/user/update_deliver_info"
-                               params:@{ @"token": [[UserService sharedService] token],
-                                         @"deliver_info_id": NSStringFromInteger(di.infoId) }
-                           completion:^(NetworkResponse* resp) {
-                               if ( !resp.requestSuccess ) {
-                                   [Toast showText:@"请求失败"];
-                               } else {
-                                   if ( resp.statusCode == 0 ) {
-                                       [[NSNotificationCenter defaultCenter] postNotificationName:@"kUpdateDeliverInfoSuccessNotification"
-                                                                                           object:di];
-                                   } else {
-                                       [Toast showText:@"更新收货信息失败"];
-                                   }
-                               }
-                           }];
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)delete:(UIButton *)sender
 {
+    int index = sender.tag - 1000;
+    RadioButton* rb = [_radioButtons objectAtIndex:index];
+    if ( rb.selected ) {
+        [Toast showText:@"默认收货信息不能被删除"];
+        return;
+    }
+    
     [ModalAlert ask:@"确定要删除吗？"
                  message:nil
              result:^(BOOL yesOrNo) {
          if ( yesOrNo ) {
-             int index = sender.tag - 1000;
              DeliverInfo* info = [_dataSource objectAtIndex:index];
              [[DataService sharedService] post:[NSString stringWithFormat:@"/deliver_infos/%d",info.infoId]
                                         params:@{ @"token" : [[UserService sharedService] token] }
@@ -210,20 +259,5 @@
     }];
         
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

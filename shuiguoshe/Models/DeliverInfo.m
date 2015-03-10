@@ -18,6 +18,8 @@
         self.mobile = [jsonObj objectForKey:@"mobile"];
         
         self.address = [jsonObj objectForKey:@"address"];
+        
+        self.name = [jsonObj objectForKey: @"name"];
     }
     
     return self;
@@ -27,6 +29,7 @@
 {
     self.mobile = nil;
     self.address = nil;
+    self.name = nil;
     
     [super dealloc];
 }

@@ -55,13 +55,16 @@
     Area* a = [[[Area alloc] init] autorelease];
     a.oid = [values[0] integerValue];
     a.name = values[1];
+    if ( values.count > 2 ) {
+        a.address = values[2];
+    }
     
     return a;
 }
 
 - (void)saveAreaToLocal:(Area *)area
 {
-    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%d;%@", area.oid, area.name]
+    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%d;%@;%@", area.oid, area.name, area.address]
                                               forKey:@"select.area"];
 }
 
@@ -196,8 +199,8 @@
              NSLog(@"Load Entity Error: %@", error);
              [self finishRequest];
              if ( completion ) {
-                 NSDictionary* result = @{ @"code": @"500", @"message": @"请求失败" };
-                 completion(result, NO);
+//                 NSDictionary* result = @{ @"code": @"500", @"message": @"请求失败" };
+                 completion(nil, NO);
              }
          }];
 }

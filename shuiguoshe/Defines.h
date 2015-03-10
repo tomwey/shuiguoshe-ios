@@ -22,10 +22,10 @@
 #define COMMON_TEXT_COLOR RGB(56,56,56)
 
 // 家里
-#define kAPIHost @"http://192.168.1.131:3000/api/v1"
+//#define kAPIHost @"http://192.168.1.131:3000/api/v1"
 
 // 公司
-//#define kAPIHost @"http://10.0.16.11:3000/api/v1"
+#define kAPIHost @"http://10.0.16.11:3000/api/v1"
 
 // 产品
 //#define kAPIHost @"http://shuiguoshe.com/api/v1"
@@ -79,7 +79,7 @@ static inline UIButton* createButton(NSString* imageName, id target, SEL action)
 static inline UIButton* createButton2(NSString* imageName, NSString* title, id target, SEL action)
 {
     UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    [btn setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     [btn sizeToFit];
     [btn setTitle:title forState:UIControlStateNormal];
     btn.exclusiveTouch = YES;
@@ -199,6 +199,7 @@ static inline UIWindow* AppWindow()
 #import "ShareView.h"
 #import "QQShareView.h"
 #import "HomeTitleView.h"
+#import "RadioButton.h"
 
 #import "BaseViewController.h"
 #import "HomeViewController.h"

@@ -46,9 +46,6 @@
     
     _tableView.backgroundView = nil;
     
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
-    
 //    _tableView.sectionHeaderHeight = 10;
 //    _tableView.sectionFooterHeight = 5;
     
@@ -85,6 +82,8 @@
     
     toolbar.items = @[textItem, flexItem, commitItem];
     
+    _tableView.delegate = self;
+    
     __block NewOrderViewController* me = self;
     NSString* uri = [NSString stringWithFormat:@"/cart/items?token=%@&area_id=%d",
                      [[UserService sharedService] token],
@@ -96,6 +95,9 @@
                                              if ( succeed ) {
                                                  me.orderInfo = result;
                                                  me->_tableView.hidden = NO;
+                                                 
+                                                 _tableView.dataSource = self;
+                                                 
                                                  [me->_tableView reloadData];
                                                  me->_resultLabel.text = [NSString stringWithFormat:@"实付款：￥%.2f",
                                                                           ( me.orderInfo.totalPrice * 100 - me.orderInfo.userScore ) / 100.0];
@@ -218,6 +220,8 @@ static int rows[] = { 1, 1, 1, 1, 1 };
     switch (indexPath.section) {
         case 0:
         {
+            CGFloat rowHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
+            
             if ( !self.orderInfo.deliverInfo.address ) {
                 UILabel* newLabel = (UILabel *)[cell.contentView viewWithTag:101];
                 if ( newLabel == nil ) {
@@ -229,30 +233,66 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                     [cell.contentView addSubview:newLabel];
                     newLabel.text = @"新建收货信息";
                 }
+                
                 _newLabel = newLabel;
                 
             } else {
                 
                 [cell.contentView viewWithTag:101].hidden = YES;
                 
-                UILabel* mobileLabel = (UILabel *)[cell.contentView viewWithTag:1001];
-                if ( mobileLabel == nil ) {
-                    mobileLabel = createLabel(CGRectMake(leftMargin, 5, 200, 20),
+                // 位置图标
+                UIImageView* iconView = (UIImageView *)[cell.contentView viewWithTag:8881];
+                if ( !iconView ) {
+                    iconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"location_icon.png"]];
+                    [iconView sizeToFit];
+                    [cell.contentView addSubview:iconView];
+                    [iconView release];
+                    
+                    iconView.tag = 8881;
+                }
+                
+                CGRect frame = iconView.frame;
+                frame.origin = CGPointMake(leftMargin, ( rowHeight - CGRectGetHeight(frame) ) / 2);
+                iconView.frame = frame;
+                
+                // 收货人信息
+                UILabel* infoLabel = ( UILabel* )[cell.contentView viewWithTag:1001];
+                if ( !infoLabel ) {
+                    infoLabel = createLabel(CGRectMake(CGRectGetMaxX(iconView.frame) + 5, 10, 200, 25),
                                               NSTextAlignmentLeft,
                                               COMMON_TEXT_COLOR,
                                               [UIFont systemFontOfSize:14]);
-                    mobileLabel.tag = 1001;
-                    [cell.contentView addSubview:mobileLabel];
+                    infoLabel.tag = 1001;
+                    [cell.contentView addSubview:infoLabel];
                 }
                 
-                _mobileLabel = mobileLabel;
+//                UILabel* mobileLabel = (UILabel *)[cell.contentView viewWithTag:1001];
+//                if ( mobileLabel == nil ) {
+//                    mobileLabel = createLabel(CGRectMake(leftMargin, 5, 200, 20),
+//                                              NSTextAlignmentLeft,
+//                                              COMMON_TEXT_COLOR,
+//                                              [UIFont systemFontOfSize:14]);
+//                    mobileLabel.tag = 1001;
+//                    [cell.contentView addSubview:mobileLabel];
+//                }
                 
-                mobileLabel.text = [NSString stringWithFormat:@"收货人: %@",
+                _mobileLabel = infoLabel;
+                
+                NSString* name = self.orderInfo.deliverInfo.name;
+                if ( name.length > 8 ) {
+                    name = [name substringToIndex:8];
+                    name = [NSString stringWithFormat:@"%@...", name];
+                }
+                
+                infoLabel.text = [NSString stringWithFormat:@"收货人: %@  %@",name,
                                     [self.orderInfo.deliverInfo.mobile stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"]];
                 
+                // 收货地址
                 UILabel* addressLabel = (UILabel *)[cell.contentView viewWithTag:1002];
                 if ( addressLabel == nil ) {
-                    addressLabel = createLabel(CGRectMake(leftMargin, CGRectGetMaxY(mobileLabel.frame), CGRectGetWidth(mainScreenBounds) - 60, 30),
+                    addressLabel = createLabel(CGRectMake(CGRectGetMinX(infoLabel.frame),
+                                                          CGRectGetMaxY(infoLabel.frame),
+                                                          CGRectGetWidth(mainScreenBounds) - 60, 30),
                                               NSTextAlignmentLeft,
                                               RGB(137, 137, 137),
                                               [UIFont systemFontOfSize:14]);
@@ -261,14 +301,16 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                     
                     addressLabel.lineBreakMode = NSLineBreakByWordWrapping;
                     addressLabel.numberOfLines = 0;
+                    
                 }
+                
                 addressLabel.text = self.orderInfo.deliverInfo.address;
                 _addressLabel = addressLabel;
                 
                 CGSize size = [addressLabel.text sizeWithFont:addressLabel.font
                                             constrainedToSize:CGSizeMake(CGRectGetWidth(addressLabel.frame), 1000)
                                                 lineBreakMode:addressLabel.lineBreakMode];
-                CGRect frame = addressLabel.frame;
+                frame = addressLabel.frame;
                 frame.size.height = size.height;
                 addressLabel.frame = frame;
             }
@@ -544,10 +586,10 @@ static int rows[] = { 1, 1, 1, 1, 1 };
         }
         
         CGSize size = [di.address sizeWithFont:[UIFont systemFontOfSize:14]
-                             constrainedToSize:CGSizeMake(CGRectGetWidth(mainScreenBounds) - 80, 1000)
+                             constrainedToSize:CGSizeMake(CGRectGetWidth(mainScreenBounds) - 60, 1000)
                                  lineBreakMode:NSLineBreakByWordWrapping];
         
-        return 30 + size.height;
+        return 20 + size.height + 25;
     }
     
     if ( indexPath.section == 1 ) {
