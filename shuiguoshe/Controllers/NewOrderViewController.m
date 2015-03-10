@@ -153,14 +153,15 @@
     if ( !note ) {
         note = @"";
     }
-    [[DataService sharedService] post:@"/user/orders" params:@{ @"token": [[UserService sharedService] token],
-                                                           @"score": NSStringFromInteger(self.orderInfo.userScore),
-                                                                @"deliver_info_id": NSStringFromInteger(self.orderInfo.deliverInfo.infoId),
-                                                                    @"note": note,
-                                                                    @"total_fee": [NSString stringWithFormat:@"%.2f", totalPrice],
-                                                                    @"discount_fee": [NSString stringWithFormat:@"%.2f", discountPrice]
-                                                                    
-                                                                   }
+    [[DataService sharedService] post:@"/user/orders"
+                               params:@{ @"token": [[UserService sharedService] token],
+                                         @"score": NSStringFromInteger(self.orderInfo.userScore),
+//                                         @"deliver_info_id": NSStringFromInteger(self.orderInfo.deliverInfo.infoId),
+                                         @"note": note,
+                                         @"total_fee": [NSString stringWithFormat:@"%.2f", totalPrice],
+                                         @"discount_fee": [NSString stringWithFormat:@"%.2f", discountPrice],
+                                         @"area_id": NSStringFromInteger([[[DataService sharedService] areaForLocal] oid]),
+                                        }
                            completion:^(NetworkResponse* resp)
      {
          if ( !resp.requestSuccess ) {
