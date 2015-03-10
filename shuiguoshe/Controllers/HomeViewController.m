@@ -142,6 +142,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
+    
     [_bannerView stopLoop];
 }
 
