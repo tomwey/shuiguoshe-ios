@@ -47,6 +47,12 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
     
+    return [[KKShareWeiXin sharedManager ] handleOpenURL:url] |
+    [[KKShareQQZone sharedManager] handleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    
     if ([url.host isEqualToString:@"safepay"]) {
         
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url
@@ -62,11 +68,6 @@
         return YES;
     }
     
-    return [[KKShareWeiXin sharedManager ] handleOpenURL:url] |
-    [[KKShareQQZone sharedManager] handleOpenURL:url];
-}
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
     return [[KKShareWeiXin sharedManager ] handleOpenURL:url] |
     [[KKShareQQZone sharedManager] handleOpenURL:url];
 }

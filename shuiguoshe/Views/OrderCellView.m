@@ -221,6 +221,8 @@
                                                
                                                stateLabel.text = @"已取消";
                                                
+                                               [[self viewWithTag:10111] removeFromSuperview];
+                                               
                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"kOrderDidCancelNotification" object:nil];
                                                
                                            } else {
