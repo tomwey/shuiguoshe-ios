@@ -64,12 +64,11 @@
     
     [self initToolbar];
     
+    [self loadData];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)loadData
 {
-    [super viewWillAppear:animated];
-    
     __block CartViewController* me = self;
     NSString* uri = [NSString stringWithFormat:@"/user/cart?token=%@&area_id=%d",
                      [[UserService sharedService] token],

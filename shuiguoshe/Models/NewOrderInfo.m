@@ -27,7 +27,10 @@
         }
         self.items = temp;
         
-        NSLog(@"score:%d", self.userScore);
+        self.paymentInfo = [[[PaymentInfo alloc] initWithDictionary:[jsonObj objectForKey:@"payment_info"]] autorelease];
+        self.shipmentInfo = [[[ShipmentInfo alloc] initWithDictionary:[jsonObj objectForKey:@"shipment_info"]] autorelease];
+        
+//        NSLog(@"score:%d", self.userScore);
     }
     
     return self;
@@ -37,6 +40,9 @@
 {
     self.deliverInfo = nil;
     self.items = nil;
+    self.paymentInfo = nil;
+    self.shipmentInfo = nil;
+    
     [super dealloc];
 }
 

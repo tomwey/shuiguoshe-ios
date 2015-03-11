@@ -160,6 +160,9 @@ static inline UIWindow* AppWindow()
 #import "Apartment.h"
 #import "Section.h"
 #import "Area.h"
+#import "PaymentInfo.h"
+#import "ShipmentInfo.h"
+#import "PaymentShipmentInfo.h"
 
 #import "GTMBase64.h"
 #import "NSString+Additions.h"

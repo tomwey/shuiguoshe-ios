@@ -9,6 +9,8 @@
 #import "NewOrderViewController.h"
 #import "Defines.h"
 
+#define kAddressPrefix @"收货地址："
+
 @interface NewOrderViewController () <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, retain) NewOrderInfo* orderInfo;
@@ -29,6 +31,8 @@
     UILabel*     _newLabel;
     UILabel*     _mobileLabel;
     UILabel*     _addressLabel;
+    
+    UIButton*    _commitBtn;
 }
 
 - (void)viewDidLoad {
@@ -62,6 +66,8 @@
     [commitBtn addTarget:self action:@selector(commit) forControlEvents:UIControlEventTouchUpInside];
     commitBtn.enabled = NO;
     
+    _commitBtn = commitBtn;
+    
     UIToolbar* toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(mainScreenBounds) - 49 - NavigationBarAndStatusBarHeight(),
                                                                      CGRectGetWidth(mainScreenBounds), 49)];
     [self.view addSubview:toolbar];
@@ -71,7 +77,7 @@
         [toolbar setTintColor:[UIColor whiteColor]];
     }
     
-    _resultLabel = createLabel(CGRectMake(0, 0, 240, 37), NSTextAlignmentLeft, COMMON_TEXT_COLOR, [UIFont systemFontOfSize:14]);
+    _resultLabel = createLabel(CGRectMake(0, 0, 240, 37), NSTextAlignmentLeft, COMMON_TEXT_COLOR, [UIFont boldSystemFontOfSize:fontSize(14)]);
     UIBarButtonItem* textItem = [[[UIBarButtonItem alloc] initWithCustomView:_resultLabel] autorelease];
     
     UIBarButtonItem* flexItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
@@ -84,28 +90,7 @@
     
     _tableView.delegate = self;
     
-    __block NewOrderViewController* me = self;
-    NSString* uri = [NSString stringWithFormat:@"/cart/items?token=%@&area_id=%d",
-                     [[UserService sharedService] token],
-                     [[[DataService sharedService] areaForLocal] oid]];
-    
-    [[DataService sharedService] loadEntityForClass:@"NewOrderInfo"
-                                                URI:uri
-                                         completion:^(id result, BOOL succeed) {
-                                             if ( succeed ) {
-                                                 me.orderInfo = result;
-                                                 me->_tableView.hidden = NO;
-                                                 
-                                                 _tableView.dataSource = self;
-                                                 
-                                                 [me->_tableView reloadData];
-                                                 me->_resultLabel.text = [NSString stringWithFormat:@"实付款：￥%.2f",
-                                                                          ( me.orderInfo.totalPrice * 100 - me.orderInfo.userScore ) / 100.0];
-                                                 commitBtn.enabled = YES;
-                                             } else {
-                                                 me->_tableView.hidden = YES;
-                                             }
-                                         }];
+    [self loadData];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didUpdateDeliverInfo:)
@@ -115,6 +100,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didUpdateDeliverInfo:)
                                                  name:@"kDeliverInfoDidRemoveAll"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didUpdatePaymentAndShipmentInfo:)
+                                                 name:@"kPaymentAndShipmentInfoDidUpdateNotification"
                                                object:nil];
 }
 
@@ -137,6 +127,37 @@
         _mobileLabel.hidden = _addressLabel.hidden = NO;
     }
     [_tableView reloadData];
+}
+
+- (void)didUpdatePaymentAndShipmentInfo:(NSNotification *)noti
+{
+    [self loadData];
+}
+
+- (void)loadData
+{
+    __block NewOrderViewController* me = self;
+    NSString* uri = [NSString stringWithFormat:@"/cart/items?token=%@&area_id=%d",
+                     [[UserService sharedService] token],
+                     [[[DataService sharedService] areaForLocal] oid]];
+    
+    [[DataService sharedService] loadEntityForClass:@"NewOrderInfo"
+                                                URI:uri
+                                         completion:^(id result, BOOL succeed) {
+                                             if ( succeed ) {
+                                                 me.orderInfo = result;
+                                                 me->_tableView.hidden = NO;
+                                                 
+                                                 _tableView.dataSource = self;
+                                                 
+                                                 [me->_tableView reloadData];
+                                                 me->_resultLabel.text = [NSString stringWithFormat:@"实付款：￥%.2f",
+                                                                          ( me.orderInfo.totalPrice * 100 - me.orderInfo.userScore ) / 100.0];
+                                                 _commitBtn.enabled = YES;
+                                             } else {
+                                                 me->_tableView.hidden = YES;
+                                             }
+                                         }];
 }
 
 - (void)commit
@@ -210,7 +231,8 @@ static int rows[] = { 1, 1, 1, 1, 1 };
     if ( cell == nil ) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId] autorelease];
         
-        if ( indexPath.section == 0 ) {
+        if ( indexPath.section == 0 ||
+            indexPath.section == 2 ) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         } else {
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -218,11 +240,11 @@ static int rows[] = { 1, 1, 1, 1, 1 };
     }
     
     CGFloat leftMargin = 15;
+    CGFloat rowHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
+    
     switch (indexPath.section) {
         case 0:
         {
-            CGFloat rowHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
-            
             if ( !self.orderInfo.deliverInfo.address ) {
                 UILabel* newLabel = (UILabel *)[cell.contentView viewWithTag:101];
                 if ( newLabel == nil ) {
@@ -267,16 +289,6 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                     [cell.contentView addSubview:infoLabel];
                 }
                 
-//                UILabel* mobileLabel = (UILabel *)[cell.contentView viewWithTag:1001];
-//                if ( mobileLabel == nil ) {
-//                    mobileLabel = createLabel(CGRectMake(leftMargin, 5, 200, 20),
-//                                              NSTextAlignmentLeft,
-//                                              COMMON_TEXT_COLOR,
-//                                              [UIFont systemFontOfSize:14]);
-//                    mobileLabel.tag = 1001;
-//                    [cell.contentView addSubview:mobileLabel];
-//                }
-                
                 _mobileLabel = infoLabel;
                 
                 NSString* name = self.orderInfo.deliverInfo.name;
@@ -305,7 +317,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                     
                 }
                 
-                addressLabel.text = self.orderInfo.deliverInfo.address;
+                addressLabel.text = [NSString stringWithFormat:@"%@%@", kAddressPrefix, self.orderInfo.deliverInfo.address];
                 _addressLabel = addressLabel;
                 
                 CGSize size = [addressLabel.text sizeWithFont:addressLabel.font
@@ -406,42 +418,49 @@ static int rows[] = { 1, 1, 1, 1, 1 };
             break;
         case 2:
         {
-            // 支付方式
+            
+            // 支付及配送
             UILabel* payLabel = (UILabel *)[cell.contentView viewWithTag:1006];
             if ( !payLabel ) {
-                payLabel = createLabel(CGRectMake(leftMargin, 3, 100, 30),
+                payLabel = createLabel(CGRectMake(leftMargin, ( rowHeight - 30 ) / 2, 100, 30),
                                        NSTextAlignmentLeft,
                                        COMMON_TEXT_COLOR,
-                                       [UIFont boldSystemFontOfSize:14]);
+                                       [UIFont boldSystemFontOfSize:fontSize(14)]);
                 payLabel.tag = 1006;
                 [cell.contentView addSubview:payLabel];
-                payLabel.text = @"支付及配送方式";
+                payLabel.text = @"支付配送";
             }
             
+            // 支付方式
             UILabel* payLabel1 = (UILabel *)[cell.contentView viewWithTag:1007];
             if ( !payLabel1 ) {
-                payLabel1 = createLabel(CGRectMake(leftMargin, CGRectGetMaxY(payLabel.frame) + 3, 200, 30),
-                                       NSTextAlignmentLeft,
+                payLabel1 = createLabel(CGRectMake(CGRectGetWidth(mainScreenBounds) - 40 - 200, 5, 200, 25),
+                                       NSTextAlignmentRight,
                                        COMMON_TEXT_COLOR,
-                                       [UIFont systemFontOfSize:13]);
+                                       [UIFont systemFontOfSize:fontSize(14)]);
                 payLabel1.tag = 1007;
                 [cell.contentView addSubview:payLabel1];
-                payLabel1.text = @"支付宝支付";//@"目前只支持货到付款";
-                [payLabel1 sizeToFit];
             }
             
-            UILabel* payLabel2 = (UILabel *)[cell.contentView viewWithTag:1008];
-            if ( !payLabel2 ) {
-                payLabel2 = createLabel(CGRectMake(leftMargin, CGRectGetMaxY(payLabel1.frame), 200, 30),
-                                       NSTextAlignmentLeft,
+            payLabel1.text = self.orderInfo.paymentInfo.name;
+            
+            // 配送方式
+            CGRect frame = payLabel1.frame;
+            frame.origin.y = CGRectGetMaxY(frame);
+            UILabel* shipLabel2 = (UILabel *)[cell.contentView viewWithTag:1008];
+            if ( !shipLabel2 ) {
+                shipLabel2 = createLabel(frame,
+                                       NSTextAlignmentRight,
                                        COMMON_TEXT_COLOR,
-                                       [UIFont systemFontOfSize:13]);
-                payLabel2.tag = 1008;
-                [cell.contentView addSubview:payLabel2];
-                payLabel2.text = @"每天18:00-21:00之间配送";
-                [payLabel2 sizeToFit];
+                                       [UIFont systemFontOfSize:fontSize(12)]);
+                shipLabel2.tag = 1008;
+                [cell.contentView addSubview:shipLabel2];
+                
             }
             
+            shipLabel2.text = [NSString stringWithFormat:@"%@%@配送",
+                               self.orderInfo.shipmentInfo.prefix,
+                               self.orderInfo.shipmentInfo.name];
         }
             break;
         case 3:
@@ -468,7 +487,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                 label = createLabel(CGRectMake(leftMargin, 7, 60, 30),
                                     NSTextAlignmentLeft,
                                     COMMON_TEXT_COLOR,
-                                    [UIFont systemFontOfSize:14]);
+                                    [UIFont boldSystemFontOfSize:fontSize(14)]);
                 label.tag = 1009;
                 [cell.contentView addSubview:label];
                 label.text = @"商品金额";
@@ -477,11 +496,11 @@ static int rows[] = { 1, 1, 1, 1, 1 };
             //
             UILabel* priceLabel = (UILabel *)[cell.contentView viewWithTag:2001];
             if ( !priceLabel ) {
-                priceLabel = createLabel(CGRectMake(CGRectGetWidth(mainScreenBounds) - leftMargin - 160 - 20,
+                priceLabel = createLabel(CGRectMake(CGRectGetWidth(mainScreenBounds) - 40 - 160,
                                                     CGRectGetMinY(label.frame), 160, 30),
                                     NSTextAlignmentRight,
                                     GREEN_COLOR,
-                                    [UIFont systemFontOfSize:14]);
+                                    [UIFont systemFontOfSize:fontSize(14)]);
                 priceLabel.tag = 2001;
                 [cell.contentView addSubview:priceLabel];
             }
@@ -586,8 +605,9 @@ static int rows[] = { 1, 1, 1, 1, 1 };
             return 44;
         }
         
-        CGSize size = [di.address sizeWithFont:[UIFont systemFontOfSize:14]
-                             constrainedToSize:CGSizeMake(CGRectGetWidth(mainScreenBounds) - 60, 1000)
+        NSString* text = [NSString stringWithFormat:@"%@%@", kAddressPrefix, di.address];
+        CGSize size = [text sizeWithFont:[UIFont systemFontOfSize:14]
+                            constrainedToSize:CGSizeMake(CGRectGetWidth(mainScreenBounds) - 60, 1000)
                                  lineBreakMode:NSLineBreakByWordWrapping];
         
         return 20 + size.height + 25;
@@ -598,7 +618,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
     }
     
     if ( indexPath.section == 2 && indexPath.row == 0 ) {
-        return 75;
+        return 60;
     }
     
     if ( indexPath.section == 3 && indexPath.row == 0 ) {
@@ -618,14 +638,25 @@ static int rows[] = { 1, 1, 1, 1, 1 };
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if ( indexPath.section == 0 && indexPath.row == 0 ) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
         Forward* aForward = [Forward buildForwardWithType:ForwardTypePush
                                                      from:self
                                          toControllerName:@"DeliverInfoListViewController"];
         
         aForward.userData = self.orderInfo.deliverInfo;
+        
+        ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:aForward];
+        
+        [aCommand execute];
+    } else if ( indexPath.section == 2 && indexPath.row == 0 ) {
+        Forward* aForward = [Forward buildForwardWithType:ForwardTypePush
+                                                     from:self
+                                         toControllerName:@"PaymentAndShipmentUpdateViewController"];
+        
+        aForward.userData = [NSString stringWithFormat:@"%d-%d", self.orderInfo.paymentInfo.oid, self.orderInfo.shipmentInfo.oid];
         
         ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:aForward];
         

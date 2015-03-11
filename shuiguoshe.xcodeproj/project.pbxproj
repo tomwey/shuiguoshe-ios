@@ -161,6 +161,10 @@
 		97EADB7D1AAFD2FE00339642 /* RSADataVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EADB751AAFD2FE00339642 /* RSADataVerifier.m */; };
 		97EADB801AAFD39500339642 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 97EADB7E1AAFD39500339642 /* AlipaySDK.bundle */; };
 		97EADB811AAFD39500339642 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97EADB7F1AAFD39500339642 /* AlipaySDK.framework */; };
+		97EADB841AAFD6E000339642 /* PaymentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EADB831AAFD6E000339642 /* PaymentInfo.m */; };
+		97EADB871AAFD6EA00339642 /* ShipmentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EADB861AAFD6EA00339642 /* ShipmentInfo.m */; };
+		97EADB8A1AAFE24300339642 /* PaymentAndShipmentUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EADB891AAFE24300339642 /* PaymentAndShipmentUpdateViewController.m */; };
+		97EADB8D1AAFE57B00339642 /* PaymentShipmentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EADB8C1AAFE57B00339642 /* PaymentShipmentInfo.m */; };
 		990371A11AAB0CA3007A42EF /* NetworkErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 990371A01AAB0CA3007A42EF /* NetworkErrorView.m */; };
 		9921EAB91A8A4627006B57D1 /* LPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9921EAB81A8A4627006B57D1 /* LPLabel.m */; };
 		9921EABB1A8A5121006B57D1 /* btn_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9921EABA1A8A5121006B57D1 /* btn_back@3x.png */; };
@@ -529,6 +533,14 @@
 		97EADB751AAFD2FE00339642 /* RSADataVerifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSADataVerifier.m; sourceTree = "<group>"; };
 		97EADB7E1AAFD39500339642 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		97EADB7F1AAFD39500339642 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		97EADB821AAFD6E000339642 /* PaymentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentInfo.h; sourceTree = "<group>"; };
+		97EADB831AAFD6E000339642 /* PaymentInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentInfo.m; sourceTree = "<group>"; };
+		97EADB851AAFD6EA00339642 /* ShipmentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShipmentInfo.h; sourceTree = "<group>"; };
+		97EADB861AAFD6EA00339642 /* ShipmentInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShipmentInfo.m; sourceTree = "<group>"; };
+		97EADB881AAFE24300339642 /* PaymentAndShipmentUpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentAndShipmentUpdateViewController.h; sourceTree = "<group>"; };
+		97EADB891AAFE24300339642 /* PaymentAndShipmentUpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentAndShipmentUpdateViewController.m; sourceTree = "<group>"; };
+		97EADB8B1AAFE57B00339642 /* PaymentShipmentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentShipmentInfo.h; sourceTree = "<group>"; };
+		97EADB8C1AAFE57B00339642 /* PaymentShipmentInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentShipmentInfo.m; sourceTree = "<group>"; };
 		9903719F1AAB0CA3007A42EF /* NetworkErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkErrorView.h; sourceTree = "<group>"; };
 		990371A01AAB0CA3007A42EF /* NetworkErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkErrorView.m; sourceTree = "<group>"; };
 		9921EAB71A8A4627006B57D1 /* LPLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPLabel.h; sourceTree = "<group>"; };
@@ -1055,6 +1067,12 @@
 				970F4A241AA3F2A400BC0F4D /* Section.m */,
 				979734841AAD50FB00542423 /* Area.h */,
 				979734851AAD50FB00542423 /* Area.m */,
+				97EADB821AAFD6E000339642 /* PaymentInfo.h */,
+				97EADB831AAFD6E000339642 /* PaymentInfo.m */,
+				97EADB851AAFD6EA00339642 /* ShipmentInfo.h */,
+				97EADB861AAFD6EA00339642 /* ShipmentInfo.m */,
+				97EADB8B1AAFE57B00339642 /* PaymentShipmentInfo.h */,
+				97EADB8C1AAFE57B00339642 /* PaymentShipmentInfo.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1160,6 +1178,8 @@
 				970F4A2A1AA45F3300BC0F4D /* AdDetailViewController.m */,
 				979734811AAD4F8600542423 /* AreaListViewController.h */,
 				979734821AAD4F8600542423 /* AreaListViewController.m */,
+				97EADB881AAFE24300339642 /* PaymentAndShipmentUpdateViewController.h */,
+				97EADB891AAFE24300339642 /* PaymentAndShipmentUpdateViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1445,6 +1465,7 @@
 				99A7BD851A519DEB0092EA89 /* Item.m in Sources */,
 				976EF2F91A8C37F300A94B15 /* LoginViewController.m in Sources */,
 				9717CFEF1A9ECB2500B1C473 /* Toast.m in Sources */,
+				97EADB841AAFD6E000339642 /* PaymentInfo.m in Sources */,
 				979ECA211AA69DDF00E52B10 /* ShareView.m in Sources */,
 				97EADB771AAFD2FE00339642 /* DataSigner.m in Sources */,
 				99C2747E1A4EE15300898741 /* CartViewController.m in Sources */,
@@ -1477,6 +1498,7 @@
 				97B77E8B1AA00E6900C12733 /* DeliverInfo.m in Sources */,
 				99C274D41A4EEE1900898741 /* AFHTTPRequestOperation.m in Sources */,
 				979ECA541AA6B19F00E52B10 /* KKShareWeiXin.m in Sources */,
+				97EADB8D1AAFE57B00339642 /* PaymentShipmentInfo.m in Sources */,
 				976EF3131A8C6EFD00A94B15 /* ForgetPasswordViewController.m in Sources */,
 				9747FA031A8F04DC008099D4 /* NewOrderViewController.m in Sources */,
 				99C274D61A4EEE1900898741 /* AFHTTPSessionManager.m in Sources */,
@@ -1532,6 +1554,7 @@
 				99C274F51A4EF00D00898741 /* UIRefreshControl+AFNetworking.m in Sources */,
 				979D64111AA145190010F78E /* OrderResultViewController.m in Sources */,
 				99C2747F1A4EE15300898741 /* HomeViewController.m in Sources */,
+				97EADB8A1AAFE24300339642 /* PaymentAndShipmentUpdateViewController.m in Sources */,
 				979D64171AA1558D0010F78E /* OrderListViewController.m in Sources */,
 				979D642C1AA17EE40010F78E /* OrderCellView.m in Sources */,
 				975201641A8992570070FE1F /* CustomButton.m in Sources */,
@@ -1546,6 +1569,7 @@
 				9747F9F81A8EF03B008099D4 /* NumberControl.m in Sources */,
 				97EADB7B1AAFD2FE00339642 /* openssl_wrapper.m in Sources */,
 				99C2744B1A4EDF3300898741 /* main.m in Sources */,
+				97EADB871AAFD6EA00339642 /* ShipmentInfo.m in Sources */,
 				99C274F91A4F0A6D00898741 /* InfinitePagingView.m in Sources */,
 				973820FF1A8890A600B54EEC /* Catalog.m in Sources */,
 			);

@@ -8,8 +8,29 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CustomButton : UIButton
+@class CustomButton;
+@class CustomButtonGroup;
 
-@property (nonatomic, retain) id userData;
+typedef void (^ButtonDidClickBlock)(CustomButton*);
+
+@interface CustomButton : UIView
+
+@property (nonatomic, assign) BOOL selected;
+@property (nonatomic, copy) ButtonDidClickBlock didClickBlock;
+
+@property (nonatomic, assign) CustomButtonGroup* buttonGroup;
+
+- (void)setTitle:(NSString*)title;
+- (NSString *)title;
+
+@end
+
+@interface CustomButtonGroup : NSObject
+
+- (void)addCustomButton:(CustomButton*)aButton;
+
+- (void)removeAllButtons;
+
+- (NSArray *)items;
 
 @end

@@ -22,10 +22,10 @@
     
     self.title = @"提交订单成功";
     
-    [self setLeftBarButtonWithImage:@"btn_back.png"
-                            command:[ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePopTo
+    [self setLeftBarButtonWithImage:@"btn_close.png"
+                            command:[ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypeDismiss
                                                                                                      from:self
-                                                                                         toControllerName:@"CartViewController"]]];
+                                                                                         toControllerName:nil]]];
     
     
     // 订单提交成功
