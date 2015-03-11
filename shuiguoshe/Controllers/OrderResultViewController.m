@@ -171,6 +171,33 @@
 
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(orderFinishPayment)
+                                                 name:@"kOrderFinishedPaymentNotification"
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)orderFinishPayment
+{
+    ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:
+                                [Forward buildForwardWithType:ForwardTypePush
+                                                         from:self
+                                    toControllerName:@"OrderListViewController"]];
+    aCommand.userData = @"-1";
+    [aCommand execute];
+}
+
 - (void)payOrder
 {
     PayOrderCommand* aCommand = [[[PayOrderCommand alloc] init] autorelease];

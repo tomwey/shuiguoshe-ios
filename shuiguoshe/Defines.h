@@ -22,10 +22,10 @@
 #define COMMON_TEXT_COLOR RGB(56,56,56)
 
 // 家里
-//#define kAPIHost @"http://192.168.1.131:3000/api/v1"
+#define kAPIHost @"http://192.168.1.131:3000/api/v1"
 
 // 公司
-#define kAPIHost @"http://10.0.16.11:3000/api/v1"
+//#define kAPIHost @"http://10.0.16.11:3000/api/v1"
 
 // 产品
 //#define kAPIHost @"http://shuiguoshe.com/api/v1"
@@ -139,6 +139,7 @@ static inline UIWindow* AppWindow()
 #import "QQShareManager.h"
 
 #import "DataSigner.h"
+#import "DataVerifier.h"
 #import <AlipaySDK/AlipaySDK.h>
 
 #import "Banner.h"
@@ -167,6 +168,7 @@ static inline UIWindow* AppWindow()
 #import "ShipmentInfo.h"
 #import "PaymentShipmentInfo.h"
 #import "PayOrderCommand.h"
+#import "DataVerifierManager.h"
 
 #import "GTMBase64.h"
 #import "NSString+Additions.h"

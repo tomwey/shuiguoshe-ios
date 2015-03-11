@@ -30,6 +30,8 @@
         self.partner = [jsonObj objectForKey:@"partner"];
         self.seller = [jsonObj objectForKey:@"seller_id"];
         self.privateKey = [jsonObj objectForKey:@"private_key"];
+        self.publicKey = [jsonObj objectForKey:@"public_key"];
+        
         self.orderNo = [jsonObj objectForKey:@"order_no"];
         self.productName = [jsonObj objectForKey:@"subject"];
         self.productDescription = [jsonObj objectForKey:@"body"];
@@ -66,7 +68,9 @@
     
     self.partner = nil;
     self.seller = nil;
+    
     self.privateKey = nil;
+    self.publicKey = nil;
     
     self.orderNo = nil;
     

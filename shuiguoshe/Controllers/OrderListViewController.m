@@ -79,6 +79,18 @@
                                              selector:@selector(orderItemDidSelect:)
                                                  name:@"kOrderItemDidSelectNotification"
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(orderFinishPayment)
+                                                 name:@"kOrderFinishedPaymentNotification"
+                                               object:nil];
+    
+}
+
+- (void)orderFinishPayment
+{
+    _currentPage = 1;
+    [self loadOrders:_currentPage showLoading:YES];
 }
 
 - (void)loadOrders:(int)page showLoading:(BOOL)flag

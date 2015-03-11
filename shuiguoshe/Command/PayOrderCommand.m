@@ -29,6 +29,15 @@
         
         [[AlipaySDK defaultService] payOrder:orderString fromScheme:@"alipay-shuiguoshe" callback:^(NSDictionary *resultDic) {
             NSLog(@"reslut = %@",resultDic);
+            
+            [[DataVerifierManager sharedManager] saveAlipayPublicKey:[self.userData publicKey]];
+            
+            if ( [[DataVerifierManager sharedManager] verifyResult:resultDic] ) {
+                NSLog(@"验证成功");
+            } else {
+                NSLog(@"验证失败");
+            }
+            
         }];
         
     }

@@ -31,7 +31,9 @@
 // 在线支付相关的属性
 @property (nonatomic, copy) NSString* partner;
 @property (nonatomic, copy) NSString* seller;
+
 @property (nonatomic, copy) NSString* privateKey;
+@property (nonatomic, copy) NSString* publicKey;
 
 @property (nonatomic, copy) NSString* orderNo;
 

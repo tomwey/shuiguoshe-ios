@@ -165,12 +165,14 @@
     }
     
     if ( [info.stateName isEqualToString:@"no_pay"] ) {
+        
+        // 保存公钥
+        if ( info.publicKey ) {
+            [[DataVerifierManager sharedManager] saveAlipayPublicKey:info.publicKey];
+        }
+        
         CommandButton* payBtn = (CommandButton *)[self viewWithTag:10111];
         if ( !payBtn ) {
-//            payBtn = [[CoordinatorController sharedInstance] createTextButton:@"去支付"
-//                                                                         font:nil
-//                                                                   titleColor:[UIColor whiteColor]
-//                                                                      command:nil];
             payBtn = [CommandButton buttonWithType:UIButtonTypeCustom];
             [payBtn setTitle:@"去支付" forState:UIControlStateNormal];
             [payBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

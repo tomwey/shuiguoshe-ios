@@ -34,6 +34,8 @@ typedef NS_ENUM(NSInteger, PaymentType) {
 @property (nonatomic, copy) NSString* seller;
 @property (nonatomic, copy) NSString* privateKey;
 
+@property (nonatomic, copy) NSString* publicKey;
+
 @property (nonatomic, copy) NSString* orderNo;
 
 @property (nonatomic, copy) NSString* productName;

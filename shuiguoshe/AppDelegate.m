@@ -56,13 +56,20 @@
     if ([url.host isEqualToString:@"safepay"]) {
         
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url
-                                                  standbyCallback:^(NSDictionary *resultDic) {
-                                                      NSLog(@"payment result: %@", resultDic);
-                                                  }];
+                                                  standbyCallback:^(NSDictionary *resultDic)
+        {
+//            NSLog(@"payment result: %@", resultDic);
+            
+            if ( [[DataVerifierManager sharedManager] verifyResult:resultDic] ) {
+                NSLog(@"验证成功");
+            } else {
+                NSLog(@"验证失败");
+            }
+        }];
         
         [[AlipaySDK defaultService] processAuth_V2Result:url
                                          standbyCallback:^(NSDictionary *resultDic) {
-                                             NSLog(@"auth result: %@", resultDic);
+//                                             NSLog(@"auth result: %@", resultDic);
                                          }];
         
         return YES;
