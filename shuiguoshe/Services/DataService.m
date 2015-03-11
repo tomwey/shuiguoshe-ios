@@ -199,7 +199,7 @@
              NSLog(@"Load Entity Error: %@", error);
              [self finishRequest];
              if ( completion ) {
-//                 NSDictionary* result = @{ @"code": @"500", @"message": @"请求失败" };
+//                 NSDictionary* result = @{ @"code": @"500", @"message": @"呃，系统出错了" };
                  completion(nil, NO);
              }
          }];

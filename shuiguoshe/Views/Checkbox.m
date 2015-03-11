@@ -126,7 +126,7 @@ NSString * const kCheckboxDidUpdateStateNotification = @"kCheckboxDidUpdateState
                                                                        [[[DataService sharedService] areaForLocal] oid])}
                            completion:^(NetworkResponse* resp) {
                                if ( !resp.requestSuccess ) {
-                                   [Toast showText:@"服务器错误"];
+                                   [Toast showText:@"呃，系统出错了"];
                                } else {
                                    if ( resp.statusCode == 0 ) {
                                        self.checked = !self.checked;

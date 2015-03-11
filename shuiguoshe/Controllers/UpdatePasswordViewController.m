@@ -134,7 +134,7 @@
                                        [Toast showText:resp.message];
                                    }
                                } else {
-                                   [Toast showText:@"服务器错误"];
+                                   [Toast showText:@"呃，系统出错了"];
                                }
                            }];
 }

@@ -57,7 +57,7 @@
                            completion:^(NetworkResponse* resp)
     {
         if ( !resp.requestSuccess ) {
-            [Toast showText:@"请求失败"];
+            [Toast showText:@"呃，系统出错了"];
         } else {
             if ( resp.statusCode == 0 ) {
                 if ( completion ) {
@@ -83,7 +83,7 @@
     {
                                
        if ( !resp.requestSuccess ) {
-           [Toast showText:@"请求失败"];
+           [Toast showText:@"呃，系统出错了"];
        } else {
            if ( resp.statusCode == 0 ) {
                [self saveToken:nil];
@@ -107,7 +107,7 @@
                            completion:^(NetworkResponse* resp)
      {
          if ( !resp.requestSuccess ) {
-             [Toast showText:@"请求失败"];
+             [Toast showText:@"呃，系统出错了"];
              completion(NO, resp.message);
          } else {
              if ( resp.statusCode == 0 ) {
@@ -129,7 +129,7 @@
                                params:@{ @"mobile": aUser.name, @"code": aUser.code, @"password": aUser.password }
                            completion:^(NetworkResponse* resp) {
                                if ( !resp.requestSuccess ) {
-                                   [Toast showText:@"请求失败"];
+                                   [Toast showText:@"呃，系统出错了"];
                                    if ( completion ) {
                                        completion(NO, resp.message);
                                    }
@@ -155,7 +155,7 @@
                                params:@{ @"mobile": aUser.name, @"code": aUser.code, @"password": aUser.password }
                            completion:^(NetworkResponse* resp) {
                                if ( !resp.requestSuccess ) {
-                                   [Toast showText:@"请求失败"];
+                                   [Toast showText:@"呃，系统出错了"];
                                    if ( completion ) {
                                        completion(NO, resp.message);
                                    }
@@ -191,7 +191,7 @@
                                       params:@{ @"token": [self token] }
                                   completion:^(NetworkResponse* resp) {
                                       if ( !resp.requestSuccess ) {
-                                          [Toast showText:@"请求失败"];
+                                          [Toast showText:@"呃，系统出错了"];
                                       } else {
                                           if ( completion ) {
                                               if ( resp.statusCode == 0 ) {

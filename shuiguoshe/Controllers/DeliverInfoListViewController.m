@@ -139,7 +139,7 @@
                                              @"area_id": NSStringFromInteger([[[DataService sharedService] areaForLocal] oid])}
                                completion:^(NetworkResponse* resp) {
                                    if ( !resp.requestSuccess ) {
-                                       [Toast showText:@"请求失败"];
+                                       [Toast showText:@"呃，系统出错了"];
                                    } else {
                                        if ( resp.statusCode == 0 ) {
                                            for (RadioButton* inBtn in me->_radioButtons) {
@@ -240,7 +240,7 @@
                                         params:@{ @"token" : [[UserService sharedService] token] }
                                     completion:^(NetworkResponse* resp) {
                                         if ( !resp.requestSuccess ) {
-                                            [Toast showText:@"服务器错误"];
+                                            [Toast showText:@"呃，系统出错了"];
                                         } else {
                                             if ( resp.statusCode == 0 ) {
                                                 [_dataSource removeObjectAtIndex:index];

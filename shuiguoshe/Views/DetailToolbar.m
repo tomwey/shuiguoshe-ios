@@ -130,7 +130,7 @@
                            completion:^(NetworkResponse* resp) {
                                _likeView.userInteractionEnabled = YES;
                                if ( !resp.requestSuccess ) {
-                                   [Toast showText:@"服务器错误"];
+                                   [Toast showText:@"呃，系统出错了"];
                                } else {
                                    if ( resp.statusCode == 0 ) {
                                        self.liked = YES;
@@ -148,7 +148,7 @@
                            completion:^(NetworkResponse* resp) {
                                _likeView.userInteractionEnabled = YES;
                                if ( !resp.requestSuccess ) {
-                                   [Toast showText:@"服务器错误"];
+                                   [Toast showText:@"呃，系统出错了"];
                                } else {
                                    if ( resp.statusCode == 0 ) {
                                        self.liked = NO;
@@ -176,7 +176,7 @@
        sender.userInteractionEnabled = YES;
        
        if ( !resp.requestSuccess ) {
-           [Toast showText:@"服务器错误"];
+           [Toast showText:@"呃，系统出错了"];
        } else {
            if ( resp.statusCode == 0 ) {
                [Toast showText:@"成功添加到购物车"];

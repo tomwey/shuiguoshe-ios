@@ -177,18 +177,22 @@
     [[DataService sharedService] post:@"/user/orders"
                                params:@{ @"token": [[UserService sharedService] token],
                                          @"score": NSStringFromInteger(self.orderInfo.userScore),
-//                                         @"deliver_info_id": NSStringFromInteger(self.orderInfo.deliverInfo.infoId),
+                                         @"deliver_info_id": NSStringFromInteger(self.orderInfo.deliverInfo.infoId),
                                          @"note": note,
                                          @"total_fee": [NSString stringWithFormat:@"%.2f", totalPrice],
                                          @"discount_fee": [NSString stringWithFormat:@"%.2f", discountPrice],
+                                         @"payment_type": NSStringFromInteger(self.orderInfo.paymentInfo.oid),
+                                         @"shipment_type": NSStringFromInteger(self.orderInfo.shipmentInfo.oid),
                                          @"area_id": NSStringFromInteger([[[DataService sharedService] areaForLocal] oid]),
                                         }
                            completion:^(NetworkResponse* resp)
      {
          if ( !resp.requestSuccess ) {
-             [Toast showText:@"服务器错误"];
+             [Toast showText:@"呃，系统出错了"];
          } else {
            if ( resp.statusCode == 0 ) {
+               [[CartService sharedService] initTotal:0];
+               
                Order* anOrder = [[[Order alloc] initWithDictionary:resp.result] autorelease];
                Forward* aForward = [Forward buildForwardWithType:ForwardTypePush
                                                             from:self
@@ -281,7 +285,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                 // 收货人信息
                 UILabel* infoLabel = ( UILabel* )[cell.contentView viewWithTag:1001];
                 if ( !infoLabel ) {
-                    infoLabel = createLabel(CGRectMake(CGRectGetMaxX(iconView.frame) + 5, 10, 200, 25),
+                    infoLabel = createLabel(CGRectMake(CGRectGetMaxX(iconView.frame) + 5, 10, 240, 25),
                                               NSTextAlignmentLeft,
                                               COMMON_TEXT_COLOR,
                                               [UIFont systemFontOfSize:14]);
