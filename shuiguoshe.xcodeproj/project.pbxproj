@@ -167,6 +167,7 @@
 		97EADB8D1AAFE57B00339642 /* PaymentShipmentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EADB8C1AAFE57B00339642 /* PaymentShipmentInfo.m */; };
 		97EADB901AB0243300339642 /* alipay_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97EADB8E1AB0243300339642 /* alipay_icon@2x.png */; };
 		97EADB911AB0243300339642 /* alipay_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97EADB8F1AB0243300339642 /* alipay_icon@3x.png */; };
+		97EADB941AB036AA00339642 /* PayOrderCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EADB931AB036AA00339642 /* PayOrderCommand.m */; };
 		990371A11AAB0CA3007A42EF /* NetworkErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 990371A01AAB0CA3007A42EF /* NetworkErrorView.m */; };
 		9921EAB91A8A4627006B57D1 /* LPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9921EAB81A8A4627006B57D1 /* LPLabel.m */; };
 		9921EABB1A8A5121006B57D1 /* btn_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9921EABA1A8A5121006B57D1 /* btn_back@3x.png */; };
@@ -545,6 +546,8 @@
 		97EADB8C1AAFE57B00339642 /* PaymentShipmentInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentShipmentInfo.m; sourceTree = "<group>"; };
 		97EADB8E1AB0243300339642 /* alipay_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alipay_icon@2x.png"; sourceTree = "<group>"; };
 		97EADB8F1AB0243300339642 /* alipay_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alipay_icon@3x.png"; sourceTree = "<group>"; };
+		97EADB921AB036AA00339642 /* PayOrderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayOrderCommand.h; sourceTree = "<group>"; };
+		97EADB931AB036AA00339642 /* PayOrderCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayOrderCommand.m; sourceTree = "<group>"; };
 		9903719F1AAB0CA3007A42EF /* NetworkErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkErrorView.h; sourceTree = "<group>"; };
 		990371A01AAB0CA3007A42EF /* NetworkErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkErrorView.m; sourceTree = "<group>"; };
 		9921EAB71A8A4627006B57D1 /* LPLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPLabel.h; sourceTree = "<group>"; };
@@ -792,6 +795,8 @@
 				979ECA321AA6A7D500E52B10 /* Share2WeiXinFriendsCommand.m */,
 				979ECA341AA6A7EB00E52B10 /* Share2QzoneCommand.h */,
 				979ECA351AA6A7EB00E52B10 /* Share2QzoneCommand.m */,
+				97EADB921AB036AA00339642 /* PayOrderCommand.h */,
+				97EADB931AB036AA00339642 /* PayOrderCommand.m */,
 			);
 			path = Command;
 			sourceTree = "<group>";
@@ -1566,6 +1571,7 @@
 				979D64171AA1558D0010F78E /* OrderListViewController.m in Sources */,
 				979D642C1AA17EE40010F78E /* OrderCellView.m in Sources */,
 				975201641A8992570070FE1F /* CustomButton.m in Sources */,
+				97EADB941AB036AA00339642 /* PayOrderCommand.m in Sources */,
 				975201821A89E1FA0070FE1F /* SectionView.m in Sources */,
 				990371A11AAB0CA3007A42EF /* NetworkErrorView.m in Sources */,
 				979ECA331AA6A7D500E52B10 /* Share2WeiXinFriendsCommand.m in Sources */,

@@ -70,7 +70,7 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     _currentPage = 1;
-    [self loadOrders:_currentPage];
+    [self loadOrders:_currentPage showLoading: YES];
 
     _tableView.backgroundColor = [UIColor clearColor];
     self.view.backgroundColor = RGB(235, 235, 235);
@@ -81,7 +81,7 @@
                                                object:nil];
 }
 
-- (void)loadOrders:(int)page
+- (void)loadOrders:(int)page showLoading:(BOOL)flag
 {
     [[DataService sharedService] loadEntityForClass:@"OrderCollection"
                                                 URI:[NSString stringWithFormat:@"/user/orders?token=%@&filter=%@&page=%d",
@@ -96,7 +96,7 @@
                                                  
                                              }
                                              
-                                         }];
+                                         } showLoading:flag];
 }
 
 - (void)orderItemDidSelect:(NSNotification *)noti
@@ -157,7 +157,7 @@
     if ( [_dataSource count] == indexPath.row + 1 ) {
         if ( _currentPage < self.orderCollection.totalPage ) {
             _currentPage ++;
-            [self loadOrders:_currentPage];
+            [self loadOrders:_currentPage showLoading: NO];
         }
     }
 }

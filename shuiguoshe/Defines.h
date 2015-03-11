@@ -166,6 +166,7 @@ static inline UIWindow* AppWindow()
 #import "PaymentInfo.h"
 #import "ShipmentInfo.h"
 #import "PaymentShipmentInfo.h"
+#import "PayOrderCommand.h"
 
 #import "GTMBase64.h"
 #import "NSString+Additions.h"

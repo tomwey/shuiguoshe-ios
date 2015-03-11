@@ -83,14 +83,6 @@
                                [UIFont systemFontOfSize:12]);
         [_headerView addSubview:_orderTimeLabel];
         
-        UIButton* btn = createButton2(nil, @"去支付", nil, nil);
-        btn.backgroundColor = GREEN_COLOR;
-        btn.frame = CGRectMake(248, 10, 60, 30);
-        btn.layer.cornerRadius = 3;
-        btn.titleLabel.font = [UIFont systemFontOfSize:12];
-        btn.clipsToBounds = YES;
-        
-        [self addSubview:btn];
     }
     return self;
 }
@@ -171,6 +163,42 @@
         frame.origin.x = CGRectGetWidth(mainScreenBounds) - 15 - CGRectGetWidth(frame);
         stateLabel.frame = frame;
     }
+    
+    if ( [info.stateName isEqualToString:@"no_pay"] ) {
+        CommandButton* payBtn = (CommandButton *)[self viewWithTag:10111];
+        if ( !payBtn ) {
+//            payBtn = [[CoordinatorController sharedInstance] createTextButton:@"去支付"
+//                                                                         font:nil
+//                                                                   titleColor:[UIColor whiteColor]
+//                                                                      command:nil];
+            payBtn = [CommandButton buttonWithType:UIButtonTypeCustom];
+            [payBtn setTitle:@"去支付" forState:UIControlStateNormal];
+            [payBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [payBtn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            payBtn.backgroundColor = GREEN_COLOR;
+            payBtn.frame = CGRectMake(CGRectGetWidth(mainScreenBounds) - 15 - 60, 10, 60, 30);
+            payBtn.layer.cornerRadius = 3;
+            payBtn.titleLabel.font = [UIFont systemFontOfSize:fontSize(13)];
+            payBtn.clipsToBounds = YES;
+            payBtn.tag = 10111;
+            [self addSubview:payBtn];
+            
+//            self.backgroundColor = [UIColor redColor];
+        }
+        
+//        NSString* description = [info description];
+        PayOrderCommand* aCommand = [[[PayOrderCommand alloc] init] autorelease];
+        aCommand.userData = info;
+        payBtn.command = aCommand;
+        
+    } else {
+        [[self viewWithTag:10111] removeFromSuperview];
+    }
+}
+
+- (void)btnClicked:(CommandButton*)sender
+{
+    [sender.command execute];
 }
 
 - (void)cancelOrder
