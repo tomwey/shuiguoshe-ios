@@ -17,7 +17,7 @@
         self.no = [jsonObj objectForKey:@"order_no"];
         self.state = [jsonObj objectForKey:@"state"];
         self.orderedAt = [jsonObj objectForKey:@"ordered_at"];
-        self.deliveredAt = [jsonObj objectForKey:@"delivered_at"];
+        self.deliveredAt = [jsonObj objectForKey:@"shipment_info"];
         
         self.totalPrice = [[jsonObj objectForKey:@"total_price"] floatValue];
         

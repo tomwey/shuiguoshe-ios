@@ -46,6 +46,22 @@
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+    
+    if ([url.host isEqualToString:@"safepay"]) {
+        
+        [[AlipaySDK defaultService] processOrderWithPaymentResult:url
+                                                  standbyCallback:^(NSDictionary *resultDic) {
+                                                      NSLog(@"payment result: %@", resultDic);
+                                                  }];
+        
+        [[AlipaySDK defaultService] processAuth_V2Result:url
+                                         standbyCallback:^(NSDictionary *resultDic) {
+                                             NSLog(@"auth result: %@", resultDic);
+                                         }];
+        
+        return YES;
+    }
+    
     return [[KKShareWeiXin sharedManager ] handleOpenURL:url] |
     [[KKShareQQZone sharedManager] handleOpenURL:url];
 }

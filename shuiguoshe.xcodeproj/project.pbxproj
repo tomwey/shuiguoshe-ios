@@ -165,6 +165,8 @@
 		97EADB871AAFD6EA00339642 /* ShipmentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EADB861AAFD6EA00339642 /* ShipmentInfo.m */; };
 		97EADB8A1AAFE24300339642 /* PaymentAndShipmentUpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EADB891AAFE24300339642 /* PaymentAndShipmentUpdateViewController.m */; };
 		97EADB8D1AAFE57B00339642 /* PaymentShipmentInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EADB8C1AAFE57B00339642 /* PaymentShipmentInfo.m */; };
+		97EADB901AB0243300339642 /* alipay_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97EADB8E1AB0243300339642 /* alipay_icon@2x.png */; };
+		97EADB911AB0243300339642 /* alipay_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97EADB8F1AB0243300339642 /* alipay_icon@3x.png */; };
 		990371A11AAB0CA3007A42EF /* NetworkErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 990371A01AAB0CA3007A42EF /* NetworkErrorView.m */; };
 		9921EAB91A8A4627006B57D1 /* LPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9921EAB81A8A4627006B57D1 /* LPLabel.m */; };
 		9921EABB1A8A5121006B57D1 /* btn_back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9921EABA1A8A5121006B57D1 /* btn_back@3x.png */; };
@@ -541,6 +543,8 @@
 		97EADB891AAFE24300339642 /* PaymentAndShipmentUpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentAndShipmentUpdateViewController.m; sourceTree = "<group>"; };
 		97EADB8B1AAFE57B00339642 /* PaymentShipmentInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentShipmentInfo.h; sourceTree = "<group>"; };
 		97EADB8C1AAFE57B00339642 /* PaymentShipmentInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentShipmentInfo.m; sourceTree = "<group>"; };
+		97EADB8E1AB0243300339642 /* alipay_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alipay_icon@2x.png"; sourceTree = "<group>"; };
+		97EADB8F1AB0243300339642 /* alipay_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alipay_icon@3x.png"; sourceTree = "<group>"; };
 		9903719F1AAB0CA3007A42EF /* NetworkErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkErrorView.h; sourceTree = "<group>"; };
 		990371A01AAB0CA3007A42EF /* NetworkErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkErrorView.m; sourceTree = "<group>"; };
 		9921EAB71A8A4627006B57D1 /* LPLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPLabel.h; sourceTree = "<group>"; };
@@ -678,6 +682,8 @@
 		973820FA1A884E7D00B54EEC /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				97EADB8E1AB0243300339642 /* alipay_icon@2x.png */,
+				97EADB8F1AB0243300339642 /* alipay_icon@3x.png */,
 				97D4F2611AAE9EA100510ADA /* location_icon@2x.png */,
 				97D4F2621AAE9EA100510ADA /* location_icon@3x.png */,
 				97D4F25A1AAE815100510ADA /* button_bg3@2x.png */,
@@ -1406,11 +1412,13 @@
 				99D9B1FF1AA48DD200DA8984 /* 60x60@3x.png in Resources */,
 				97D1E3A51A8B3BD100A8B3B6 /* btn_add_to_cart@2x.png in Resources */,
 				975201A51A89FC9D0070FE1F /* btn_phone@3x.png in Resources */,
+				97EADB911AB0243300339642 /* alipay_icon@3x.png in Resources */,
 				975201991A89EEB30070FE1F /* down_arrow@3x.png in Resources */,
 				975201921A89EDB40070FE1F /* logo_title@3x.png in Resources */,
 				977887331A8D9571003B5A5D /* btn_code@3x.png in Resources */,
 				99D9B1FC1AA48DD200DA8984 /* 57x57@2x.png in Resources */,
 				99D9B2031AA48E6300DA8984 /* 40x40.png in Resources */,
+				97EADB901AB0243300339642 /* alipay_icon@2x.png in Resources */,
 				9921EABD1A8A515E006B57D1 /* btn_back@2x.png in Resources */,
 				9752019D1A89EEE70070FE1F /* down_arrow@2x.png in Resources */,
 				9747F9FA1A8EF0EB008099D4 /* number_control_bg@2x.png in Resources */,

@@ -138,6 +138,9 @@ static inline UIWindow* AppWindow()
 #import "KKShareQQZone.h"
 #import "QQShareManager.h"
 
+#import "DataSigner.h"
+#import <AlipaySDK/AlipaySDK.h>
+
 #import "Banner.h"
 #import "Sale.h"
 #import "Item.h"
