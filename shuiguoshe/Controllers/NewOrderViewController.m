@@ -460,6 +460,8 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                 shipLabel2.tag = 1008;
                 [cell.contentView addSubview:shipLabel2];
                 
+                shipLabel2.adjustsFontSizeToFitWidth = YES;
+                
             }
             
             shipLabel2.text = [NSString stringWithFormat:@"%@%@配送",
@@ -488,7 +490,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
             // 商品金额
             UILabel* label = (UILabel *)[cell.contentView viewWithTag:1009];
             if ( !label ) {
-                label = createLabel(CGRectMake(leftMargin, 7, 60, 30),
+                label = createLabel(CGRectMake(leftMargin, 7, 100, 30),
                                     NSTextAlignmentLeft,
                                     COMMON_TEXT_COLOR,
                                     [UIFont boldSystemFontOfSize:fontSize(14)]);
@@ -500,7 +502,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
             //
             UILabel* priceLabel = (UILabel *)[cell.contentView viewWithTag:2001];
             if ( !priceLabel ) {
-                priceLabel = createLabel(CGRectMake(CGRectGetWidth(mainScreenBounds) - 40 - 160,
+                priceLabel = createLabel(CGRectMake(CGRectGetWidth(mainScreenBounds) - leftMargin - 160,
                                                     CGRectGetMinY(label.frame), 160, 30),
                                     NSTextAlignmentRight,
                                     GREEN_COLOR,
@@ -518,7 +520,7 @@ static int rows[] = { 1, 1, 1, 1, 1 };
                     dLabel = createLabel(CGRectMake(leftMargin, CGRectGetMaxY(priceLabel.frame), 160, 30),
                                          NSTextAlignmentLeft,
                                          COMMON_TEXT_COLOR,
-                                         [UIFont systemFontOfSize:14]);
+                                         [UIFont boldSystemFontOfSize:fontSize(14)]);
                     dLabel.tag = 2002;
                     [cell.contentView addSubview:dLabel];
                     dLabel.text = @"抵扣";

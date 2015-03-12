@@ -293,7 +293,7 @@
     UILabel* priceLabel = (UILabel *)[cell.contentView viewWithTag:1004];
     if ( !priceLabel ) {
         priceLabel = createLabel(CGRectMake(CGRectGetMinX(titleLabel.frame),
-                                            CGRectGetMinY(titleLabel.frame) + 32,
+                                            CGRectGetMinY(titleLabel.frame) + 34,
                                             200,
                                             30),
                                  NSTextAlignmentLeft,

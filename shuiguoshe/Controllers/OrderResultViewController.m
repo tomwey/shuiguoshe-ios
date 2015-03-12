@@ -66,6 +66,7 @@
                                       COMMON_TEXT_COLOR,
                                       [UIFont boldSystemFontOfSize:fontSize(14)]);
     orderLabel.text = @"订单号：";
+    orderLabel.adjustsFontSizeToFitWidth = YES;
     [orderInfoContainer addSubview:orderLabel];
     
     // 值
@@ -83,6 +84,7 @@
                                       COMMON_TEXT_COLOR,
                                       [UIFont boldSystemFontOfSize:fontSize(14)]);
     totalLabel.text = @"应付金额：";
+    totalLabel.adjustsFontSizeToFitWidth = YES;
     [orderInfoContainer addSubview:totalLabel];
     
     // 值
@@ -99,6 +101,7 @@
                                       COMMON_TEXT_COLOR,
                                       [UIFont boldSystemFontOfSize:fontSize(14)]);
     payLabel.text = @"支付方式：";
+    payLabel.adjustsFontSizeToFitWidth = YES;
     [orderInfoContainer addSubview:payLabel];
     
     UILabel* paymentLabel = createLabel(CGRectMake(CGRectGetMaxX(orderLabel.frame), CGRectGetMinY(payLabel.frame), 200, 30),
@@ -114,6 +117,7 @@
                                       COMMON_TEXT_COLOR,
                                       [UIFont boldSystemFontOfSize:fontSize(14)]);
     shipmentLabel.text = @"配送时间：";
+    shipmentLabel.adjustsFontSizeToFitWidth = YES;
     [orderInfoContainer addSubview:shipmentLabel];
     
     UILabel* shipmentLabel2 = createLabel(CGRectMake(CGRectGetMaxX(orderLabel.frame), CGRectGetMinY(shipmentLabel.frame), 200, 30),
@@ -121,6 +125,7 @@
                                         COMMON_TEXT_COLOR,
                                         [UIFont systemFontOfSize:fontSize(14)]);
     shipmentLabel2.text = [self.userData deliveredAt];
+    shipmentLabel2.adjustsFontSizeToFitWidth = YES;
     [orderInfoContainer addSubview:shipmentLabel2];
     
     

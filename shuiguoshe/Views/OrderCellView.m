@@ -180,7 +180,7 @@
             payBtn.backgroundColor = GREEN_COLOR;
             payBtn.frame = CGRectMake(CGRectGetWidth(mainScreenBounds) - 15 - 60, 10, 60, 30);
             payBtn.layer.cornerRadius = 3;
-            payBtn.titleLabel.font = [UIFont systemFontOfSize:fontSize(13)];
+            payBtn.titleLabel.font = [UIFont systemFontOfSize:10.5];
             payBtn.clipsToBounds = YES;
             payBtn.tag = 10111;
             [self addSubview:payBtn];
