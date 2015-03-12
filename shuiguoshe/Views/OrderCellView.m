@@ -162,6 +162,8 @@
         CGRect frame = stateLabel.frame;
         frame.origin.x = CGRectGetWidth(mainScreenBounds) - 15 - CGRectGetWidth(frame);
         stateLabel.frame = frame;
+        
+        [[_footerView viewWithTag:10011] removeFromSuperview];
     }
     
     if ( [info.stateName isEqualToString:@"no_pay"] ) {

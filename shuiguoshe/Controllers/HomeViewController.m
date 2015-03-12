@@ -80,7 +80,9 @@
     // 创建表视图
     [self.refreshControl removeFromSuperview];
     [self.tableView removeFromSuperview];
-    
+    if ( [[[UIDevice currentDevice] systemVersion] floatValue] < 7.0 ) {
+        _dtHeight = 0;
+    }
     self.tableView = [[[UITableView alloc] initWithFrame:
                        CGRectMake(0, _dtHeight,
                                   CGRectGetWidth(mainScreenBounds),

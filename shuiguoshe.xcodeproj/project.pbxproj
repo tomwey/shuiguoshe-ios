@@ -1350,6 +1350,7 @@
 				TargetAttributes = {
 					99C274441A4EDF3300898741 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = L76KY7YU4W;
 					};
 				};
 			};
@@ -1720,7 +1721,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: liu bo (L76KY7YU4W)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/shuiguoshe/Share/QQ/SDK",

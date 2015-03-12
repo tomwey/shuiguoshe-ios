@@ -90,6 +90,7 @@
 - (void)orderFinishPayment
 {
     _currentPage = 1;
+    [_dataSource removeAllObjects];
     [self loadOrders:_currentPage showLoading:YES];
 }
 
