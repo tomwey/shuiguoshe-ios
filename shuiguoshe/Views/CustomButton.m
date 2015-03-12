@@ -69,6 +69,7 @@
                                     [UIColor whiteColor],
                                     [UIFont boldSystemFontOfSize:fontSize(14)]);
         [self addSubview:_contentLabel];
+        _contentLabel.adjustsFontSizeToFitWidth = YES;
         
         UIButton* btn = createButton(nil, self, @selector(btnClicked));
         [self addSubview:btn];
