@@ -37,45 +37,73 @@
     
     
     // 旧密码
-    UILabel* oldPassword = createLabel(CGRectMake(15, 80, 80, 37),
+    UILabel* oldPassword = createLabel(CGRectMake(15, 80, 80, 30),
                                        NSTextAlignmentRight,
                                        COMMON_TEXT_COLOR,
                                        [UIFont systemFontOfSize:16]);
     [self.view addSubview:oldPassword];
     oldPassword.text = @"旧密码";
     
-    _oldTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(oldPassword.frame) + 10, CGRectGetMinY(oldPassword.frame), 180, 37)];
+    _oldTextField = [[UITextField alloc] initWithFrame:
+                     CGRectMake(CGRectGetMaxX(oldPassword.frame) + 10,
+                     CGRectGetMinY(oldPassword.frame),
+                     CGRectGetWidth(mainScreenBounds) - 15 * 2 - 80 - 10, 30)];
     [self.view addSubview:_oldTextField];
     [_oldTextField release];
     
+    _oldTextField.font = [UIFont systemFontOfSize:16];
+    
     _oldTextField.placeholder = @"输入旧密码";
     
+//    _oldTextField.layer.borderWidth = .5;
+//    _oldTextField.layer.borderColor = [RGB(207, 207, 207) CGColor];
+//    _oldTextField.layer.cornerRadius = 2;
+    
+    _oldTextField.borderStyle = UITextBorderStyleRoundedRect;
+    
     // 新密码
-    UILabel* newPassword = createLabel(CGRectMake(15, CGRectGetMaxY(oldPassword.frame),
-                                                  80, 37),
+    UILabel* newPassword = createLabel(CGRectMake(15, CGRectGetMaxY(oldPassword.frame) + 5,
+                                                  80, 30),
                                        NSTextAlignmentRight,
                                        COMMON_TEXT_COLOR,
                                        [UIFont systemFontOfSize:16]);
     [self.view addSubview:newPassword];
     newPassword.text = @"新密码";
     
-    _newTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(oldPassword.frame) + 10, CGRectGetMinY(newPassword.frame), 180, 37)];
+    _newTextField = [[UITextField alloc] initWithFrame:
+                     CGRectMake(CGRectGetMaxX(oldPassword.frame) + 10, CGRectGetMinY(newPassword.frame),
+                         CGRectGetWidth(_oldTextField.frame), 30)];
     [self.view addSubview:_newTextField];
     [_newTextField release];
+    _newTextField.font = [UIFont systemFontOfSize:16];
     
     _newTextField.placeholder = @"输入新密码";
     
+//    _newTextField.layer.borderWidth = .5;
+//    _newTextField.layer.borderColor = [RGB(207, 207, 207) CGColor];
+//    _newTextField.layer.cornerRadius = 2;
+    
+    _newTextField.borderStyle = UITextBorderStyleRoundedRect;
+    
     // 确认新密码
-    UILabel* confirmPassword = createLabel(CGRectMake(15, CGRectGetMaxY(newPassword.frame), 80, 37),
+    UILabel* confirmPassword = createLabel(CGRectMake(15, CGRectGetMaxY(newPassword.frame) + 5, 80, 30),
                                        NSTextAlignmentRight,
                                        COMMON_TEXT_COLOR,
                                        [UIFont systemFontOfSize:16]);
     [self.view addSubview:confirmPassword];
     confirmPassword.text = @"确认新密码";
     
-    _confirmTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(oldPassword.frame) + 10, CGRectGetMinY(confirmPassword.frame), 180, 37)];
+    _confirmTextField = [[UITextField alloc] initWithFrame:
+                         CGRectMake(CGRectGetMaxX(oldPassword.frame) + 10,
+                        CGRectGetMinY(confirmPassword.frame),
+                                    CGRectGetWidth(_oldTextField.frame), 30)];
     [self.view addSubview:_confirmTextField];
     [_confirmTextField release];
+    
+//    _confirmTextField.layer.borderWidth = .5;
+//    _confirmTextField.layer.borderColor = [RGB(207, 207, 207) CGColor];
+//    _newTextField.layer.cornerRadius = 2;
+    _confirmTextField.borderStyle = UITextBorderStyleRoundedRect;
     
     _confirmTextField.placeholder = @"确认新密码";
     

@@ -32,53 +32,61 @@
     
     self.title = @"新建收货信息";
     
-    UILabel* name = createLabel(CGRectMake(15, 70, 80,
-                                             37),
+    UILabel* name = createLabel(CGRectMake(15, 80 - NavigationBarAndStatusBarHeight(), 80,
+                                             30),
                                   NSTextAlignmentLeft,
                                   COMMON_TEXT_COLOR,
-                                  [UIFont systemFontOfSize:14]);
+                                  [UIFont systemFontOfSize:16]);
     [self.view addSubview:name];
     name.text = @"收货人姓名";
     
-    UILabel* mobile = createLabel(CGRectMake(15, CGRectGetMaxY(name.frame), 80,
-                                             37),
+    UILabel* mobile = createLabel(CGRectMake(15, CGRectGetMaxY(name.frame) + 5, 80,
+                                             30),
                                   NSTextAlignmentLeft,
                                   COMMON_TEXT_COLOR,
-                                  [UIFont systemFontOfSize:14]);
+                                  [UIFont systemFontOfSize:16]);
     [self.view addSubview:mobile];
     mobile.text = @"收货人手机";
     
-    UILabel* address = createLabel(CGRectMake(15, CGRectGetMaxY(mobile.frame), 80,
-                                             37),
+    UILabel* address = createLabel(CGRectMake(15, CGRectGetMaxY(mobile.frame) + 5, 80,
+                                             30),
                                   NSTextAlignmentLeft,
                                   COMMON_TEXT_COLOR,
-                                  [UIFont systemFontOfSize:14]);
+                                  [UIFont systemFontOfSize:16]);
     [self.view addSubview:address];
     address.text = @"收货人地址";
     
     // 收货人姓名
-    _nameField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(name.frame) + 5, CGRectGetMinY(name.frame), 200, 37)];
+    _nameField = [[UITextField alloc] initWithFrame:
+                  CGRectMake(CGRectGetMaxX(name.frame) + 5,
+                             CGRectGetMinY(name.frame),
+                             CGRectGetWidth(mainScreenBounds) - 15 * 2 - 85, 30)];
     _nameField.placeholder = @"输入收货人姓名";
     _nameField.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:_nameField];
     [_nameField release];
     
+    _nameField.borderStyle = UITextBorderStyleRoundedRect;
+    
     // 手机号
-    _mobileField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(mobile.frame) + 5, CGRectGetMinY(mobile.frame), 200, 37)];
+    _mobileField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(mobile.frame) + 5, CGRectGetMinY(mobile.frame),
+                                                                 CGRectGetWidth(_nameField.frame), 30)];
     _mobileField.placeholder = @"输入11位手机号";
     _mobileField.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:_mobileField];
     [_mobileField release];
     _mobileField.keyboardType = UIKeyboardTypeNumberPad;
     
+    _mobileField.borderStyle = UITextBorderStyleRoundedRect;
+    
     // 收货地址
     CGRect frame = address.frame;
     frame.origin.x = CGRectGetMaxX(frame) + 5;
-    frame.size.width = CGRectGetWidth(mainScreenBounds) - frame.origin.x - 10;
+    frame.size.width = CGRectGetWidth(_nameField.frame);
     _addressLabel = createLabel(frame,
                                 NSTextAlignmentLeft,
                                 RGB(207, 207, 207),
-                                [UIFont systemFontOfSize:14]);
+                                [UIFont systemFontOfSize:16]);
     _addressLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [self.view addSubview:_addressLabel];
     
@@ -90,9 +98,11 @@
     [self.view addSubview:addressField];
     [addressField release];
     
-    addressField.font = [UIFont systemFontOfSize:fontSize(14)];
+    addressField.font = [UIFont systemFontOfSize:16];
     
     addressField.placeholder = @"详细地址（可不填）";
+    
+    addressField.borderStyle = UITextBorderStyleRoundedRect;
     
     _addressField = addressField;
     

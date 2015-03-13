@@ -32,54 +32,50 @@
     
     [WXApi registerApp:kWechatAppID];
     
+    [self checkVersion];
+    
     return YES;
 }
 
-//- (void)checkVersion
-//{
-//    NSString *urlPath = [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@", appId];
-//    NSURL *url = [NSURL URLWithString:urlPath];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-//    [request setHTTPMethod:@"GET"];
-//    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
-//    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-//        if ([data length]>0 && !error ) {
-//            NSDictionary *appInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-//            NSDictionary *result = nil;
-//            if ([appInfo valueForKey:@"results"]) {
-//                NSArray *arrary = [appInfo valueForKey:@"results"];
-//                if (arrary && [arrary count]>0) {
-//                    result = [arrary objectAtIndex:0];
-//                }
-//            }
-//            
-//            if (result) {
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    NSString *versionsInAppStore = [result valueForKey:@"version"];
-//                    if (versionsInAppStore) {
-//                        if ([[NSBundle bundleVersion] compare:versionsInAppStore options:NSNumericSearch] == NSOrderedAscending) {
-//                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"新版本提示" message:[NSString stringWithFormat:@"当前有新的版本%@",versionsInAppStore] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"马上升级",nil];
-//                            [alert show];
-//                            [alert release];
-//                        }
-//                        else {
-//                            if (showMsg) {
-//                                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
-//                                                                                    message:@"当前应用已为最新版本。"
-//                                                                                   delegate:self
-//                                                                          cancelButtonTitle:@"好的"
-//                                                                          otherButtonTitles:nil];
-//                                [alertView show];
-//                                [alertView release];
-//                            }
-//                        }
-//                    }
-//                });
-//            }
-//        }
-//    }];
-//    [queue release];
-//}
+- (void)checkVersion
+{
+    NSString* appUrl = @"http://itunes.apple.com/lookup?id=974919575";
+    NSURLRequest* request = [NSURLRequest requestWithURL:
+                             [NSURL URLWithString:appUrl]];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response,
+                                               NSData *data,
+                                               NSError *connectionError)
+    {
+        if ( !connectionError ) {
+            NSDictionary *appInfo = [NSJSONSerialization JSONObjectWithData:data
+                                                                    options:NSJSONReadingAllowFragments error:nil];
+            if ( appInfo&& [appInfo objectForKey:@"results"] ) {
+                NSArray* results = [appInfo objectForKey:@"results"];
+                NSDictionary* result = [results firstObject];
+                if ( result ) {
+                    NSString* versionInAppStore = [result objectForKey:@"version"];
+                    NSString* localVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+                    
+                    if ( [versionInAppStore compare:localVersion
+                                            options:NSNumericSearch] == NSOrderedDescending ) {
+                        [ModalAlert showWithTitle:@"新版本提示"
+                                          message:[NSString stringWithFormat:@"当前有新的版本%@",versionInAppStore]
+                                     cancelButton:@"不了"
+                                     otherButtons:@[@"马上升级"]
+                                           result:^(NSUInteger buttonIndex) {
+                                               if ( buttonIndex == 1 ) {
+                                                   [[UIApplication sharedApplication] openURL:
+                                                    [NSURL URLWithString:@"https://itunes.apple.com/app/id974919575"]];
+                                               }
+                                           }];
+                    }
+                }
+            }
+        }
+    }];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -128,6 +124,8 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    [self checkVersion];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

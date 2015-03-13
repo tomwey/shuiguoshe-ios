@@ -83,10 +83,10 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 4;
 }
 
-static int rows[] = { 2, 3, 3 };
+static int rows[] = { 2, 3, 2,1 };
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return rows[section];
@@ -118,6 +118,15 @@ static int rows[] = { 2, 3, 3 };
             break;
         case 2:
             [self addContentForSectionThree:cell indexPath:indexPath];
+            break;
+        case 3:
+        {
+            cell.textLabel.text = @"退出登录";
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+            cell.textLabel.textColor = [UIColor redColor];
+            
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        };
             break;
             
         default:
@@ -196,7 +205,7 @@ static NSString* label1s[] = { @"我的积分", @"我的收藏", @"有话要说"
     cell.textLabel.text = label1s[indexPath.row];
 }
 
-static NSString* label2s[] = { @"收货信息管理", @"修改密码", @"退出登录" };
+static NSString* label2s[] = { @"收货信息管理", @"修改密码" };
 - (void)addContentForSectionThree:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath
 {
     cell.textLabel.text = label2s[indexPath.row];
@@ -246,22 +255,6 @@ static NSString* controllers[] = {@"ScoreListViewController", @"LikeListViewCont
         {
             if ( indexPath.row == 2 ) {
                 
-                [ModalAlert showWithTitle:@"确定退出登录吗？"
-                                  message:nil
-                             cancelButton:nil
-                             otherButtons:@[@"确定", @"取消"]
-                                   result:^(NSUInteger buttonIndex) {
-                                       if ( buttonIndex == 0 ) {
-                                           [[UserService sharedService] logout:^(BOOL succeed, NSString *errorMsg) {
-                                               if ( succeed ) {
-                                                   [self dismissViewControllerAnimated:YES completion:nil];
-                                               } else {
-                                                   [Toast showText:errorMsg];
-                                               }
-                                           }];
-                                       }
-                                   }];
-                
             } else if ( indexPath.row == 0 ) {
                 ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePush from:self toControllerName:@"DeliverInfoListViewController"]];
                 
@@ -275,6 +268,25 @@ static NSString* controllers[] = {@"ScoreListViewController", @"LikeListViewCont
                 ForwardCommand* aCommand = [ForwardCommand buildCommandWithForward:[Forward buildForwardWithType:ForwardTypePush from:self toControllerName:@"UpdatePasswordViewController"]];
                 [aCommand execute];
             }
+        }
+            break;
+        case 3:
+        {
+            [ModalAlert showWithTitle:@"确定退出登录吗？"
+                              message:nil
+                         cancelButton:nil
+                         otherButtons:@[@"确定", @"取消"]
+                               result:^(NSUInteger buttonIndex) {
+                                   if ( buttonIndex == 0 ) {
+                                       [[UserService sharedService] logout:^(BOOL succeed, NSString *errorMsg) {
+                                           if ( succeed ) {
+                                               [self dismissViewControllerAnimated:YES completion:nil];
+                                           } else {
+                                               [Toast showText:errorMsg];
+                                           }
+                                       }];
+                                   }
+                               }];
         }
             break;
             

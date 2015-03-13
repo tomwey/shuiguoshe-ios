@@ -40,7 +40,7 @@
         
         _avatarView.bounds = CGRectMake(0, 0, 89 * factor, 89 * factor);
         _avatarView.layer.cornerRadius = CGRectGetWidth(_avatarView.bounds) * 0.5;
-        _avatarView.layer.borderWidth = 5;
+        _avatarView.layer.borderWidth = 2;
         _avatarView.layer.borderColor = [[UIColor whiteColor] CGColor];
         _avatarView.clipsToBounds = YES;
         

@@ -26,12 +26,16 @@
     
     self.title = @"我有话说";
     
-    UITextField* titleField = [[UITextField alloc] initWithFrame:CGRectMake(15, 80, CGRectGetWidth(mainScreenBounds) - 30,
-                                                                            37)];
+    UITextField* titleField = [[UITextField alloc] initWithFrame:
+                               CGRectMake(15, 80,
+                                          CGRectGetWidth(mainScreenBounds) - 30,
+                                                                            30)];
     [self.view addSubview:titleField];
     [titleField release];
     
-    titleField.font = [UIFont systemFontOfSize:14];
+    titleField.borderStyle = UITextBorderStyleRoundedRect;
+    
+    titleField.font = [UIFont systemFontOfSize:16];
     titleField.clearButtonMode = UITextFieldViewModeWhileEditing;
     titleField.placeholder = @"输入标题，必须";
     
@@ -39,8 +43,8 @@
     
     // 内容
     CGRect frame = titleField.frame;
-    frame.origin.y = CGRectGetMaxY(frame);
-    frame.origin.x = 12;
+    frame.origin.y = CGRectGetMaxY(frame) + 6;
+//    frame.origin.x = 12;
     frame.size.height = 100;
     
     UITextView* bodyView = [[UITextView alloc] initWithFrame:frame];
@@ -48,19 +52,24 @@
     [self.view addSubview:bodyView];
     [bodyView release];
     
+    bodyView.layer.cornerRadius = 5;
+    bodyView.layer.borderColor = [RGB(224, 224, 224) CGColor];
+    bodyView.layer.borderWidth = 1.0;
+    bodyView.layer.masksToBounds = YES;
+    
     _bodyView = bodyView;
     
-    bodyView.font = [UIFont systemFontOfSize:14];
+    bodyView.font = [UIFont systemFontOfSize:16];
 //    bodyView.text = @"输入内容...";
     
     frame = titleField.frame;
-    frame.origin.y = CGRectGetMaxY(frame) - 3;
-    frame.origin.x = 15;
+    frame.origin.y = CGRectGetMaxY(frame) + 8;
+    frame.origin.x = 22;
     
     _tipLabel = createLabel(frame,
                                       NSTextAlignmentLeft,
                                       RGB(207, 207, 207),
-                                      [UIFont boldSystemFontOfSize:14]);
+                                      [UIFont systemFontOfSize:16]);
     _tipLabel.text = @"输入内容，必须";
     [self.view addSubview:_tipLabel];
     
