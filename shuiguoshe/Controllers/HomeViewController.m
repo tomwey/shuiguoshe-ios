@@ -63,6 +63,15 @@
                                                  name:kAreaDidSelectNotification2Home
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadTable)
+                                                 name:@"kReloadDataNotification"
+                                               object:nil];
+    [self loadData:YES];
+}
+
+- (void)reloadTable
+{
     [self loadData:YES];
 }
 
@@ -112,8 +121,9 @@
 
 - (void)loadData:(BOOL)yesOrNo
 {
+    NSString* uri = [NSString stringWithFormat:@"/sections?area_id=%ld", [[[DataService sharedService] areaForLocal] oid]];
     [[DataService sharedService] loadEntityForClass:@"Section"
-                                                URI:[NSString stringWithFormat:@"/sections?area_id=%ld", [[[DataService sharedService] areaForLocal] oid]]
+                                                URI:uri
                                          completion:^(id result, BOOL succeed) {
                                              [_refreshControl endRefreshing];
                                              
@@ -124,12 +134,19 @@
                                                  self.tableView.dataSource = self;
                                                  self.tableView.delegate   = self;
                                                  
+                                                 [[self.view viewWithTag:10121] removeFromSuperview];
+                                                 
                                                  [self.tableView reloadData];
                                              } else {
-                                                 if ( result ) {
-                                                     
-                                                 } else {
-                                                     
+                                                 // 显示错误提示页面
+                                                 if ( [[DataService sharedService] canShowErrorViewForURI:uri] ) {
+                                                     RequestErrorView* errorView = (RequestErrorView*) [self.view viewWithTag:10121];
+                                                     if ( !errorView ) {
+                                                         errorView = [[[RequestErrorView alloc] init] autorelease];
+                                                         [self.view addSubview:errorView];
+                                                         errorView.tag = 10121;
+                                                         [self.view bringSubviewToFront:errorView];
+                                                     }
                                                  }
                                              }
                                          } showLoading:yesOrNo];

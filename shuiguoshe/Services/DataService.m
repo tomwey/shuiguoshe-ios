@@ -12,6 +12,7 @@
 {
     NSMutableDictionary* _cacheDict;
     BOOL _loading;
+    NSMutableDictionary* _firstLoadStates;
 }
 
 + (DataService *)sharedService
@@ -184,9 +185,16 @@
                                               if ( completion ) {
                                                   completion([self handleResponse:result.data forClass:clz], YES);
                                               }
+                                              
+                                              if ( !_firstLoadStates ) {
+                                                  _firstLoadStates = [[NSMutableDictionary alloc] init];
+                                              }
+                                              
+                                              [_firstLoadStates setObject:@(YES) forKey:uri];
+                                              
                                           } else {
                                               if ( completion ) {
-                                                  completion(nil, NO);
+                                                  completion(nil, YES);
                                               }
                                           }
                                       } else {
@@ -240,6 +248,11 @@
                  completion(nil, NO);
              }
          }];*/
+}
+
+- (BOOL)canShowErrorViewForURI:(NSString *)uri
+{
+    return ![[_firstLoadStates objectForKey:uri] boolValue];
 }
 
 - (void)loadEntityForClass:(NSString *)clz

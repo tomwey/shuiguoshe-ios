@@ -34,6 +34,8 @@
 - (Area *)areaForLocal;
 - (void)saveAreaToLocal:(Area *)area;
 
+- (BOOL)canShowErrorViewForURI:(NSString*)uri;
+
 @end
 
 typedef NS_ENUM(NSInteger, NetworkResponseResultType) {

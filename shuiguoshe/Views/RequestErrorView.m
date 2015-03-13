@@ -49,6 +49,7 @@
 
 - (void)tap
 {
+    [self removeFromSuperview];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"kReloadDataNotification"
                                                         object:self.requestURI];
 }
