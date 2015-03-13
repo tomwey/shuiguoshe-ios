@@ -59,18 +59,18 @@
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url
                                                   standbyCallback:^(NSDictionary *resultDic)
         {
-//            NSLog(@"payment result: %@", resultDic);
+            DLog(@"payment result: %@", resultDic);
             
             if ( [[DataVerifierManager sharedManager] verifyResult:resultDic] ) {
-                NSLog(@"验证成功");
+                DLog(@"验证成功");
             } else {
-                NSLog(@"验证失败");
+                DLog(@"验证失败");
             }
         }];
         
         [[AlipaySDK defaultService] processAuth_V2Result:url
                                          standbyCallback:^(NSDictionary *resultDic) {
-//                                             NSLog(@"auth result: %@", resultDic);
+                                             DLog(@"auth result: %@", resultDic);
                                          }];
         
         return YES;

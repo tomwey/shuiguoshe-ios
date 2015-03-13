@@ -141,9 +141,7 @@
 
 - (void)dealloc
 {
-#if DEBUG
-    NSLog(@"############# %@ dealloc #############", NSStringFromClass([self class]));
-#endif
+    DLog(@"############# %@ dealloc #############", NSStringFromClass([self class]));
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.userData = nil;
     [super dealloc];

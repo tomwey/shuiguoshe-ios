@@ -215,7 +215,6 @@
 - (void)tencentDidNotLogin:(BOOL)cancelled{
     if (cancelled)
     {
-        NSLog(@"用户取消登录");
         [Toast showText:@"用户取消登录"];
     }
     else
@@ -229,7 +228,7 @@
  * 登录时网络有问题的回调
  */
 - (void)tencentDidNotNetWork{
-    NSLog(@"无网络连接，请设置网络");
+    DLog(@"无网络连接，请设置网络");
 }
 
 - (BOOL)getUserInfo{
@@ -559,11 +558,11 @@
 		}
         [userInfo release];userInfo = nil;
         userInfo = [response.jsonResponse retain];
-        NSLog(@"【QQ空间】获取用户信息成功！");
+        DLog(@"【QQ空间】获取用户信息成功！");
 	}
 	else
     {
-        NSLog(@"【QQ空间】获取用户信息失败！");
+        DLog(@"【QQ空间】获取用户信息失败！");
 //		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"获取用户信息失败" message:[NSString stringWithFormat:@"%@", response.errorMsg]
 //							  
 //													   delegate:self cancelButtonTitle:@"我知道啦" otherButtonTitles: nil];
@@ -583,7 +582,7 @@
 			[str appendString: [NSString stringWithFormat:@"%@:%@\n",key,[response.jsonResponse objectForKey:key]]];
 		}
         
-        NSLog(@"errorMsg: %@", str);
+        DLog(@"errorMsg: %@", str);
         
         [Toast showText:@"分享到QQ空间成功"];
 //        [[TKAlertCenter defaultCenter] postAlertWithMessage:@"分享到QQ空间成功"];

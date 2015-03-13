@@ -12,6 +12,19 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+// 自定义日志输出方法
+#ifdef DEBUG
+#define DLog(s, ...) do { \
+                            NSLog(@"<%@:(%d)> %@", \
+                                [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, \
+                                [NSString stringWithFormat: (s), ##__VA_ARGS__]); \
+                        } while(0)
+#else
+
+#define DLog(s, ...) do {} while(0)
+
+#endif
+
 #define RGB(r,g,b)     [UIColor colorWithRed:(r)/255.0 \
                                        green:(g)/255.0 \
                                         blue:(b)/255.0 \

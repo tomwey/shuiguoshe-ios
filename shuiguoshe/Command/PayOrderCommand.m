@@ -14,9 +14,8 @@
 - (void)execute:(void (^)(id))result
 {
     NSString* description = [self.userData description];
-#if DEBUG
-    NSLog(@"order description: %@", description);
-#endif
+
+    DLog(@"order description: %@", description);
     
     id<DataSigner> signer = CreateRSADataSigner([self.userData privateKey]);
     NSString *signedString = [signer signString:description];
@@ -28,14 +27,14 @@
                        description, signedString, @"RSA"];
         
         [[AlipaySDK defaultService] payOrder:orderString fromScheme:@"alipay-shuiguoshe" callback:^(NSDictionary *resultDic) {
-            NSLog(@"reslut = %@",resultDic);
+            DLog(@"reslut = %@",resultDic);
             
             [[DataVerifierManager sharedManager] saveAlipayPublicKey:[self.userData publicKey]];
             
             if ( [[DataVerifierManager sharedManager] verifyResult:resultDic] ) {
-                NSLog(@"验证成功");
+                DLog(@"验证成功");
             } else {
-                NSLog(@"验证失败");
+                DLog(@"验证失败");
             }
             
         }];

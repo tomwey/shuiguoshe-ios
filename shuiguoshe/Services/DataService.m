@@ -97,9 +97,9 @@
     NSString* apiHost = kAPIHost;
 
     NSString* url = [NSString stringWithFormat:@"%@/%@", apiHost, uri];
-#if DEBUG
-    NSLog(@"url: %@", url);
-#endif
+    
+    DLog(@"请求URL: %@", url);
+    
     return url;
 }
 
@@ -117,9 +117,9 @@
     
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     [manager POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-#if DEBUG
-        NSLog(@"uri: %@, resp: %@", uri, responseObject);
-#endif
+        
+        DLog(@"成功返回: %@", responseObject);
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             [self finishRequest];
             if ( completion ) {
@@ -136,9 +136,9 @@
             }
         });
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-#if DEBUG
-        NSLog(@"post error: %@", error);
-#endif
+
+        DLog(@"请求错误: %@", error);
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             [self finishRequest];
             if ( completion ) {
@@ -196,10 +196,12 @@
              });
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"Load Entity Error: %@", error);
+             DLog(@"Load Entity Error: %@", error);
              [self finishRequest];
+             
+             [Toast showText:@"呃，系统出错了"];
+             
              if ( completion ) {
-//                 NSDictionary* result = @{ @"code": @"500", @"message": @"呃，系统出错了" };
                  completion(nil, NO);
              }
          }];
@@ -234,7 +236,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     
 }
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//              NSLog(@"upload success");
               [self finishRequest];
               
               NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
@@ -251,7 +252,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
               }
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//              NSLog(@"upload error");
               [self finishRequest];
               
               NSInteger code = error.code;

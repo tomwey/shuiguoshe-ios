@@ -151,7 +151,7 @@
     }
     else
     {
-        NSLog(@"登录不成功 没有获取accesstoken");
+//        NSLog(@"登录不成功 没有获取accesstoken");
         [Toast showText:@"登录失败，没有获取AccessToken"];
     }
 }
@@ -163,10 +163,10 @@
 - (void)tencentDidNotLogin:(BOOL)cancelled
 {
     if ( cancelled ) {
-        NSLog(@"取消登录");
+//        NSLog(@"取消登录");
         [Toast showText:@"取消登录"];
     } else {
-        NSLog(@"登录失败");
+//        NSLog(@"登录失败");
         [Toast showText:@"登录失败"];
     }
 }
@@ -176,7 +176,7 @@
  */
 - (void)tencentDidNotNetWork
 {
-    NSLog(@"无网络连接，请设置网络");
+//    NSLog(@"无网络连接，请设置网络");
     [Toast showText:@"无网络连接，请设置网络"];
 }
 
