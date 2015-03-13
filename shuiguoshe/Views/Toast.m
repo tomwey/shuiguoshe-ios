@@ -67,7 +67,7 @@
     [UIView animateWithDuration:.3 animations:^{
         self.alpha = 1.0;
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:.5 delay:.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [UIView animateWithDuration:.5 delay:1.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             self.alpha = 0.0;
         } completion:^(BOOL finished) {
             [self removeFromSuperview];

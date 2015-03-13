@@ -50,6 +50,9 @@
 // QQ分享
 #define kQQOpenAppId @"1104304977"
 
+// API URI
+#define kHomeAPIURI @"/sections"
+
 static inline CGFloat NavigationBarAndStatusBarHeight()
 {
     if ( [[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0 ) {
@@ -222,6 +225,7 @@ static inline UIWindow* AppWindow()
 #import "QQShareView.h"
 #import "HomeTitleView.h"
 #import "RadioButton.h"
+#import "RequestErrorView.h"
 
 #import "BaseViewController.h"
 #import "HomeViewController.h"

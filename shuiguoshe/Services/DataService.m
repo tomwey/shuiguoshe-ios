@@ -199,7 +199,15 @@
              DLog(@"Load Entity Error: %@", error);
              [self finishRequest];
              
-             [Toast showText:@"呃，系统出错了"];
+             AFNetworkReachabilityStatus status = [[AFNetworkReachabilityManager sharedManager] networkReachabilityStatus];
+             
+             if ( status == AFNetworkReachabilityStatusNotReachable ) {
+                 [Toast showText:@"无网络连接，请检查设置"];
+             } else {
+                 [Toast showText:@"呃，系统出错了"];
+             }
+//             [[NSNotificationCenter defaultCenter] postNotificationName:@"kLoadEntityErrorNotification"
+//                                                                 object:uri];
              
              if ( completion ) {
                  completion(nil, NO);

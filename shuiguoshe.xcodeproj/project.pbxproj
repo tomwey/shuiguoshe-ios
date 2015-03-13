@@ -168,6 +168,8 @@
 		97EADB901AB0243300339642 /* alipay_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97EADB8E1AB0243300339642 /* alipay_icon@2x.png */; };
 		97EADB911AB0243300339642 /* alipay_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 97EADB8F1AB0243300339642 /* alipay_icon@3x.png */; };
 		97EADB941AB036AA00339642 /* PayOrderCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 97EADB931AB036AA00339642 /* PayOrderCommand.m */; };
+		97F387DC1AB28D0A007B98FE /* RequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F387DB1AB28D0A007B98FE /* RequestManager.m */; };
+		97F387DF1AB2A1D3007B98FE /* RequestErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F387DE1AB2A1D3007B98FE /* RequestErrorView.m */; };
 		990371A11AAB0CA3007A42EF /* NetworkErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 990371A01AAB0CA3007A42EF /* NetworkErrorView.m */; };
 		9915651F1AB07E3B003A19CB /* DataVerifierManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9915651E1AB07E3B003A19CB /* DataVerifierManager.m */; };
 		9921EAB91A8A4627006B57D1 /* LPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9921EAB81A8A4627006B57D1 /* LPLabel.m */; };
@@ -549,6 +551,10 @@
 		97EADB8F1AB0243300339642 /* alipay_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alipay_icon@3x.png"; sourceTree = "<group>"; };
 		97EADB921AB036AA00339642 /* PayOrderCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayOrderCommand.h; sourceTree = "<group>"; };
 		97EADB931AB036AA00339642 /* PayOrderCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayOrderCommand.m; sourceTree = "<group>"; };
+		97F387DA1AB28D0A007B98FE /* RequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestManager.h; sourceTree = "<group>"; };
+		97F387DB1AB28D0A007B98FE /* RequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestManager.m; sourceTree = "<group>"; };
+		97F387DD1AB2A1D3007B98FE /* RequestErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestErrorView.h; sourceTree = "<group>"; };
+		97F387DE1AB2A1D3007B98FE /* RequestErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestErrorView.m; sourceTree = "<group>"; };
 		9903719F1AAB0CA3007A42EF /* NetworkErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkErrorView.h; sourceTree = "<group>"; };
 		990371A01AAB0CA3007A42EF /* NetworkErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkErrorView.m; sourceTree = "<group>"; };
 		9915651D1AB07E3B003A19CB /* DataVerifierManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataVerifierManager.h; sourceTree = "<group>"; };
@@ -1034,6 +1040,23 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
+		97F387D81AB28CCB007B98FE /* CommonSDK */ = {
+			isa = PBXGroup;
+			children = (
+				97F387D91AB28CE3007B98FE /* Network */,
+			);
+			path = CommonSDK;
+			sourceTree = "<group>";
+		};
+		97F387D91AB28CE3007B98FE /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				97F387DA1AB28D0A007B98FE /* RequestManager.h */,
+				97F387DB1AB28D0A007B98FE /* RequestManager.m */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		99A7BD7C1A519DBD0092EA89 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1131,6 +1154,7 @@
 		99C274471A4EDF3300898741 /* shuiguoshe */ = {
 			isa = PBXGroup;
 			children = (
+				97F387D81AB28CCB007B98FE /* CommonSDK */,
 				97EADB131AAFD2A300339642 /* AlipaySDK */,
 				979ECA371AA6ACD200E52B10 /* Share */,
 				976EF3241A8C993700A94B15 /* GTMBase64 */,
@@ -1247,6 +1271,8 @@
 				990371A01AAB0CA3007A42EF /* NetworkErrorView.m */,
 				97D4F25C1AAE8DDD00510ADA /* RadioButton.h */,
 				97D4F25D1AAE8DDD00510ADA /* RadioButton.m */,
+				97F387DD1AB2A1D3007B98FE /* RequestErrorView.h */,
+				97F387DE1AB2A1D3007B98FE /* RequestErrorView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1473,6 +1499,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97F387DF1AB2A1D3007B98FE /* RequestErrorView.m in Sources */,
 				975201701A89A0AF0070FE1F /* User.m in Sources */,
 				979D64261AA164F50010F78E /* OrderInfo.m in Sources */,
 				99C274D81A4EEE1900898741 /* AFSecurityPolicy.m in Sources */,
@@ -1488,6 +1515,7 @@
 				97EADB771AAFD2FE00339642 /* DataSigner.m in Sources */,
 				99C2747E1A4EE15300898741 /* CartViewController.m in Sources */,
 				99C274D71A4EEE1900898741 /* AFNetworkReachabilityManager.m in Sources */,
+				97F387DC1AB28D0A007B98FE /* RequestManager.m in Sources */,
 				979ECA301AA6A7BE00E52B10 /* Share2WeiXinCommand.m in Sources */,
 				99C274881A4EE2CF00898741 /* BaseViewController.m in Sources */,
 				99928FEF1AA0BB52003EB739 /* DeliverInfoFormViewController.m in Sources */,
