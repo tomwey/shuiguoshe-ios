@@ -30,9 +30,9 @@
 - (NSString *)token
 {
     NSString* token = [[NSUserDefaults standardUserDefaults] objectForKey:@"token"];
-    if ( !token ) return nil;
+    if ( token.length == 0 ) return nil;
     
-    return [[[NSString alloc] initWithData:[GTMBase64 decodeString:token] encoding:NSUTF8StringEncoding] autorelease];
+    return token; //[[[NSString alloc] initWithData:[GTMBase64 decodeString:token] encoding:NSUTF8StringEncoding] autorelease];
 }
 
 - (void)saveToken:(NSString *)token
@@ -41,9 +41,7 @@
         [[NSUserDefaults standardUserDefaults] setObject:@""
                                                   forKey:@"token"];
     } else {
-        NSData* data = [GTMBase64 encodeData:[token dataUsingEncoding:NSUTF8StringEncoding]];
-        [[NSUserDefaults standardUserDefaults] setObject:[[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease]
-                                                  forKey:@"token"];
+        [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"token"];
     }
     
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -51,9 +49,12 @@
 
 - (void)login:(User *)aUser completion:( void (^)(BOOL succeed, NSString* errorMsg) )completion
 {
+    NSString* password = aUser.password;
+    password = [[password dataUsingEncoding:NSUTF8StringEncoding] base64Encoding];
+    
     [[DataService sharedService] post:@"/account/login"
                                params:@{ @"login": aUser.name,
-                                         @"password": aUser.password }
+                                         @"password": password }
                            completion:^(NetworkResponse* resp)
     {
         if ( !resp.requestSuccess ) {
@@ -125,8 +126,11 @@
 
 - (void)signup:(User *)aUser completion:( void (^)(BOOL succeed, NSString* errorMsg) )completion
 {
+    NSString* password = aUser.password;
+    password = [[password dataUsingEncoding:NSUTF8StringEncoding] base64Encoding];
+    
     [[DataService sharedService] post:@"/account/sign_up"
-                               params:@{ @"mobile": aUser.name, @"code": aUser.code, @"password": aUser.password }
+                               params:@{ @"mobile": aUser.name, @"code": aUser.code, @"password": password }
                            completion:^(NetworkResponse* resp) {
                                if ( !resp.requestSuccess ) {
                                    [Toast showText:@"呃，系统出错了"];
@@ -151,8 +155,11 @@
 
 - (void)forgetPassword:(User *)aUser completion:( void (^)(BOOL succeed, NSString* errorMsg) )completion
 {
+    NSString* password = aUser.password;
+    password = [[password dataUsingEncoding:NSUTF8StringEncoding] base64Encoding];
+    
     [[DataService sharedService] post:@"/account/password/reset"
-                               params:@{ @"mobile": aUser.name, @"code": aUser.code, @"password": aUser.password }
+                               params:@{ @"mobile": aUser.name, @"code": aUser.code, @"password": password }
                            completion:^(NetworkResponse* resp) {
                                if ( !resp.requestSuccess ) {
                                    [Toast showText:@"呃，系统出错了"];

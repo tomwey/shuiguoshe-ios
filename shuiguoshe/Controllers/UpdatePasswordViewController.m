@@ -122,6 +122,10 @@
         return;
     }
     
+    // 加密密码
+    oldPassword = [[oldPassword dataUsingEncoding:NSUTF8StringEncoding] base64Encoding];
+    newPassword = [[newPassword dataUsingEncoding:NSUTF8StringEncoding] base64Encoding];
+    
     [[DataService sharedService] post:@"/account/password/update"
                                params:@{ @"token":[[UserService sharedService] token],
                                          @"old_password": oldPassword,
