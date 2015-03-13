@@ -83,7 +83,16 @@ static NSString * const kServerError = @"呃，系统出错了";
                  if ( [[AFNetworkReachabilityManager sharedManager] networkReachabilityStatus] == AFNetworkReachabilityStatusNotReachable ) {
                      [Toast showText:kNetworkNotReachable];
                  } else {
-                     [self checkNetwork];
+                     [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:
+                                                               [NSURL URLWithString:@"http://www.baidu.com"]]
+                                                        queue:[NSOperationQueue mainQueue]
+                                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                                                if ( connectionError ) {
+                                                    [Toast showText:kNetworkNotReachable];
+                                                } else {
+                                                    [Toast showText:kServerError];
+                                                }
+                                            }];
                  }
                  
                  if ( resultBlock ) {
@@ -118,8 +127,6 @@ static NSString * const kServerError = @"呃，系统出错了";
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
                                if ( connectionError ) {
                                    [Toast showText:kNetworkNotReachable];
-                               } else {
-                                   [Toast showText:kServerError];
                                }
                            }];
     

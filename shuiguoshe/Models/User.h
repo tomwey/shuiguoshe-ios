@@ -21,8 +21,8 @@
 @property (nonatomic, assign) NSUInteger score;
 @property (nonatomic, copy) NSString* avatarUrl;
 
+@property (nonatomic, assign) NSUInteger noPayCount;
 @property (nonatomic, assign) NSUInteger deliveringCount;
-@property (nonatomic, assign) NSUInteger completedCount;
 @property (nonatomic, assign) NSUInteger canceledCount;
 
 @property (nonatomic, assign) NSInteger currentDeliverInfoId;

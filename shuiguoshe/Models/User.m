@@ -33,8 +33,8 @@
         self.avatarUrl = [jsonObj objectForKey:@"avatar_url"];
         self.score = [[jsonObj objectForKey:@"score"] integerValue];
         
+        self.noPayCount = [[jsonObj objectForKey:@"no_pay_orders_count"] integerValue];
         self.deliveringCount = [[jsonObj objectForKey:@"delivering_orders_count"] integerValue];
-        self.completedCount = [[jsonObj objectForKey:@"completed_orders_count"] integerValue];
         self.canceledCount = [[jsonObj objectForKey:@"canceled_orders_count"] integerValue];
         
         self.currentDeliverInfoId = [[jsonObj objectForKey:@"current_deliver_info_id"] integerValue];

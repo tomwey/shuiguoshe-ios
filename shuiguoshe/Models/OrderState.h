@@ -10,6 +10,7 @@
 
 typedef NS_ENUM(NSUInteger, OrderStateType) {
     OrderStateTypeDelivering,
+    OrderStateTypeNoPay,
     OrderStateTypeDone,
     OrderStateTypeCanceled,
 };

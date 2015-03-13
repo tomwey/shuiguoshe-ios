@@ -47,10 +47,10 @@
             self.filter = @"delivering";
         }
             break;
-        case OrderStateTypeDone:
+        case OrderStateTypeNoPay:
         {
-            self.title = @"已完成订单";
-            self.filter = @"completed";
+            self.title = @"待付款订单";
+            self.filter = @"no_pay";
         }
             break;
             
