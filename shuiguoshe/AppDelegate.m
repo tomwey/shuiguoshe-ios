@@ -20,7 +20,8 @@
     // Override point for customization after application launch.
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
-    NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024 diskCapacity:20 * 1024 * 1024 diskPath:@"shuiguoshe"];
+    NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024
+                                                         diskCapacity:30 * 1024 * 1024 diskPath:@"Images"];
     [NSURLCache setSharedURLCache:URLCache];
     
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
