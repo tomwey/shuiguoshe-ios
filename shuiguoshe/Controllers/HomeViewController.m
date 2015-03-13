@@ -64,14 +64,15 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reloadTable)
+                                             selector:@selector(reloadTable:)
                                                  name:@"kReloadDataNotification"
                                                object:nil];
     [self loadData:YES];
 }
 
-- (void)reloadTable
+- (void)reloadTable:(NSNotification *)noti
 {
+    
     [self loadData:YES];
 }
 
