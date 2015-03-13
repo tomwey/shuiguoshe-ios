@@ -195,6 +195,8 @@ static inline UIWindow* AppWindow()
 
 #import "CoordinatorController.h"
 
+#import "RequestManager.h"
+
 #import "DataService.h"
 #import "UserService.h"
 #import "CartService.h"

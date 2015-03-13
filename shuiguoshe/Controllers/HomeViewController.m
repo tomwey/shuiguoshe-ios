@@ -56,6 +56,8 @@
     
     [self initTable];
     
+    [RequestManager sharedInstance];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateTable)
                                                  name:kAreaDidSelectNotification2Home

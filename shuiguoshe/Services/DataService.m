@@ -173,6 +173,33 @@
         [MBProgressHUD showHUDAddedTo:view animated:YES];
     }
     
+    [[RequestManager sharedInstance] GET:url
+                                  params:nil
+                                  result:^(RequestResult *result) {
+                                      
+                                      [self finishRequest];
+                                      
+                                      if ( result ) {
+                                          if ( result.statusCode == 0 ) {
+                                              if ( completion ) {
+                                                  completion([self handleResponse:result.data forClass:clz], YES);
+                                              }
+                                          } else {
+                                              if ( completion ) {
+                                                  completion(nil, NO);
+                                              }
+                                          }
+                                      } else {
+                                          // 请求出错
+                                          
+                                          if ( completion ) {
+                                              completion(nil, NO);
+                                          }
+                                      }
+                                      
+                                  }];
+    
+    /*
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager manager];
     [manager GET:url parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -212,7 +239,7 @@
              if ( completion ) {
                  completion(nil, NO);
              }
-         }];
+         }];*/
 }
 
 - (void)loadEntityForClass:(NSString *)clz
@@ -280,7 +307,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 
 - (id)handleResponse:(id)responseObject forClass:(NSString *)clz
 {
-    id result = [responseObject objectForKey:@"data"];
+    id result = responseObject;//[responseObject objectForKey:@"data"];
     if ( [result isKindOfClass:[NSArray class]] ) {
         NSMutableArray* temp = [NSMutableArray array];
         for (NSDictionary* dict in result) {
