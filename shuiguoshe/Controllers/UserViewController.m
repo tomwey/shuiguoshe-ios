@@ -63,6 +63,11 @@
                                                  name:@"kOrderDidCancelNotification"
                                                object:nil];
     
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(loadData)
+//                                                 name:@"kOrderFinishedPaymentNotification"
+//                                               object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateInfo:)
                                                  name:@"kUpdateDeliverInfoSuccessNotification"

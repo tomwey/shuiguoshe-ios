@@ -81,7 +81,7 @@
 
 - (void)setUser:(User *)aUser
 {
-    [_avatarView setImageWithURL:[NSURL URLWithString:aUser.avatarUrl] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+    [_avatarView setImageWithURL:[NSURL URLWithString:aUser.avatarUrl] placeholderImage:[UIImage imageNamed:@"default_user_avatar.png"]];
     _nameLabel.text = [aUser.name stringByReplacingCharactersInRange:
                                                           NSMakeRange(3, 4)
                                                           withString:@"****"];

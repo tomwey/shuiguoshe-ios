@@ -35,6 +35,52 @@
     return YES;
 }
 
+//- (void)checkVersion
+//{
+//    NSString *urlPath = [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%@", appId];
+//    NSURL *url = [NSURL URLWithString:urlPath];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+//    [request setHTTPMethod:@"GET"];
+//    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+//    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+//        if ([data length]>0 && !error ) {
+//            NSDictionary *appInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+//            NSDictionary *result = nil;
+//            if ([appInfo valueForKey:@"results"]) {
+//                NSArray *arrary = [appInfo valueForKey:@"results"];
+//                if (arrary && [arrary count]>0) {
+//                    result = [arrary objectAtIndex:0];
+//                }
+//            }
+//            
+//            if (result) {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    NSString *versionsInAppStore = [result valueForKey:@"version"];
+//                    if (versionsInAppStore) {
+//                        if ([[NSBundle bundleVersion] compare:versionsInAppStore options:NSNumericSearch] == NSOrderedAscending) {
+//                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"新版本提示" message:[NSString stringWithFormat:@"当前有新的版本%@",versionsInAppStore] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"马上升级",nil];
+//                            [alert show];
+//                            [alert release];
+//                        }
+//                        else {
+//                            if (showMsg) {
+//                                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
+//                                                                                    message:@"当前应用已为最新版本。"
+//                                                                                   delegate:self
+//                                                                          cancelButtonTitle:@"好的"
+//                                                                          otherButtonTitles:nil];
+//                                [alertView show];
+//                                [alertView release];
+//                            }
+//                        }
+//                    }
+//                });
+//            }
+//        }
+//    }];
+//    [queue release];
+//}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

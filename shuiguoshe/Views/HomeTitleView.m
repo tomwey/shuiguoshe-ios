@@ -30,13 +30,14 @@
         self.frame = CGRectMake(0, 0, 168, 44);
         
         CGRect frame = self.bounds;
-        frame.size.width = 98;
+        frame.size.width = 128;
         _titleLabel = createLabel(frame,
                                   NSTextAlignmentCenter,
                                   COMMON_TEXT_COLOR,
                                   [UIFont systemFontOfSize:18]);
         [self addSubview:_titleLabel];
         _titleLabel.numberOfLines = 1;
+        _titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         
         _arrowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"down_arrow.png"]];
         [self addSubview:_arrowView];
@@ -63,7 +64,7 @@
     _title = [title copy];
     
     _titleLabel.text = title;
-    [_titleLabel sizeToFit];
+//    [_titleLabel sizeToFit];
     
     CGFloat width = CGRectGetWidth(_titleLabel.bounds);
     

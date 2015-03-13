@@ -131,11 +131,11 @@
     if ( !spiner ) {
         spiner = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"default_logo.png"]];
         
-        CGFloat width = CGRectGetWidth(self.bounds);
-        CGFloat height = CGRectGetHeight(self.bounds);
-        CGFloat dtWidth = MIN(width, height);
+//        CGFloat width = CGRectGetWidth(self.bounds);
+//        CGFloat height = CGRectGetHeight(self.bounds);
+//        CGFloat dtWidth = MIN(width, height);
         
-        spiner.frame = CGRectMake(0, 0, 40, 40);
+        spiner.frame = CGRectMake(0, 0, 50, 34);
         spiner.center = CGPointMake(CGRectGetMidX(self.bounds),
                                     CGRectGetMidY(self.bounds));
         spiner.tag = 10241;
